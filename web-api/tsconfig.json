@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es6",
+    "lib": ["esnext"],
+    "outDir": "dist",
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+  
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+    },
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@timetree/web-api",
+  "version": "1.0.0",
+  "description": "Official SDK for using TimeTree WebAPI",
+  "author": "TimeTree, Inc. <dev-platform@timetreeapp.com>",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --cache './**/*.{js,ts}'"
+  },
+  "dependencies": {
+    "axios": "^0.19.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.17.0",
+    "@typescript-eslint/parser": "^2.17.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-functional": "^3.0.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.5"
+  }
+}
