@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "cz-conventional-changelog": "^3.0.2",
+    "cz-conventional-changelog": "3.0.2",
     "husky": "^4.2.0"
   },
   "config": {
