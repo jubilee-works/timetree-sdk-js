@@ -1,6 +1,6 @@
 {
   "name": "@timetreeapp/web-api",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Official SDK for using TimeTree WebAPI",
   "author": "TimeTree, Inc. <dev-platform@timetreeapp.com>",
   "main": "index.js",
