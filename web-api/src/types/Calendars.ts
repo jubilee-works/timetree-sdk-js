@@ -5,7 +5,7 @@ type Relationships = {
   }[];
 };
 
-type Datum = {
+type Calendar = {
   readonly id: string;
   readonly type: "calendar";
   readonly attributes: {
@@ -41,7 +41,20 @@ type User = {
   };
 };
 
-export type Calendars = {
-  readonly data: readonly Datum[];
+export type CalendarsResult = {
+  readonly data: readonly Calendar[];
   readonly included: readonly (Label | User)[];
+};
+
+export type CalendarResult = {
+  readonly data: readonly Calendar[];
+  readonly included: readonly (Label | User)[];
+};
+
+export type LabelsResult = {
+  readonly data: readonly Label[];
+};
+
+export type MembersResult = {
+  readonly data: readonly User[];
 };

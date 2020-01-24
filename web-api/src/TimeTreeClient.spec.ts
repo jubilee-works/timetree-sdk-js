@@ -20,13 +20,13 @@ describe("TimeTreeClient", () => {
     });
   });
 
-  describe("getCalendar", () => {
+  describe("getCalendars", () => {
     let client: TimeTreeClient;
     beforeEach(() => {
       client = new TimeTreeClient("fake-access-token");
     });
 
-    describe("when calling api succeed", () => {
+    describe("when calling api without include option", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
           .get("/calendars")
@@ -36,6 +36,85 @@ describe("TimeTreeClient", () => {
       it("should resolve values", async () => {
         const response = await client.getCalendars();
         expect(response.data).toEqual({ data: [{ id: 123 }], included: [] });
+      });
+    });
+
+    describe("when calling api with include option", () => {
+      beforeEach(() => {
+        nock("https://timetreeapis.com")
+          .get(`/calendars?include=labels,members`)
+          .reply(200, { data: [{ id: 123 }], included: [] });
+      });
+
+      it("should resolve values", async () => {
+        const response = await client.getCalendars(["labels", "members"]);
+        expect(response.data).toEqual({ data: [{ id: 123 }], included: [] });
+      });
+    });
+  });
+
+  describe("getCalendar", () => {
+    const testCalendarId = "test-calendar-id";
+
+    let client: TimeTreeClient;
+    beforeEach(() => {
+      client = new TimeTreeClient("fake-access-token");
+    });
+
+    describe("when calling api succeed", () => {
+      beforeEach(() => {
+        nock("https://timetreeapis.com")
+          .get(`/calendars/${testCalendarId}`)
+          .reply(200, { data: [{ id: 123 }], included: [] });
+      });
+
+      it("should resolve values", async () => {
+        const response = await client.getCalendar(testCalendarId);
+        expect(response.data).toEqual({ data: [{ id: 123 }], included: [] });
+      });
+    });
+  });
+
+  describe("getLabels", () => {
+    const testCalendarId = "test-calendar-id";
+
+    let client: TimeTreeClient;
+    beforeEach(() => {
+      client = new TimeTreeClient("fake-access-token");
+    });
+
+    describe("when calling api succeed", () => {
+      beforeEach(() => {
+        nock("https://timetreeapis.com")
+          .get(`/calendars/${testCalendarId}/labels`)
+          .reply(200, { data: [{ id: 123 }] });
+      });
+
+      it("should resolve values", async () => {
+        const response = await client.getLabels(testCalendarId);
+        expect(response.data).toEqual({ data: [{ id: 123 }] });
+      });
+    });
+  });
+
+  describe("getMembers", () => {
+    const testCalendarId = "test-calendar-id";
+
+    let client: TimeTreeClient;
+    beforeEach(() => {
+      client = new TimeTreeClient("fake-access-token");
+    });
+
+    describe("when calling api succeed", () => {
+      beforeEach(() => {
+        nock("https://timetreeapis.com")
+          .get(`/calendars/${testCalendarId}/members`)
+          .reply(200, { data: [{ id: 123 }] });
+      });
+
+      it("should resolve values", async () => {
+        const response = await client.getMembers(testCalendarId);
+        expect(response.data).toEqual({ data: [{ id: 123 }] });
       });
     });
   });
@@ -63,6 +142,31 @@ describe("TimeTreeClient", () => {
           timezone: testTimeZone
         });
         expect(response.data).toEqual({ data: [{ id: "abc" }] });
+      });
+    });
+  });
+
+  describe("getEvent", () => {
+    const testCalendarId = "test-calendar-id";
+    const testEventId = "test-event-id";
+    let client: TimeTreeClient;
+    beforeEach(() => {
+      client = new TimeTreeClient("fake-access-token");
+    });
+
+    describe("when calling api succeed", () => {
+      beforeEach(() => {
+        nock("https://timetreeapis.com")
+          .get(`/calendars/${testCalendarId}/events/${testEventId}`)
+          .reply(200, { data: { id: "abc" } });
+      });
+
+      it("should resolve values", async () => {
+        const response = await client.getEvent({
+          calendarId: testCalendarId,
+          eventId: testEventId
+        });
+        expect(response.data).toEqual({ data: { id: "abc" } });
       });
     });
   });

@@ -45,6 +45,10 @@ type Event = {
   readonly relationships: Relationships;
 };
 
-export type UpcomingEvents = {
+export type EventsResult = {
   readonly data: readonly Event[];
+};
+
+export type EventResult = {
+  readonly data: Event;
 };
