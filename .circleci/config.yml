@@ -1,0 +1,66 @@
+version: 2.1
+
+executors:
+  default:
+    working_directory: ~/timetree-sdk-js/web-api
+    docker:
+      - image: circleci/node:12.14.1
+
+commands:
+  restore:
+    steps:
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ arch }}-node12.14.1-{{ checksum "yarn.lock" }}
+            - v1-dependencies-{{ arch }}
+            - v1-dependencies-
+      - run:
+          name: Yarn
+          command: yarn
+  save:
+    steps:
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ arch }}-node12.14.1-{{ checksum "yarn.lock" }}
+
+jobs:
+  test:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - restore
+      - save
+      - run:
+          name: Lint
+          command: yarn lint
+      - run:
+          name: Test
+          command: yarn jest
+  release:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - restore
+      - save
+      - run:
+          name: yarn semantic-release
+          command: yarn semantic-release
+
+workflows:
+  version: 2
+  test_and_release:
+    jobs:
+       - test:
+          filters:
+            branches:
+              only: master
+       - release:
+            context: release-timetree-sdk
+            requires:
+                - test
+            filters:
+              branches:
+                only: master
