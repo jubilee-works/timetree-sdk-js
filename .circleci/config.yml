@@ -29,7 +29,8 @@ jobs:
     executor:
       name: default
     steps:
-      - checkout
+      - checkout:
+          path: ~/timetree-sdk-js
       - restore
       - save
       - run:
@@ -42,7 +43,8 @@ jobs:
     executor:
       name: default
     steps:
-      - checkout
+      - checkout:
+          path: ~/timetree-sdk-js
       - restore
       - save
       - run:
