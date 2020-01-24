@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.0.3...v1.1.0) (2020-01-24)
+
+
+### Features
+
+* **timetreeclient:** add method to timetreeclient for get calendar, labels, members, event ([761b7bb](https://github.com/jubilee-works/timetree-sdk-js/commit/761b7bb3b2c4c38989754d7774e77832dcb6e2c5))
+
 ## [1.0.3](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.0.2...v1.0.3) (2020-01-24)
 
 
