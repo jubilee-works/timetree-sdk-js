@@ -32,5 +32,8 @@
     "semantic-release": "^16.0.3",
     "ts-jest": "^25.0.0",
     "typescript": "^3.7.5"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
