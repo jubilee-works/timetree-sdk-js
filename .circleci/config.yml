@@ -38,13 +38,12 @@ jobs:
           command: yarn lint
       - run:
           name: Test
-          command: yarn jest
+          command: yarn test
   release:
     executor:
       name: default
     steps:
-      - checkout:
-          path: ~/timetree-sdk-js
+      - checkout
       - restore
       - save
       - run:
