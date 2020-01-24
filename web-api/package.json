@@ -1,5 +1,5 @@
 {
-  "name": "@timetree/web-api",
+  "name": "@timetreeapp/web-api",
   "version": "0.0.1",
   "description": "Official SDK for using TimeTree WebAPI",
   "author": "TimeTree, Inc. <dev-platform@timetreeapp.com>",

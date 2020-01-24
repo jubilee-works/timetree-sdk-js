@@ -2,15 +2,15 @@
 
 |package|what its for|
 |:---:|:---|
-|`@timetree/web-api`|to use [Web API](https://developers.timetreeapp.com/en/docs/api) more easily.|
+|`@timetreeapp/web-api`|to use [Web API](https://developers.timetreeapp.com/en/docs/api) more easily.|
 
 
 # Installation
 
 ```bash
-$ npm install @timetree/web-api
+$ npm install @timetreeapp/web-api
 # if you prefer yarn
-$ yarn add @timetree/web-api
+$ yarn add @timetreeapp/web-api
 ```
 
 # Get Started
