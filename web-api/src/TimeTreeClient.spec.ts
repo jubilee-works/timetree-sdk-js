@@ -15,9 +15,9 @@ describe("TimeTreeClient", () => {
         headers: {
           Accept: "application/vnd.timetree.v1+json",
           Authorization: `Bearer ${accessToken}`
-        },
-      })
-    })
+        }
+      });
+    });
   });
 
   describe("getCalendar", () => {
@@ -30,13 +30,13 @@ describe("TimeTreeClient", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
           .get("/calendars")
-          .reply(200, { data: [{ id: 123 }], included: [] })
+          .reply(200, { data: [{ id: 123 }], included: [] });
       });
-  
+
       it("should resolve values", async () => {
         const response = await client.getCalendars();
-        expect(response.data).toEqual({ data: [{ id: 123 }] , included: []});
-      })
+        expect(response.data).toEqual({ data: [{ id: 123 }], included: [] });
+      });
     });
   });
 
@@ -51,17 +51,19 @@ describe("TimeTreeClient", () => {
     describe("when calling api succeed", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
-          .get(`/calendars/${testCalendarId}/upcoming_events?timezone=${testTimeZone}`)
-          .reply(200, { data: [{ id: "abc" }] })
+          .get(
+            `/calendars/${testCalendarId}/upcoming_events?timezone=${testTimeZone}`
+          )
+          .reply(200, { data: [{ id: "abc" }] });
       });
-  
+
       it("should resolve values", async () => {
         const response = await client.getUpcomingEvents({
           calendarId: testCalendarId,
           timezone: testTimeZone
         });
-        expect(response.data).toEqual({ data: [{ id: "abc" }]});
-      })
+        expect(response.data).toEqual({ data: [{ id: "abc" }] });
+      });
     });
   });
 });

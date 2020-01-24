@@ -5,10 +5,6 @@ module.exports = {
   },
   testEnvironment: "node",
   testMatch: ["**/*.(spec|test).(js|ts)"],
-  moduleFileExtensions: [
-    "ts",
-    "js",
-    "json"
-  ],
+  moduleFileExtensions: ["ts", "js", "json"],
   clearMocks: true
 };
