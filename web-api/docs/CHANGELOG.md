@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.1.0...v1.2.0) (2020-01-24)
+
+
+### Features
+
+* implement all api method ([975ac0a](https://github.com/jubilee-works/timetree-sdk-js/commit/975ac0a25effbd9fab0e757d1aa8b434830bb33d))
+
 # [1.1.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.0.3...v1.1.0) (2020-01-24)
 
 
