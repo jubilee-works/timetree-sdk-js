@@ -19,7 +19,7 @@ $ yarn add @timetreeapp/web-api
 ```ts
 import { TimeTreeClient } from '@timetreeapp/web-api';
 
-const client = new TimeTreeClient("your-access-token");
+const client = new TimeTreeClient("<your-access-token>");
 
 (async () => {
   const response = await client.getCalendars();

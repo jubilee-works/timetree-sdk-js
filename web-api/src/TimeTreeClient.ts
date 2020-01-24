@@ -5,7 +5,11 @@ import {
   LabelsResult,
   MembersResult
 } from "~/types/Calendars";
-import { EventsResult as Events } from "~/types/Events";
+import { EventsResult as Events, EventResult as Event } from "~/types/Events";
+import { EventForm } from "~/types/EventForm";
+import { User } from "~/types/User";
+import { EventActivityForm } from "./types/EventActivityForm";
+import { EventActivityResult as EventActivity } from "./types/EventActivities";
 
 type TimeTreeClientOptions = {
   /** you can overwrite for testing purposes */
@@ -28,6 +32,11 @@ type GetEventParams = {
   readonly eventId: string;
   readonly include?: IncludeOptions;
 };
+
+type DeleteEventParams = {
+  readonly calendarId: string;
+  readonly eventId: string;
+};
 export class TimeTreeClient {
   private readonly axios: AxiosInstance;
 
@@ -40,6 +49,10 @@ export class TimeTreeClient {
       },
       timeout: options.timeout
     });
+  }
+
+  public getUser() {
+    return this.axios.get<User>("/user");
   }
 
   public getCalendars(include?: IncludeOptions) {
@@ -82,10 +95,46 @@ export class TimeTreeClient {
   }
 
   public getEvent({ eventId, calendarId, include }: GetEventParams) {
-    return this.axios.get<Events>(`calendars/${calendarId}/events/${eventId}`, {
+    return this.axios.get<Event>(`calendars/${calendarId}/events/${eventId}`, {
       params: {
         include: include && include.join(",")
       }
     });
+  }
+
+  public postEvent({ calendarId, ...event }: EventForm) {
+    return this.axios.post<Event>(`calendars/${calendarId}/events`, event, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  }
+
+  public putEvent({ calendarId, ...event }: EventForm) {
+    return this.axios.put<Event>(`calendars/${calendarId}/events`, event, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  }
+
+  public deleteEvent({ calendarId, eventId }: DeleteEventParams) {
+    return this.axios.delete<{}>(`calendars/${calendarId}/events/${eventId}`);
+  }
+
+  public postEventActivity({
+    calendarId,
+    eventId,
+    ...activity
+  }: EventActivityForm) {
+    return this.axios.post<EventActivity>(
+      `calendars/${calendarId}/events/${eventId}/activities`,
+      activity,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
   }
 }
