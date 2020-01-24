@@ -43,12 +43,13 @@ jobs:
     executor:
       name: default
     steps:
-      - checkout
+      - checkout:
+          path: ~/timetree-sdk-js
       - restore
       - save
       - run:
-          name: yarn semantic-release
-          command: yarn semantic-release
+          name: yarn release
+          command: yarn release
 
 workflows:
   version: 2
