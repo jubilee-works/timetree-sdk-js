@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Official SDK for using TimeTree WebAPI",
   "author": "TimeTree, Inc. <dev-platform@timetreeapp.com>",
-  "main": "index.js",
+  "repository": "https://github.com/jubilee-works/timetree-sdk-js",
+  "homepage": "https://github.com/jubilee-works/timetree-sdk-js",
+  "keywords": [],
+  "main": "dist/index.js",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "lint": "eslint --cache './**/*.{js,ts}'",
     "test": "jest",

@@ -1,5 +1,8 @@
 # TimeTree Web API
 
+[![CircleCI](https://circleci.com/gh/jubilee-works/timetree-sdk-js.svg?style=svg)](https://circleci.com/gh/jubilee-works/timetree-sdk-js)
+
+
 `@timetreeapp/web-api` is simple HTTP client for requesting to TimeTree's [Web API](https://developers.timetreeapp.com/en/docs/api).
 
 # Installation
