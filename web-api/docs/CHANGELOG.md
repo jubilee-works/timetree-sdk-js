@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.0.2...v1.0.3) (2020-01-24)
+
+
+### Bug Fixes
+
+* fix tsconfig ([40a1cfb](https://github.com/jubilee-works/timetree-sdk-js/commit/40a1cfb9fe741a0730c779f0876559484f8f6ddf))
+
 ## [1.0.2](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.0.1...v1.0.2) (2020-01-24)
 
 
