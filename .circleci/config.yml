@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  slack: circleci/slack@3.4.2
+
 executors:
   default:
     working_directory: ~/timetree-sdk-js/web-api
@@ -55,14 +58,22 @@ workflows:
   version: 2
   test_and_release:
     jobs:
-       - test:
+      - test:
           filters:
             branches:
               only: master
-       - release:
-            context: release-timetree-sdk
-            requires:
-                - test
-            filters:
-              branches:
-                only: master
+      - slack/approval-notification:
+          channel: "#timetree-sdk-js"
+          requires:
+            - test
+      - release-approval:
+          type: approval
+          requires:
+            - slack/approval-notification
+      - release:
+          context: release-timetree-sdk
+          requires:
+            - release-approval
+          filters:
+            branches:
+              only: master
