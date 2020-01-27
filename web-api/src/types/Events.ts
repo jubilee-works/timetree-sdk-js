@@ -18,7 +18,9 @@ type Creator = {
 
 type Relationships = {
   readonly creator: Creator;
-  readonly label: Label;
+  readonly label: {
+    readonly data: Label;
+  };
   readonly attendees: Attendees;
 };
 
