@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.2.0...v1.2.1) (2020-01-27)
+
+
+### Bug Fixes
+
+* use relative path instead of absolute path ([82ce547](https://github.com/jubilee-works/timetree-sdk-js/commit/82ce547531c6bade294e2fb0d3a3b746d192d1b8))
+
 # [1.2.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.1.0...v1.2.0) (2020-01-24)
 
 
