@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.2.1...v1.2.2) (2020-01-27)
+
+
+### Bug Fixes
+
+* **types/events.ts:** fix nested type of event.relationships.label.data ([d8de866](https://github.com/jubilee-works/timetree-sdk-js/commit/d8de8663942306d1094f36bd52cfe292562c0945))
+
 ## [1.2.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.2.0...v1.2.1) (2020-01-27)
 
 
