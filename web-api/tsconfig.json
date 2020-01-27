@@ -2,6 +2,7 @@
   "compilerOptions": {
     "sourceMap": true,
     "target": "es6",
+    "module": "umd",
     "lib": ["esnext"],
     "outDir": "dist",
 
@@ -15,7 +16,6 @@
     "baseUrl": "./src",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "resolveJsonModule": true,
     "declaration": true,
     "typeRoots": [
       "./node_modules/@types",
