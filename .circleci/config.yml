@@ -67,4 +67,5 @@ workflows:
               branches:
                 only:
                   - master
-                  - /.*-(alpha|beta)/
+                  - /.*-alpha/
+                  - /.*-beta/

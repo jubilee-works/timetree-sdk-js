@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios";
+import humps from "humps";
 import {
   CalendarsResult as Calendars,
   CalendarResult as Calendar,
@@ -47,6 +48,14 @@ export class TimeTreeClient {
         Accept: "application/vnd.timetree.v1+json",
         Authorization: `Bearer ${accessToken}`
       },
+      transformResponse: [
+        ...[axios.defaults.transformResponse].flat(),
+        data => humps.camelizeKeys(data)
+      ],
+      transformRequest: [
+        data => humps.decamelizeKeys(data),
+        ...[axios.defaults.transformRequest].flat()
+      ],
       timeout: options.timeout
     });
   }

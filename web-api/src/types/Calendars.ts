@@ -13,8 +13,8 @@ type Calendar = {
     readonly description: string;
     readonly color: string;
     readonly order: number;
-    readonly image_url: string;
-    readonly created_at: string;
+    readonly imageUrl: string;
+    readonly createdAt: string;
   };
   readonly relationships: {
     readonly labels?: Relationships;
@@ -37,7 +37,7 @@ type User = {
   readonly attributes: {
     readonly name: string;
     readonly description?: string;
-    readonly image_url?: string;
+    readonly imageUrl?: string;
   };
 };
 

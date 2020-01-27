@@ -6,22 +6,22 @@ type Attributes = {
   /** maxLength 100 */
   readonly location?: string;
   readonly url?: string;
-  readonly start_timezone?: string;
-  readonly end_timezone?: string;
+  readonly startTimezone?: string;
+  readonly endTimezone?: string;
 };
 
 type ScheduleAttributes = Attributes & {
   readonly category: "schedule";
-  readonly all_day: boolean;
-  readonly start_at: string;
-  readonly end_at: string;
+  readonly allDay: boolean;
+  readonly startAt: string;
+  readonly endAt: string;
 };
 
 type KeepAttributes = Attributes & {
   readonly category: "keep";
-  readonly all_day?: boolean;
-  readonly start_at?: string;
-  readonly end_at?: string;
+  readonly allDay?: boolean;
+  readonly startAt?: string;
+  readonly endAt?: string;
 };
 
 type User = {
