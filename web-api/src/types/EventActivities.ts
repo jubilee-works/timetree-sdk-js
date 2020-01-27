@@ -4,8 +4,8 @@ export type EventActivityResult = {
     readonly type: "activity";
     readonly attributes: {
       readonly content: string;
-      readonly updated_at: string;
-      readonly created_at: string;
+      readonly updatedAt: string;
+      readonly createdAt: string;
     };
   };
 };

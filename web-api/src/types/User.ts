@@ -5,7 +5,7 @@ export type User = {
     readonly attributes: {
       readonly name: string;
       readonly description: string;
-      readonly image_url: string;
+      readonly imageUrl: string;
     };
   };
 };

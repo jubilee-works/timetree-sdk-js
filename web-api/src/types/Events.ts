@@ -27,17 +27,17 @@ type Relationships = {
 type Attributes = {
   readonly category: "schedule" | "keep";
   readonly title: string;
-  readonly all_day: boolean;
-  readonly start_at: string;
-  readonly start_timezone: string;
-  readonly end_at: string;
-  readonly end_timezone: string;
+  readonly allDay: boolean;
+  readonly startAt: string;
+  readonly startTimezone: string;
+  readonly endAt: string;
+  readonly endTimezone: string;
   readonly recurrences: readonly string[];
   readonly description: string;
   readonly location: string;
   readonly url: string;
-  readonly updated_at: string;
-  readonly created_at: string;
+  readonly updatedAt: string;
+  readonly createdAt: string;
 };
 
 type Event = {
