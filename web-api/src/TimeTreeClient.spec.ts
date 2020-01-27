@@ -15,7 +15,9 @@ describe("TimeTreeClient", () => {
         headers: {
           Accept: "application/vnd.timetree.v1+json",
           Authorization: `Bearer ${accessToken}`
-        }
+        },
+        transformResponse: expect.anything(),
+        transformRequest: expect.anything(),
       });
     });
   });
