@@ -4,10 +4,10 @@ import {
   CalendarResult as Calendar,
   LabelsResult,
   MembersResult
-} from "~/types/Calendars";
-import { EventsResult as Events, EventResult as Event } from "~/types/Events";
-import { EventForm } from "~/types/EventForm";
-import { User } from "~/types/User";
+} from "./types/Calendars";
+import { EventsResult as Events, EventResult as Event } from "./types/Events";
+import { EventForm } from "./types/EventForm";
+import { User } from "./types/User";
 import { EventActivityForm } from "./types/EventActivityForm";
 import { EventActivityResult as EventActivity } from "./types/EventActivities";
 

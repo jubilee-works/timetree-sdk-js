@@ -13,9 +13,6 @@
     "noFallthroughCasesInSwitch": true,
   
     "baseUrl": "./src",
-    "paths": {
-      "~/*": ["./*"],
-    },
     "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
