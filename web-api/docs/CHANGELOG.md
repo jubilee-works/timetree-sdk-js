@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.2.2...v1.3.0) (2020-01-27)
+
+
+### Features
+
+* **type:** camelize and decamelized keys per request ([d0a8760](https://github.com/jubilee-works/timetree-sdk-js/commit/d0a87607e54b9d4f74785d4f5cd4ab618cfff440))
+
 ## [1.2.2](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.2.1...v1.2.2) (2020-01-27)
 
 
