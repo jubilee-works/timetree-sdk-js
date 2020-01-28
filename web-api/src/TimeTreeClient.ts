@@ -60,83 +60,116 @@ export class TimeTreeClient {
     });
   }
 
-  public getUser() {
-    return this.axios.get<User>("/user");
+  public async getUser() {
+    const response = await this.axios.get<User>("/user");
+    return response.data;
   }
 
-  public getCalendars(include?: IncludeOptions) {
-    return this.axios.get<Calendars>("/calendars", {
+  public async getCalendars(include?: IncludeOptions) {
+    const response = await this.axios.get<Calendars>("/calendars", {
       params: {
         include: include && include.join(",")
       }
     });
+    return response.data;
   }
 
-  public getCalendar(calendarId: string, include?: IncludeOptions) {
-    return this.axios.get<Calendar>(`/calendars/${calendarId}`, {
-      params: {
-        include: include && include.join(",")
+  public async getCalendar(calendarId: string, include?: IncludeOptions) {
+    const response = await this.axios.get<Calendar>(
+      `/calendars/${calendarId}`,
+      {
+        params: {
+          include: include && include.join(",")
+        }
       }
-    });
+    );
+    return response.data;
   }
 
-  public getLabels(calendarId: string) {
-    return this.axios.get<LabelsResult>(`/calendars/${calendarId}/labels`);
+  public async getLabels(calendarId: string) {
+    const response = await this.axios.get<LabelsResult>(
+      `/calendars/${calendarId}/labels`
+    );
+    return response.data;
   }
 
-  public getMembers(calendarId: string) {
-    return this.axios.get<MembersResult>(`/calendars/${calendarId}/members`);
+  public async getMembers(calendarId: string) {
+    const response = await this.axios.get<MembersResult>(
+      `/calendars/${calendarId}/members`
+    );
+    return response.data;
   }
 
-  public getUpcomingEvents({
+  public async getUpcomingEvents({
     calendarId,
     timezone,
     days,
     include
   }: GetUpcomingEventsParams) {
-    return this.axios.get<Events>(`calendars/${calendarId}/upcoming_events`, {
-      params: {
-        timezone,
-        days,
-        include: include && include.join(",")
+    const response = await this.axios.get<Events>(
+      `calendars/${calendarId}/upcoming_events`,
+      {
+        params: {
+          timezone,
+          days,
+          include: include && include.join(",")
+        }
       }
-    });
+    );
+    return response.data;
   }
 
-  public getEvent({ eventId, calendarId, include }: GetEventParams) {
-    return this.axios.get<Event>(`calendars/${calendarId}/events/${eventId}`, {
-      params: {
-        include: include && include.join(",")
+  public async getEvent({ eventId, calendarId, include }: GetEventParams) {
+    const response = await this.axios.get<Event>(
+      `calendars/${calendarId}/events/${eventId}`,
+      {
+        params: {
+          include: include && include.join(",")
+        }
       }
-    });
+    );
+    return response.data;
   }
 
-  public postEvent({ calendarId, ...event }: EventForm) {
-    return this.axios.post<Event>(`calendars/${calendarId}/events`, event, {
-      headers: {
-        "Content-Type": "application/json"
+  public async postEvent({ calendarId, ...event }: EventForm) {
+    const response = await this.axios.post<Event>(
+      `calendars/${calendarId}/events`,
+      event,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
-    });
+    );
+    return response.data;
   }
 
-  public putEvent({ calendarId, ...event }: EventForm) {
-    return this.axios.put<Event>(`calendars/${calendarId}/events`, event, {
-      headers: {
-        "Content-Type": "application/json"
+  public async putEvent({ calendarId, ...event }: EventForm) {
+    const response = await this.axios.put<Event>(
+      `calendars/${calendarId}/events`,
+      event,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
-    });
+    );
+    return response.data;
   }
 
-  public deleteEvent({ calendarId, eventId }: DeleteEventParams) {
-    return this.axios.delete<{}>(`calendars/${calendarId}/events/${eventId}`);
+  public async deleteEvent({ calendarId, eventId }: DeleteEventParams) {
+    const response = await this.axios.delete<{}>(
+      `calendars/${calendarId}/events/${eventId}`
+    );
+    return response.data;
   }
 
-  public postEventActivity({
+  public async postEventActivity({
     calendarId,
     eventId,
     ...activity
   }: EventActivityForm) {
-    return this.axios.post<EventActivity>(
+    const response = await this.axios.post<EventActivity>(
       `calendars/${calendarId}/events/${eventId}/activities`,
       activity,
       {
@@ -145,5 +178,6 @@ export class TimeTreeClient {
         }
       }
     );
+    return response.data;
   }
 }

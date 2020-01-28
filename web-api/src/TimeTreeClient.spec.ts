@@ -37,7 +37,7 @@ describe("TimeTreeClient", () => {
 
       it("should resolve values", async () => {
         const response = await client.getCalendars();
-        expect(response.data).toEqual({ data: [{ id: 123 }], included: [] });
+        expect(response).toEqual({ data: [{ id: 123 }], included: [] });
       });
     });
 
@@ -50,7 +50,7 @@ describe("TimeTreeClient", () => {
 
       it("should resolve values", async () => {
         const response = await client.getCalendars(["labels", "members"]);
-        expect(response.data).toEqual({ data: [{ id: 123 }], included: [] });
+        expect(response).toEqual({ data: [{ id: 123 }], included: [] });
       });
     });
   });
@@ -71,7 +71,7 @@ describe("TimeTreeClient", () => {
 
       it("should resolve values", async () => {
         const response = await client.getUser();
-        expect(response.data).toEqual({ data: [{ id: 123 }] });
+        expect(response.data).toEqual([{ id: 123 }]);
       });
     });
   });
@@ -93,7 +93,7 @@ describe("TimeTreeClient", () => {
 
       it("should resolve values", async () => {
         const response = await client.getCalendar(testCalendarId);
-        expect(response.data).toEqual({ data: [{ id: 123 }], included: [] });
+        expect(response).toEqual({ data: [{ id: 123 }], included: [] });
       });
     });
   });
@@ -115,7 +115,7 @@ describe("TimeTreeClient", () => {
 
       it("should resolve values", async () => {
         const response = await client.getLabels(testCalendarId);
-        expect(response.data).toEqual({ data: [{ id: 123 }] });
+        expect(response.data).toEqual([{ id: 123 }]);
       });
     });
   });
@@ -137,7 +137,7 @@ describe("TimeTreeClient", () => {
 
       it("should resolve values", async () => {
         const response = await client.getMembers(testCalendarId);
-        expect(response.data).toEqual({ data: [{ id: 123 }] });
+        expect(response.data).toEqual([{ id: 123 }]);
       });
     });
   });
@@ -165,7 +165,7 @@ describe("TimeTreeClient", () => {
           calendarId: testCalendarId,
           timezone: testTimeZone
         });
-        expect(response.data).toEqual({ data: [{ id: "abc" }] });
+        expect(response.data).toEqual([{ id: "abc" }]);
       });
     });
   });
@@ -191,7 +191,7 @@ describe("TimeTreeClient", () => {
           calendarId: testCalendarId,
           eventId: testEventId
         });
-        expect(response.data).toEqual({ data: { id: "abc" } });
+        expect(response.data).toEqual({ id: "abc" });
       });
     });
   });
@@ -232,7 +232,7 @@ describe("TimeTreeClient", () => {
           calendarId: testCalendarId,
           ...testForm
         });
-        expect(response.data).toEqual({ data: { id: "abc" } });
+        expect(response.data).toEqual({ id: "abc" });
       });
     });
   });
@@ -273,7 +273,7 @@ describe("TimeTreeClient", () => {
           calendarId: testCalendarId,
           ...testForm
         });
-        expect(response.data).toEqual({ data: { id: "abc" } });
+        expect(response.data).toEqual({ id: "abc" });
       });
     });
   });
@@ -337,7 +337,7 @@ describe("TimeTreeClient", () => {
           eventId: testEventId,
           ...testForm
         });
-        expect(response.data).toEqual({ data: { id: "abc" } });
+        expect(response.data).toEqual({ id: "abc" });
       });
     });
   });
