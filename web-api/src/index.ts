@@ -9,6 +9,7 @@ import { EventActivityResult } from "./types/EventActivities";
 import { EventForm } from "./types/EventForm";
 import { EventActivityForm } from "./types/EventActivityForm";
 import { User } from "./types/User";
+import { ErrorResponse } from "./types/ErrorResponse";
 
 export { TimeTreeClient } from "./TimeTreeClient";
 
@@ -20,4 +21,4 @@ export type Events = EventsResult;
 export type Event = EventResult;
 export type EventActivity = EventActivityResult;
 
-export { EventForm, EventActivityForm, User };
+export { ErrorResponse, EventForm, EventActivityForm, User };
