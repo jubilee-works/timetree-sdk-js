@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.3.0...v1.3.1) (2020-01-28)
+
+
+### Bug Fixes
+
+* **response:** extract response.data for returning only content ([9793baa](https://github.com/jubilee-works/timetree-sdk-js/commit/9793baabf7e4372c28bd734600a3269114fbba2a))
+
 # [1.3.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.2.2...v1.3.0) (2020-01-27)
 
 
