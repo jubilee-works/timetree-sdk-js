@@ -17,7 +17,8 @@ describe("TimeTreeClient", () => {
           Authorization: `Bearer ${accessToken}`
         },
         transformResponse: expect.anything(),
-        transformRequest: expect.anything()
+        transformRequest: expect.anything(),
+        paramsSerializer: expect.anything()
       });
     });
   });

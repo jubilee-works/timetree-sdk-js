@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import humps from "humps";
+import qs from "qs";
 import {
   CalendarsResult as Calendars,
   CalendarResult as Calendar,
@@ -48,6 +49,7 @@ export class TimeTreeClient {
         Accept: "application/vnd.timetree.v1+json",
         Authorization: `Bearer ${accessToken}`
       },
+      paramsSerializer: params => qs.stringify(humps.decamelizeKeys(params)),
       transformResponse: [
         ...[axios.defaults.transformResponse].flat(),
         data => humps.camelizeKeys(data)

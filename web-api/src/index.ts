@@ -12,6 +12,7 @@ import { User } from "./types/User";
 import { ErrorResponse } from "./types/ErrorResponse";
 
 export { TimeTreeClient } from "./TimeTreeClient";
+export { Authenticator } from "./Authenticator";
 
 export type Calendars = CalendarsResult;
 export type Calendar = CalendarResult;
