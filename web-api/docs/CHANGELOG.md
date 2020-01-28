@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.3.1...v1.4.0) (2020-01-28)
+
+
+### Features
+
+* **authenticator:** create OAuth API for using OAuth application ([78ef6e4](https://github.com/jubilee-works/timetree-sdk-js/commit/78ef6e4c9965b71b808f3683d04ab8955ad0198d))
+
 ## [1.3.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.3.0...v1.3.1) (2020-01-28)
 
 
