@@ -28,9 +28,9 @@ type GetTokenBody = {
 };
 
 type GetTokenResponse = {
-  readonly acess_token: string;
-  readonly created_at: number;
-  readonly token_type: string;
+  readonly acessToken: string;
+  readonly createdAt: number;
+  readonly tokenType: string;
 };
 
 export class Authenticator {
