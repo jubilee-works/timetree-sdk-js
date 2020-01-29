@@ -1,6 +1,8 @@
 import axios, { AxiosInstance } from "axios";
 import humps from "humps";
 import qs from "qs";
+import { deserialise } from "kitsu-core";
+
 import {
   CalendarsResult as Calendars,
   CalendarResult as Calendar,
@@ -52,7 +54,8 @@ export class TimeTreeClient {
       paramsSerializer: params => qs.stringify(humps.decamelizeKeys(params)),
       transformResponse: [
         ...[axios.defaults.transformResponse].flat(),
-        data => humps.camelizeKeys(data)
+        data => humps.camelizeKeys(data),
+        data => deserialise(data)
       ],
       transformRequest: [
         data => humps.decamelizeKeys(data),
@@ -68,12 +71,12 @@ export class TimeTreeClient {
   }
 
   public async getCalendars(include?: IncludeOptions) {
-    const response = await this.axios.get<Calendars>("/calendars", {
+    const { data: calendars } = await this.axios.get<Calendars>("/calendars", {
       params: {
         include: include && include.join(",")
       }
     });
-    return response.data;
+    return calendars.data;
   }
 
   public async getCalendar(calendarId: string, include?: IncludeOptions) {

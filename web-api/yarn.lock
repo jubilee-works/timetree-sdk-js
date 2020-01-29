@@ -3972,6 +3972,11 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
+kitsu-core@^8.0.4:
+  version "8.0.4"
+  resolved "https://registry.yarnpkg.com/kitsu-core/-/kitsu-core-8.0.4.tgz#08e3dcc64f36d8cd7389be1398792e2528a9ef38"
+  integrity sha512-BlPa/c7OIB+mzlVmSDCxm7oncQmslgpj4Y4hOYkBIPGHCtlcNOgsyYOYcqSFa0nYRn8MucAzGfD6e8MWtPS3yQ==
+
 kleur@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
