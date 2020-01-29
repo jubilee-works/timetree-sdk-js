@@ -1,8 +1,26 @@
 import { TimeTreeClient } from "./TimeTreeClient";
 import axios from "axios";
 import nock from "nock";
-import { calendars } from "./__tests__/fixtures";
-import { expectedCalendars } from "./__tests__/expectations";
+import {
+  calendars,
+  calendar,
+  labels,
+  members,
+  upcomingEvents,
+  event,
+  user,
+  activity
+} from "./__tests__/fixtures";
+import {
+  expectedCalendars,
+  expectedCalendar,
+  expecteLabels,
+  expectedMembers,
+  expectedUpcomingEvents,
+  expectedEvent,
+  expectedUser,
+  expectedActivity
+} from "./__tests__/expectations";
 
 const axiosCreationMock = jest.spyOn(axios, "create");
 
@@ -21,6 +39,27 @@ describe("TimeTreeClient", () => {
         transformResponse: expect.anything(),
         transformRequest: expect.anything(),
         paramsSerializer: expect.anything()
+      });
+    });
+  });
+
+  describe("getUser", () => {
+    let client: TimeTreeClient;
+
+    beforeEach(() => {
+      client = new TimeTreeClient("fake-access-token");
+    });
+
+    describe("when calling api succeed", () => {
+      beforeEach(() => {
+        nock("https://timetreeapis.com")
+          .get(`/user`)
+          .reply(200, user);
+      });
+
+      it("should resolve values", async () => {
+        const response = await client.getUser();
+        expect(response).toEqual(expectedUser);
       });
     });
   });
@@ -58,28 +97,7 @@ describe("TimeTreeClient", () => {
     });
   });
 
-  describe.skip("getUser", () => {
-    let client: TimeTreeClient;
-
-    beforeEach(() => {
-      client = new TimeTreeClient("fake-access-token");
-    });
-
-    describe("when calling api succeed", () => {
-      beforeEach(() => {
-        nock("https://timetreeapis.com")
-          .get(`/user`)
-          .reply(200, { data: [{ id: 123 }] });
-      });
-
-      it("should resolve values", async () => {
-        const response = await client.getUser();
-        expect(response.data).toEqual([{ id: 123 }]);
-      });
-    });
-  });
-
-  describe.skip("getCalendar", () => {
+  describe("getCalendar", () => {
     const testCalendarId = "test-calendar-id";
     let client: TimeTreeClient;
 
@@ -91,17 +109,17 @@ describe("TimeTreeClient", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
           .get(`/calendars/${testCalendarId}`)
-          .reply(200, { data: [{ id: 123 }], included: [] });
+          .reply(200, calendar);
       });
 
       it("should resolve values", async () => {
         const response = await client.getCalendar(testCalendarId);
-        expect(response).toEqual({ data: [{ id: 123 }], included: [] });
+        expect(response).toEqual(expectedCalendar);
       });
     });
   });
 
-  describe.skip("getLabels", () => {
+  describe("getLabels", () => {
     const testCalendarId = "test-calendar-id";
     let client: TimeTreeClient;
 
@@ -113,17 +131,17 @@ describe("TimeTreeClient", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
           .get(`/calendars/${testCalendarId}/labels`)
-          .reply(200, { data: [{ id: 123 }] });
+          .reply(200, labels);
       });
 
       it("should resolve values", async () => {
         const response = await client.getLabels(testCalendarId);
-        expect(response.data).toEqual([{ id: 123 }]);
+        expect(response).toEqual(expecteLabels);
       });
     });
   });
 
-  describe.skip("getMembers", () => {
+  describe("getMembers", () => {
     const testCalendarId = "test-calendar-id";
     let client: TimeTreeClient;
 
@@ -135,17 +153,17 @@ describe("TimeTreeClient", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
           .get(`/calendars/${testCalendarId}/members`)
-          .reply(200, { data: [{ id: 123 }] });
+          .reply(200, members);
       });
 
       it("should resolve values", async () => {
         const response = await client.getMembers(testCalendarId);
-        expect(response.data).toEqual([{ id: 123 }]);
+        expect(response).toEqual(expectedMembers);
       });
     });
   });
 
-  describe.skip("getUpcomingEvents", () => {
+  describe("getUpcomingEvents", () => {
     const testCalendarId = "test-calendar-id";
     const testTimeZone = "America/New_York";
     let client: TimeTreeClient;
@@ -160,7 +178,7 @@ describe("TimeTreeClient", () => {
           .get(
             `/calendars/${testCalendarId}/upcoming_events?timezone=${testTimeZone}`
           )
-          .reply(200, { data: [{ id: "abc" }] });
+          .reply(200, upcomingEvents);
       });
 
       it("should resolve values", async () => {
@@ -168,12 +186,12 @@ describe("TimeTreeClient", () => {
           calendarId: testCalendarId,
           timezone: testTimeZone
         });
-        expect(response.data).toEqual([{ id: "abc" }]);
+        expect(response).toEqual(expectedUpcomingEvents);
       });
     });
   });
 
-  describe.skip("getEvent", () => {
+  describe("getEvent", () => {
     const testCalendarId = "test-calendar-id";
     const testEventId = "test-event-id";
     let client: TimeTreeClient;
@@ -186,7 +204,7 @@ describe("TimeTreeClient", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
           .get(`/calendars/${testCalendarId}/events/${testEventId}`)
-          .reply(200, { data: { id: "abc" } });
+          .reply(200, event);
       });
 
       it("should resolve values", async () => {
@@ -194,12 +212,12 @@ describe("TimeTreeClient", () => {
           calendarId: testCalendarId,
           eventId: testEventId
         });
-        expect(response.data).toEqual({ id: "abc" });
+        expect(response).toEqual(expectedEvent);
       });
     });
   });
 
-  describe.skip("postEvent", () => {
+  describe("postEvent", () => {
     const testCalendarId = "test-calendar-id";
     const testForm = {
       data: {
@@ -227,7 +245,7 @@ describe("TimeTreeClient", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
           .post(`/calendars/${testCalendarId}/events`, testForm)
-          .reply(200, { data: { id: "abc" } });
+          .reply(200, event);
       });
 
       it("should resolve values", async () => {
@@ -235,12 +253,12 @@ describe("TimeTreeClient", () => {
           calendarId: testCalendarId,
           ...testForm
         });
-        expect(response.data).toEqual({ id: "abc" });
+        expect(response).toEqual(expectedEvent);
       });
     });
   });
 
-  describe.skip("putEvent", () => {
+  describe("putEvent", () => {
     const testCalendarId = "test-calendar-id";
     const testForm = {
       data: {
@@ -268,7 +286,7 @@ describe("TimeTreeClient", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
           .put(`/calendars/${testCalendarId}/events`, testForm)
-          .reply(200, { data: { id: "abc" } });
+          .reply(200, event);
       });
 
       it("should resolve values", async () => {
@@ -276,12 +294,12 @@ describe("TimeTreeClient", () => {
           calendarId: testCalendarId,
           ...testForm
         });
-        expect(response.data).toEqual({ id: "abc" });
+        expect(response).toEqual(expectedEvent);
       });
     });
   });
 
-  describe.skip("deleteEvent", () => {
+  describe("deleteEvent", () => {
     const testCalendarId = "test-calendar-id";
     const testEventId = "test-event-id";
     let client: TimeTreeClient;
@@ -308,7 +326,7 @@ describe("TimeTreeClient", () => {
     });
   });
 
-  describe.skip("postEventActivity", () => {
+  describe("postEventActivity", () => {
     const testCalendarId = "test-calendar-id";
     const testEventId = "test-event-id";
     const testForm = {
@@ -331,16 +349,16 @@ describe("TimeTreeClient", () => {
             `/calendars/${testCalendarId}/events/${testEventId}/activities`,
             testForm
           )
-          .reply(200, { data: { id: "abc" } });
+          .reply(200, activity);
       });
 
       it("should resolve values", async () => {
-        const response = await client.postEventActivity({
+        const response = await client.postActivity({
           calendarId: testCalendarId,
           eventId: testEventId,
           ...testForm
         });
-        expect(response.data).toEqual({ id: "abc" });
+        expect(response).toEqual(expectedActivity);
       });
     });
   });

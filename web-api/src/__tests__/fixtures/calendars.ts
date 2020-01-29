@@ -51,7 +51,6 @@ export const calendars = {
         color: "#2ecc87"
       }
     },
-    // ...
     {
       id: "1234,12345",
       type: "user",
