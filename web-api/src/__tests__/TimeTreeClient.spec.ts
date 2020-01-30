@@ -1,4 +1,4 @@
-import { TimeTreeClient } from "./TimeTreeClient";
+import { TimeTreeClient } from "../TimeTreeClient";
 import axios from "axios";
 import nock from "nock";
 import {
@@ -9,8 +9,10 @@ import {
   upcomingEvents,
   event,
   user,
-  activity
-} from "./__tests__/fixtures";
+  activity,
+  activityForm,
+  eventForm
+} from "./fixtures";
 import {
   expectedCalendars,
   expectedCalendar,
@@ -19,8 +21,10 @@ import {
   expectedUpcomingEvents,
   expectedEvent,
   expectedUser,
-  expectedActivity
-} from "./__tests__/expectations";
+  expectedActivity,
+  expectedActivityForm,
+  expectedEventForm
+} from "./expectations";
 
 const axiosCreationMock = jest.spyOn(axios, "create");
 
@@ -219,22 +223,6 @@ describe("TimeTreeClient", () => {
 
   describe("postEvent", () => {
     const testCalendarId = "test-calendar-id";
-    const testForm = {
-      data: {
-        attributes: {
-          category: "keep",
-          title: "test-keep"
-        },
-        relationships: {
-          label: {
-            data: {
-              id: "1234,1",
-              type: "label"
-            }
-          }
-        }
-      }
-    } as const;
     let client: TimeTreeClient;
 
     beforeEach(() => {
@@ -244,14 +232,14 @@ describe("TimeTreeClient", () => {
     describe("when calling api succeed", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
-          .post(`/calendars/${testCalendarId}/events`, testForm)
+          .post(`/calendars/${testCalendarId}/events`, expectedEventForm)
           .reply(200, event);
       });
 
       it("should resolve values", async () => {
         const response = await client.postEvent({
           calendarId: testCalendarId,
-          ...testForm
+          ...eventForm
         });
         expect(response).toEqual(expectedEvent);
       });
@@ -260,22 +248,6 @@ describe("TimeTreeClient", () => {
 
   describe("putEvent", () => {
     const testCalendarId = "test-calendar-id";
-    const testForm = {
-      data: {
-        attributes: {
-          category: "keep",
-          title: "test-keep"
-        },
-        relationships: {
-          label: {
-            data: {
-              id: "1234,1",
-              type: "label"
-            }
-          }
-        }
-      }
-    } as const;
     let client: TimeTreeClient;
 
     beforeEach(() => {
@@ -285,14 +257,14 @@ describe("TimeTreeClient", () => {
     describe("when calling api succeed", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
-          .put(`/calendars/${testCalendarId}/events`, testForm)
+          .put(`/calendars/${testCalendarId}/events`, expectedEventForm)
           .reply(200, event);
       });
 
       it("should resolve values", async () => {
         const response = await client.putEvent({
           calendarId: testCalendarId,
-          ...testForm
+          ...eventForm
         });
         expect(response).toEqual(expectedEvent);
       });
@@ -326,16 +298,9 @@ describe("TimeTreeClient", () => {
     });
   });
 
-  describe("postEventActivity", () => {
+  describe("postActivity", () => {
     const testCalendarId = "test-calendar-id";
     const testEventId = "test-event-id";
-    const testForm = {
-      data: {
-        attributes: {
-          content: "test-content"
-        }
-      }
-    } as const;
     let client: TimeTreeClient;
 
     beforeEach(() => {
@@ -347,7 +312,7 @@ describe("TimeTreeClient", () => {
         nock("https://timetreeapis.com")
           .post(
             `/calendars/${testCalendarId}/events/${testEventId}/activities`,
-            testForm
+            expectedActivityForm
           )
           .reply(200, activity);
       });
@@ -356,7 +321,7 @@ describe("TimeTreeClient", () => {
         const response = await client.postActivity({
           calendarId: testCalendarId,
           eventId: testEventId,
-          ...testForm
+          ...activityForm
         });
         expect(response).toEqual(expectedActivity);
       });

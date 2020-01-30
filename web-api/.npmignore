@@ -3,3 +3,4 @@ jest.config.js
 release.config.js
 src/
 docs/
+dist/__tests__

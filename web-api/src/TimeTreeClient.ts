@@ -1,7 +1,8 @@
 import axios, { AxiosInstance } from "axios";
 import humps from "humps";
 import qs from "qs";
-import { deserialise } from "kitsu-core";
+import { deserialise, serialise, camel } from "kitsu-core";
+import plural from "pluralize";
 
 import {
   Calendar,
@@ -40,6 +41,37 @@ type DeleteEventParams = {
   readonly calendarId: string;
   readonly eventId: string;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const isObject = (value: any): value is object =>
+  value
+    ?.toString()
+    .slice(8, -1)
+    .toLowerCase() === "object";
+
+const deserialiseResponse = (data: unknown) => {
+  if (!data || !isObject(data)) {
+    return data;
+  }
+  // when data does not have "include", "deserialise" does not work.
+  const newData = data?.hasOwnProperty("included")
+    ? data
+    : { ...data, included: [] };
+  return deserialise(newData);
+};
+
+const serialiseRequest = (data: unknown) => {
+  if (!data || !isObject(data)) {
+    return data;
+  }
+
+  // does not need type property for POST body
+  const serialisedData = serialise.apply({ camel, plural }, ["", data]);
+  // eslint-disable-next-line functional/immutable-data
+  delete serialisedData.data.type;
+  return serialisedData;
+};
+
 export class TimeTreeClient {
   private readonly axios: AxiosInstance;
 
@@ -54,18 +86,10 @@ export class TimeTreeClient {
       transformResponse: [
         ...[axios.defaults.transformResponse].flat(),
         data => humps.camelizeKeys(data),
-        data => {
-          // when data does not have "include", "deserialise" does not work.
-          if (!data) {
-            return data;
-          }
-          const newData = data?.hasOwnProperty("included")
-            ? data
-            : { ...data, included: [] };
-          return deserialise(newData);
-        }
+        data => deserialiseResponse(data)
       ],
       transformRequest: [
+        data => serialiseRequest(data),
         data => humps.decamelizeKeys(data),
         ...[axios.defaults.transformRequest].flat()
       ],

@@ -6,3 +6,5 @@ export { upcomingEvents } from "./upcomingEvents";
 export { event } from "./event";
 export { user } from "./user";
 export { activity } from "./activity";
+export { activityForm } from "./activityForm";
+export { eventForm } from "./eventForm";

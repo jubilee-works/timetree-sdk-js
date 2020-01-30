@@ -6,3 +6,6 @@ export { upcomingEvents as expectedUpcomingEvents } from "./upcomingEvents";
 export { event as expectedEvent } from "./event";
 export { user as expectedUser } from "./user";
 export { activity as expectedActivity } from "./activity";
+
+export { activityForm as expectedActivityForm } from "./activityForm";
+export { eventForm as expectedEventForm } from "./eventForm";
