@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.4.0...v1.5.0) (2020-01-30)
+
+
+### Features
+
+* **response data:** deserialize data formated as JSONAPI ([c2bbb2d](https://github.com/jubilee-works/timetree-sdk-js/commit/c2bbb2d0d4f3ac9814a863e5edf680f2233e573d))
+
 # [1.4.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.3.1...v1.4.0) (2020-01-28)
 
 
