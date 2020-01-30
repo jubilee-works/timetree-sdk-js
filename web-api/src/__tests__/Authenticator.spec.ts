@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Authenticator } from "./Authenticator";
+import { Authenticator } from "../Authenticator";
 import nock from "nock";
 
 describe("Authenticator", () => {

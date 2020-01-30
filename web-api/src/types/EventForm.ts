@@ -1,4 +1,10 @@
+type User = {
+  readonly id: string;
+  readonly type: "user";
+};
+
 type Attributes = {
+  readonly calendarId: string;
   /** maxLength: 50 */
   readonly title: string;
   /** maxLength 10000 */
@@ -8,38 +14,25 @@ type Attributes = {
   readonly url?: string;
   readonly startTimezone?: string;
   readonly endTimezone?: string;
+  readonly label: {
+    readonly id: string;
+    readonly type: "label";
+  };
+  readonly attendees?: readonly User[];
 };
 
-type ScheduleAttributes = Attributes & {
+type ScheduleForm = Attributes & {
   readonly category: "schedule";
   readonly allDay: boolean;
   readonly startAt: string;
   readonly endAt: string;
 };
 
-type KeepAttributes = Attributes & {
+type KeepForm = Attributes & {
   readonly category: "keep";
   readonly allDay?: boolean;
   readonly startAt?: string;
   readonly endAt?: string;
 };
 
-type User = {
-  readonly id: string;
-  readonly type: "user";
-};
-
-export type EventForm = {
-  readonly calendarId: string;
-  readonly data: {
-    readonly attributes: ScheduleAttributes | KeepAttributes;
-    readonly relationships: {
-      readonly label: {
-        readonly data: { readonly id: string; readonly type: "label" };
-      };
-      readonly attendees?: {
-        readonly data: readonly User[];
-      };
-    };
-  };
-};
+export type EventForm = ScheduleForm | KeepForm;

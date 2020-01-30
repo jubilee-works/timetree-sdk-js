@@ -1,17 +1,19 @@
 import axios, { AxiosInstance } from "axios";
 import humps from "humps";
 import qs from "qs";
+import { deserialise, serialise, camel } from "kitsu-core";
+import plural from "pluralize";
+
 import {
-  CalendarsResult as Calendars,
-  CalendarResult as Calendar,
-  LabelsResult,
-  MembersResult
-} from "./types/Calendars";
-import { EventsResult as Events, EventResult as Event } from "./types/Events";
-import { EventForm } from "./types/EventForm";
-import { User } from "./types/User";
-import { EventActivityForm } from "./types/EventActivityForm";
-import { EventActivityResult as EventActivity } from "./types/EventActivities";
+  Calendar,
+  Label,
+  Member,
+  Event,
+  User,
+  Activity,
+  EventForm,
+  ActivityForm
+} from "./types";
 
 type TimeTreeClientOptions = {
   /** you can overwrite for testing purposes */
@@ -39,6 +41,37 @@ type DeleteEventParams = {
   readonly calendarId: string;
   readonly eventId: string;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const isObject = (value: any): value is object =>
+  value
+    ?.toString()
+    .slice(8, -1)
+    .toLowerCase() === "object";
+
+const deserialiseResponse = (data: unknown) => {
+  if (!data || !isObject(data)) {
+    return data;
+  }
+  // when data does not have "include", "deserialise" does not work.
+  const newData = data?.hasOwnProperty("included")
+    ? data
+    : { ...data, included: [] };
+  return deserialise(newData);
+};
+
+const serialiseRequest = (data: unknown) => {
+  if (!data || !isObject(data)) {
+    return data;
+  }
+
+  // does not need type property for POST body
+  const serialisedData = serialise.apply({ camel, plural }, ["", data]);
+  // eslint-disable-next-line functional/immutable-data
+  delete serialisedData.data.type;
+  return serialisedData;
+};
+
 export class TimeTreeClient {
   private readonly axios: AxiosInstance;
 
@@ -52,9 +85,11 @@ export class TimeTreeClient {
       paramsSerializer: params => qs.stringify(humps.decamelizeKeys(params)),
       transformResponse: [
         ...[axios.defaults.transformResponse].flat(),
-        data => humps.camelizeKeys(data)
+        data => humps.camelizeKeys(data),
+        data => deserialiseResponse(data)
       ],
       transformRequest: [
+        data => serialiseRequest(data),
         data => humps.decamelizeKeys(data),
         ...[axios.defaults.transformRequest].flat()
       ],
@@ -63,21 +98,25 @@ export class TimeTreeClient {
   }
 
   public async getUser() {
-    const response = await this.axios.get<User>("/user");
-    return response.data;
+    const { data: user } = await this.axios.get<{ readonly data: User }>(
+      "/user"
+    );
+    return user.data;
   }
 
   public async getCalendars(include?: IncludeOptions) {
-    const response = await this.axios.get<Calendars>("/calendars", {
+    const { data: calendars } = await this.axios.get<{
+      readonly data: readonly Calendar[];
+    }>("/calendars", {
       params: {
         include: include && include.join(",")
       }
     });
-    return response.data;
+    return calendars.data;
   }
 
   public async getCalendar(calendarId: string, include?: IncludeOptions) {
-    const response = await this.axios.get<Calendar>(
+    const { data } = await this.axios.get<{ readonly data: Calendar }>(
       `/calendars/${calendarId}`,
       {
         params: {
@@ -85,21 +124,21 @@ export class TimeTreeClient {
         }
       }
     );
-    return response.data;
+    return data.data;
   }
 
   public async getLabels(calendarId: string) {
-    const response = await this.axios.get<LabelsResult>(
-      `/calendars/${calendarId}/labels`
-    );
-    return response.data;
+    const { data: labels } = await this.axios.get<{
+      readonly data: readonly Label[];
+    }>(`/calendars/${calendarId}/labels`);
+    return labels.data;
   }
 
   public async getMembers(calendarId: string) {
-    const response = await this.axios.get<MembersResult>(
-      `/calendars/${calendarId}/members`
-    );
-    return response.data;
+    const { data: members } = await this.axios.get<{
+      readonly data: readonly Member[];
+    }>(`/calendars/${calendarId}/members`);
+    return members.data;
   }
 
   public async getUpcomingEvents({
@@ -108,21 +147,20 @@ export class TimeTreeClient {
     days,
     include
   }: GetUpcomingEventsParams) {
-    const response = await this.axios.get<Events>(
-      `calendars/${calendarId}/upcoming_events`,
-      {
-        params: {
-          timezone,
-          days,
-          include: include && include.join(",")
-        }
+    const { data: events } = await this.axios.get<{
+      readonly data: readonly Event[];
+    }>(`calendars/${calendarId}/upcoming_events`, {
+      params: {
+        timezone,
+        days,
+        include: include && include.join(",")
       }
-    );
-    return response.data;
+    });
+    return events.data;
   }
 
   public async getEvent({ eventId, calendarId, include }: GetEventParams) {
-    const response = await this.axios.get<Event>(
+    const { data: event } = await this.axios.get<{ readonly data: Event }>(
       `calendars/${calendarId}/events/${eventId}`,
       {
         params: {
@@ -130,33 +168,29 @@ export class TimeTreeClient {
         }
       }
     );
-    return response.data;
+    return event.data;
   }
 
   public async postEvent({ calendarId, ...event }: EventForm) {
-    const response = await this.axios.post<Event>(
-      `calendars/${calendarId}/events`,
-      event,
-      {
-        headers: {
-          "Content-Type": "application/json"
-        }
+    const { data: resultEvent } = await this.axios.post<{
+      readonly data: Event;
+    }>(`calendars/${calendarId}/events`, event, {
+      headers: {
+        "Content-Type": "application/json"
       }
-    );
-    return response.data;
+    });
+    return resultEvent.data;
   }
 
   public async putEvent({ calendarId, ...event }: EventForm) {
-    const response = await this.axios.put<Event>(
-      `calendars/${calendarId}/events`,
-      event,
-      {
-        headers: {
-          "Content-Type": "application/json"
-        }
+    const { data: resultEvent } = await this.axios.put<{
+      readonly data: Event;
+    }>(`calendars/${calendarId}/events`, event, {
+      headers: {
+        "Content-Type": "application/json"
       }
-    );
-    return response.data;
+    });
+    return resultEvent.data;
   }
 
   public async deleteEvent({ calendarId, eventId }: DeleteEventParams) {
@@ -166,20 +200,18 @@ export class TimeTreeClient {
     return response.data;
   }
 
-  public async postEventActivity({
+  public async postActivity({
     calendarId,
     eventId,
     ...activity
-  }: EventActivityForm) {
-    const response = await this.axios.post<EventActivity>(
-      `calendars/${calendarId}/events/${eventId}/activities`,
-      activity,
-      {
-        headers: {
-          "Content-Type": "application/json"
-        }
+  }: ActivityForm) {
+    const { data: resultActivity } = await this.axios.post<{
+      readonly data: Activity;
+    }>(`calendars/${calendarId}/events/${eventId}/activities`, activity, {
+      headers: {
+        "Content-Type": "application/json"
       }
-    );
-    return response.data;
+    });
+    return resultActivity.data;
   }
 }
