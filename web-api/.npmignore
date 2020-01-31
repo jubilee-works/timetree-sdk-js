@@ -1,6 +1,7 @@
 eslintrc.js
 jest.config.js
 release.config.js
+rollup.config.js
 src/
 docs/
 dist/__tests__
