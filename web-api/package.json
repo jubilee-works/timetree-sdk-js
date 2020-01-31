@@ -13,7 +13,7 @@
     "lint": "eslint --cache './**/*.{js,ts}'",
     "test": "jest",
     "release": "semantic-release",
-    "build": "tsc",
+    "build": "rollup -c ./rollup.config.js",
     "clean": "rimraf dist",
     "prepublishOnly": "run-s clean build"
   },
@@ -42,6 +42,9 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
+    "rollup": "^1.30.1",
+    "rollup-plugin-terser": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.25.3",
     "semantic-release": "^16.0.3",
     "ts-jest": "^25.0.0",
     "typescript": "^3.7.5"
