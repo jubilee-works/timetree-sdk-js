@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.5.0...v1.5.1) (2020-01-31)
+
+
+### Bug Fixes
+
+* **ci:** fix build configuration to use browser ([b407946](https://github.com/jubilee-works/timetree-sdk-js/commit/b4079469b3c2c0c1ecbec485b470955618d86001))
+
 # [1.5.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.4.0...v1.5.0) (2020-01-30)
 
 
