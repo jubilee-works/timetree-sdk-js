@@ -10,7 +10,7 @@ executors:
       - image: circleci/node:12.14.1
 
 commands:
-  restore:
+  build_npm:
     steps:
       - restore_cache:
           keys:
@@ -20,8 +20,6 @@ commands:
       - run:
           name: Yarn
           command: yarn
-  save:
-    steps:
       - save_cache:
           paths:
             - node_modules
@@ -34,8 +32,7 @@ jobs:
     steps:
       - checkout:
           path: ~/timetree-sdk-js
-      - restore
-      - save
+      - build_npm
       - run:
           name: Lint
           command: yarn lint
@@ -48,14 +45,19 @@ jobs:
     steps:
       - checkout:
           path: ~/timetree-sdk-js
-      - restore
-      - save
+      - build_npm
       - run:
           name: yarn release
           command: yarn release
 
 workflows:
   version: 2
+  test_pull_request:
+    jobs:
+      - test:
+          filters:
+            branches:
+              ignore: master
   test_and_release:
     jobs:
       - test:
