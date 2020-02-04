@@ -1,5 +1,5 @@
 import { TimeTreeClient } from "../TimeTreeClient";
-import axios from "axios";
+import ky from "ky-universal";
 import nock from "nock";
 import {
   calendars,
@@ -26,7 +26,7 @@ import {
   expectedEventForm
 } from "./expectations";
 
-const axiosCreationMock = jest.spyOn(axios, "create");
+const kyExtendMock = jest.spyOn(ky, "extend");
 
 describe("TimeTreeClient", () => {
   describe("constructor", () => {
@@ -34,15 +34,12 @@ describe("TimeTreeClient", () => {
       const accessToken = "fake-access-token";
       const client = new TimeTreeClient(accessToken);
       expect(client).toBeInstanceOf(TimeTreeClient);
-      expect(axiosCreationMock).toHaveBeenCalledWith({
-        baseURL: "https://timetreeapis.com/",
+      expect(kyExtendMock).toHaveBeenCalledWith({
+        prefixUrl: "https://timetreeapis.com",
         headers: {
           Accept: "application/vnd.timetree.v1+json",
           Authorization: `Bearer ${accessToken}`
-        },
-        transformResponse: expect.anything(),
-        transformRequest: expect.anything(),
-        paramsSerializer: expect.anything()
+        }
       });
     });
   });
@@ -57,7 +54,7 @@ describe("TimeTreeClient", () => {
     describe("when calling api succeed", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
-          .get(`/user`)
+          .get("/user")
           .reply(200, user);
       });
 
@@ -288,12 +285,11 @@ describe("TimeTreeClient", () => {
       });
 
       it("should resolve values", async () => {
-        await expect(
-          client.deleteEvent({
-            calendarId: testCalendarId,
-            eventId: testEventId
-          })
-        ).resolves.toBeDefined();
+        const response = await client.deleteEvent({
+          calendarId: testCalendarId,
+          eventId: testEventId
+        });
+        expect(response.ok).toBe(true);
       });
     });
   });
