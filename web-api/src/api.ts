@@ -21,7 +21,7 @@ const isObject = (value: any): value is object =>
     .slice(8, -1)
     .toLowerCase() === "object";
 
-const deserialiseResponse = (data: unknown) => {
+const normalizeResponse = (data: unknown) => {
   if (!data || !isObject(data)) {
     return data;
   }
@@ -29,16 +29,17 @@ const deserialiseResponse = (data: unknown) => {
   const newData = data?.hasOwnProperty("included")
     ? data
     : { ...data, included: [] };
-  return deserialise(newData);
+  return deserialise(humps.camelizeKeys(newData));
 };
 
-const serialiseRequest = (data: unknown) => {
+const normalizeRequest = (data: unknown) => {
   if (!data || !isObject(data)) {
     return data;
   }
+  const newData = humps.decamelizeKeys(data);
 
   // does not need type property for POST body
-  const serialisedData = serialise.apply({ camel, plural }, ["", data]);
+  const serialisedData = serialise.apply({ camel, plural }, ["", newData]);
   // eslint-disable-next-line functional/immutable-data
   delete serialisedData.data.type;
   return serialisedData;
@@ -83,7 +84,7 @@ export class APIClient {
         searchParams
       })
       .json();
-    return deserialiseResponse(humps.camelizeKeys(response))?.data;
+    return normalizeResponse(response)?.data;
   }
 
   public async post<Response>(
@@ -92,7 +93,6 @@ export class APIClient {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     { searchParams, ...options }: APIOptions = {}
   ): Promise<Response> {
-    const decamelized = humps.decamelizeKeys(json);
     const response: object = await this.api
       .post(url, {
         ...options,
@@ -100,17 +100,12 @@ export class APIClient {
           ...options?.headers,
           "Content-Type": "application/json"
         },
-        json: serialiseRequest(decamelized)
+        json: normalizeRequest(json)
       })
       .json();
 
     if (!response) return response;
-    const decamelizedResponse = humps.camelizeKeys(response);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    if (!decamelizedResponse.data) return decamelizedResponse;
-
-    return deserialiseResponse(humps.camelizeKeys(response)).data;
+    return normalizeResponse(response).data;
   }
 
   public async put<Response>(
@@ -119,7 +114,6 @@ export class APIClient {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     { searchParams, ...options }: APIOptions = {}
   ): Promise<Response> {
-    const decamelized = humps.decamelizeKeys(json);
     const response: object = await this.api
       .put(url, {
         ...options,
@@ -127,10 +121,10 @@ export class APIClient {
           ...options?.headers,
           "Content-Type": "application/json"
         },
-        json: serialiseRequest(decamelized)
+        json: normalizeRequest(json)
       })
       .json();
-    return deserialiseResponse(humps.camelizeKeys(response))?.data;
+    return normalizeResponse(response)?.data;
   }
 
   public async delete(url: string, options?: Options) {
