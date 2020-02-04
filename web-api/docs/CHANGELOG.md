@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.5.1...v1.6.0) (2020-02-04)
+
+
+### Features
+
+* using ky-universal, add retry option to TimeTreeClient ([fd1bf45](https://github.com/jubilee-works/timetree-sdk-js/commit/fd1bf45fb39096f9ddc3fcfbaf826f5c5a85bede))
+
 ## [1.5.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.5.0...v1.5.1) (2020-01-31)
 
 
