@@ -57,10 +57,9 @@ const client = new TimeTreeClient("<your-access-token>");
 
 (async () => {
   const response = await client.getCalendars();
-  console.log("calendars", response.data);
+  console.log("calendars", response);
 })();
 ```
 
-## Contribution
-
 ## Licence
+MIT
