@@ -23,7 +23,6 @@
     "ky": "^0.17.0",
     "ky-universal": "^0.4.0",
     "pluralize": "^8.0.0",
-    "qs": "^6.9.1",
     "utility-types": "^3.10.0"
   },
   "devDependencies": {
