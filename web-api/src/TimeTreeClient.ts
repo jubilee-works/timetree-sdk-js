@@ -1,8 +1,4 @@
-import axios, { AxiosInstance } from "axios";
-import humps from "humps";
-import qs from "qs";
-import { deserialise, serialise, camel } from "kitsu-core";
-import plural from "pluralize";
+import { APIClient } from "./api";
 
 import {
   Calendar,
@@ -14,11 +10,13 @@ import {
   EventForm,
   ActivityForm
 } from "./types";
+import { RetryOptions } from "ky";
 
 type TimeTreeClientOptions = {
   /** you can overwrite for testing purposes */
   readonly baseURL?: string;
   readonly timeout?: number;
+  readonly retry?: RetryOptions | number;
 };
 
 type IncludeOptions = readonly ("labels" | "members")[];
@@ -42,103 +40,48 @@ type DeleteEventParams = {
   readonly eventId: string;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isObject = (value: any): value is object =>
-  value
-    ?.toString()
-    .slice(8, -1)
-    .toLowerCase() === "object";
-
-const deserialiseResponse = (data: unknown) => {
-  if (!data || !isObject(data)) {
-    return data;
-  }
-  // when data does not have "include", "deserialise" does not work.
-  const newData = data?.hasOwnProperty("included")
-    ? data
-    : { ...data, included: [] };
-  return deserialise(newData);
-};
-
-const serialiseRequest = (data: unknown) => {
-  if (!data || !isObject(data)) {
-    return data;
-  }
-
-  // does not need type property for POST body
-  const serialisedData = serialise.apply({ camel, plural }, ["", data]);
-  // eslint-disable-next-line functional/immutable-data
-  delete serialisedData.data.type;
-  return serialisedData;
-};
-
 export class TimeTreeClient {
-  private readonly axios: AxiosInstance;
+  private readonly api: APIClient;
 
   constructor(accessToken: string, options: TimeTreeClientOptions = {}) {
-    this.axios = axios.create({
-      baseURL: options.baseURL || "https://timetreeapis.com/",
+    this.api = new APIClient({
+      prefixUrl: options.baseURL || "https://timetreeapis.com",
       headers: {
         Accept: "application/vnd.timetree.v1+json",
         Authorization: `Bearer ${accessToken}`
       },
-      paramsSerializer: params => qs.stringify(humps.decamelizeKeys(params)),
-      transformResponse: [
-        ...[axios.defaults.transformResponse].flat(),
-        data => humps.camelizeKeys(data),
-        data => deserialiseResponse(data)
-      ],
-      transformRequest: [
-        data => serialiseRequest(data),
-        data => humps.decamelizeKeys(data),
-        ...[axios.defaults.transformRequest].flat()
-      ],
-      timeout: options.timeout
+      ...options
     });
   }
 
-  public async getUser() {
-    const { data: user } = await this.axios.get<{ readonly data: User }>(
-      "/user"
-    );
-    return user.data;
+  public getUser() {
+    return this.api.get<User>("user");
   }
 
-  public async getCalendars(include?: IncludeOptions) {
-    const { data: calendars } = await this.axios.get<{
-      readonly data: readonly Calendar[];
-    }>("/calendars", {
-      params: {
-        include: include && include.join(",")
+  public getCalendars(include?: IncludeOptions) {
+    return this.api.get<readonly Calendar[]>("calendars", {
+      searchParams: include && {
+        include: include.join(",")
       }
     });
-    return calendars.data;
   }
 
   public async getCalendar(calendarId: string, include?: IncludeOptions) {
-    const { data } = await this.axios.get<{ readonly data: Calendar }>(
-      `/calendars/${calendarId}`,
-      {
-        params: {
-          include: include && include.join(",")
-        }
+    return this.api.get<Calendar>(`calendars/${calendarId}`, {
+      searchParams: include && {
+        include: include.join(",")
       }
-    );
-    return data.data;
+    });
   }
 
   public async getLabels(calendarId: string) {
-    const { data: labels } = await this.axios.get<{
-      readonly data: readonly Label[];
-    }>(`/calendars/${calendarId}/labels`);
-    return labels.data;
+    return await this.api.get<readonly Label[]>(
+      `calendars/${calendarId}/labels`
+    );
   }
 
   public async getMembers(calendarId: string) {
-    const { data: members } = await this.axios.get<{
-      readonly data: readonly Member[];
-    }>(`/calendars/${calendarId}/members`);
-    return members.data;
+    return this.api.get<readonly Member[]>(`calendars/${calendarId}/members`);
   }
 
   public async getUpcomingEvents({
@@ -147,71 +90,42 @@ export class TimeTreeClient {
     days,
     include
   }: GetUpcomingEventsParams) {
-    const { data: events } = await this.axios.get<{
-      readonly data: readonly Event[];
-    }>(`calendars/${calendarId}/upcoming_events`, {
-      params: {
-        timezone,
-        days,
-        include: include && include.join(",")
-      }
-    });
-    return events.data;
-  }
-
-  public async getEvent({ eventId, calendarId, include }: GetEventParams) {
-    const { data: event } = await this.axios.get<{ readonly data: Event }>(
-      `calendars/${calendarId}/events/${eventId}`,
+    return this.api.get<readonly Event[]>(
+      `calendars/${calendarId}/upcoming_events`,
       {
-        params: {
+        searchParams: {
+          timezone,
+          days,
           include: include && include.join(",")
         }
       }
     );
-    return event.data;
   }
 
-  public async postEvent({ calendarId, ...event }: EventForm) {
-    const { data: resultEvent } = await this.axios.post<{
-      readonly data: Event;
-    }>(`calendars/${calendarId}/events`, event, {
-      headers: {
-        "Content-Type": "application/json"
+  public async getEvent({ eventId, calendarId, include }: GetEventParams) {
+    return this.api.get<Event>(`calendars/${calendarId}/events/${eventId}`, {
+      searchParams: include && {
+        include: include.join(",")
       }
     });
-    return resultEvent.data;
   }
 
-  public async putEvent({ calendarId, ...event }: EventForm) {
-    const { data: resultEvent } = await this.axios.put<{
-      readonly data: Event;
-    }>(`calendars/${calendarId}/events`, event, {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    return resultEvent.data;
+  public async postEvent({ calendarId, ...json }: EventForm) {
+    return this.api.post<Event>(`calendars/${calendarId}/events`, json);
+  }
+
+  public async putEvent({ calendarId, ...json }: EventForm) {
+    return this.api.put<Event>(`calendars/${calendarId}/events`, json);
   }
 
   public async deleteEvent({ calendarId, eventId }: DeleteEventParams) {
-    const response = await this.axios.delete<{}>(
-      `calendars/${calendarId}/events/${eventId}`
-    );
-    return response.data;
+    return this.api.delete(`calendars/${calendarId}/events/${eventId}`);
   }
 
-  public async postActivity({
-    calendarId,
-    eventId,
-    ...activity
-  }: ActivityForm) {
-    const { data: resultActivity } = await this.axios.post<{
-      readonly data: Activity;
-    }>(`calendars/${calendarId}/events/${eventId}/activities`, activity, {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    return resultActivity.data;
+  public async postActivity({ calendarId, eventId, ...json }: ActivityForm) {
+    return this.api.post<Activity>(
+      `calendars/${calendarId}/events/${eventId}/activities`,
+      json
+    );
   }
 }
