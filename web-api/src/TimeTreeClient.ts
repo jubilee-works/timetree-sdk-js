@@ -10,14 +10,14 @@ import {
   EventForm,
   ActivityForm
 } from "./types";
-import { RetryOptions } from "ky";
+import { Options } from "ky";
 
 type TimeTreeClientOptions = {
   /** you can overwrite for testing purposes */
   readonly baseURL?: string;
-  readonly timeout?: number;
-  readonly retry?: RetryOptions | number;
-  readonly beforeRetry?: (error: Error, retryCount: number) => Promise<void>;
+  readonly timeout?: Options["timeout"];
+  readonly retry?: Options["retry"] | number;
+  readonly beforeRetry?: (error: Error, retryCount: number) => void;
 };
 
 type IncludeOptions = readonly ("labels" | "members")[];
@@ -53,10 +53,8 @@ export class TimeTreeClient {
       },
       hooks: {
         beforeRetry: [
-          async (_request, _options, error, retryCount) => {
-            return (
-              options.beforeRetry && options.beforeRetry(error, retryCount)
-            );
+          (_request, _options, error, retryCount) => {
+            options.beforeRetry && options.beforeRetry(error, retryCount);
           }
         ]
       },
