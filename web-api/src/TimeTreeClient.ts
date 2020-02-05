@@ -17,6 +17,7 @@ type TimeTreeClientOptions = {
   readonly baseURL?: string;
   readonly timeout?: number;
   readonly retry?: RetryOptions | number;
+  beforeRetry?: (error: Error, retryCount: number) => Promise<void>
 };
 
 type IncludeOptions = readonly ("labels" | "members")[];
@@ -49,6 +50,11 @@ export class TimeTreeClient {
       headers: {
         Accept: "application/vnd.timetree.v1+json",
         Authorization: `Bearer ${accessToken}`
+      },
+      hooks: {
+        beforeRetry:  [async (_request,_options, error, retryCount) => {
+          return options.beforeRetry && options.beforeRetry(error,retryCount);
+        }]
       },
       ...options
     });

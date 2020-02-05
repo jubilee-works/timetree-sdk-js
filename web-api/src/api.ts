@@ -14,17 +14,7 @@ type APIOptions = Overwrite<
   }
 >;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isObject = (value: any): value is object =>
-  value
-    ?.toString()
-    .slice(8, -1)
-    .toLowerCase() === "object";
-
-const normalizeResponse = (data: unknown) => {
-  if (!data || !isObject(data)) {
-    return data;
-  }
+const normalizeResponse = (data: object) => {
   // when data does not have "include", "deserialise" does not work.
   const newData = data?.hasOwnProperty("included")
     ? data
@@ -32,10 +22,7 @@ const normalizeResponse = (data: unknown) => {
   return deserialise(humps.camelizeKeys(newData));
 };
 
-const normalizeRequest = (data: unknown) => {
-  if (!data || !isObject(data)) {
-    return data;
-  }
+const normalizeRequest = (data: object) => {
   const newData = humps.decamelizeKeys(data);
 
   // does not need type property for POST body
