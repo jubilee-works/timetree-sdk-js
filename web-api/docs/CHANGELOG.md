@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.0...v1.6.1) (2020-02-05)
+
+
+### Bug Fixes
+
+* add retry callback option ([6135c74](https://github.com/jubilee-works/timetree-sdk-js/commit/6135c7449d9fdc94fc135a51f79e47c7a7c82853))
+
 # [1.6.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.5.1...v1.6.0) (2020-02-04)
 
 
