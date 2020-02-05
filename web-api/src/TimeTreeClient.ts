@@ -17,7 +17,7 @@ type TimeTreeClientOptions = {
   readonly baseURL?: string;
   readonly timeout?: number;
   readonly retry?: RetryOptions | number;
-  beforeRetry?: (error: Error, retryCount: number) => Promise<void>
+  readonly beforeRetry?: (error: Error, retryCount: number) => Promise<void>;
 };
 
 type IncludeOptions = readonly ("labels" | "members")[];
@@ -52,9 +52,13 @@ export class TimeTreeClient {
         Authorization: `Bearer ${accessToken}`
       },
       hooks: {
-        beforeRetry:  [async (_request,_options, error, retryCount) => {
-          return options.beforeRetry && options.beforeRetry(error,retryCount);
-        }]
+        beforeRetry: [
+          async (_request, _options, error, retryCount) => {
+            return (
+              options.beforeRetry && options.beforeRetry(error, retryCount)
+            );
+          }
+        ]
       },
       ...options
     });
