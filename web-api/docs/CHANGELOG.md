@@ -1,3 +1,10 @@
+## [1.6.5](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.4...v1.6.5) (2020-02-07)
+
+
+### Bug Fixes
+
+* **rollup:** fix broken build system ([f8750d1](https://github.com/jubilee-works/timetree-sdk-js/commit/f8750d18c58b7a404de595709fea3369ef7c130a))
+
 ## [1.6.4](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.3...v1.6.4) (2020-02-07)
 
 
