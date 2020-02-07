@@ -8,14 +8,16 @@
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "browser": "dist/browser.js",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --cache './**/*.{js,ts}'",
     "test": "jest",
     "release": "semantic-release",
-    "build": "rollup -c ./rollup.config.js",
+    "build:node": "rollup -c ./rollup.config.js",
+    "build:browser": "TARGET=browser rollup -c ./rollup.config.js",
     "clean": "rimraf dist",
-    "prepublishOnly": "run-s clean build"
+    "prepublishOnly": "run-s clean build:node build:browser"
   },
   "dependencies": {
     "humps": "^2.0.1",

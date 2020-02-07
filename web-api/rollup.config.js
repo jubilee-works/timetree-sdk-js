@@ -3,15 +3,18 @@ import { terser } from "rollup-plugin-terser";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 
+const isBrowser = process.env.TARGET === "browser";
+const fileName = isBrowser ? "browser" : "index";
+
 export default {
   input: "./src/index.ts",
   output: [
     {
-      file: "./dist/index.js",
+      file: `./dist/${fileName}.js`,
       format: "cjs"
     },
     {
-      file: "./dist/index.mjs",
+      file: `./dist/${fileName}.mjs`,
       format: "esm"
     }
   ],
@@ -24,10 +27,11 @@ export default {
         }
       }
     }),
-    commonjs(),
     resolve({
+      browser: isBrowser,
       resolveOnly: [/src\/.*$/, "ky-universal"]
     }),
+    commonjs(),
     terser()
   ]
 };
