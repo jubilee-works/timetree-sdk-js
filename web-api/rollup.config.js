@@ -24,10 +24,10 @@ export default {
         }
       }
     }),
+    commonjs(),
     resolve({
       resolveOnly: [/src\/.*$/, "ky-universal"]
     }),
-    commonjs(),
     terser()
   ]
 };
