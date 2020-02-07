@@ -1,3 +1,10 @@
+## [1.6.4](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.3...v1.6.4) (2020-02-07)
+
+
+### Bug Fixes
+
+* **rollup:** fix order of rollup/plugins ([c99e00f](https://github.com/jubilee-works/timetree-sdk-js/commit/c99e00f0dd9dfa17aaeb5e0c764f45808cd824af))
+
 ## [1.6.3](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.2...v1.6.3) (2020-02-06)
 
 
