@@ -48,7 +48,7 @@ type DeleteEventParams = {
   readonly eventId: string;
 };
 
-const parseIncludeOptions = (options: IncludeOptions) => {
+const parseIncludeOptions = (options: Record<string, boolean | undefined>) => {
   return Object.entries(options)
     .reduce<readonly string[]>(
       (accum, [key, value]) => (value ? [...accum, key] : accum),

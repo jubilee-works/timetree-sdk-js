@@ -11,7 +11,9 @@
   "browser": "dist/browser.js",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint --cache './**/*.{js,ts}'",
+    "lint:ts": "tsc --noEmit",
+    "lint:es": "eslint --cache './**/*.{js,ts}'",
+    "lint": "run-p lint:*",
     "test": "jest",
     "release": "semantic-release",
     "build:node": "rollup -c ./rollup.config.js",
