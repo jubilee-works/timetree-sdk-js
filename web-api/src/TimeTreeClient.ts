@@ -20,7 +20,10 @@ type TimeTreeClientOptions = {
   readonly beforeRetry?: (error: Error, retryCount: number) => void;
 };
 
-type IncludeOptions = readonly ("labels" | "members")[];
+type IncludeOptions = {
+  readonly labels?: boolean;
+  readonly members?: boolean;
+};
 
 type GetUpcomingEventsParams = {
   readonly timezone: string;
@@ -33,12 +36,25 @@ type GetUpcomingEventsParams = {
 type GetEventParams = {
   readonly calendarId: string;
   readonly eventId: string;
-  readonly include?: IncludeOptions;
+  readonly include?: {
+    readonly creator?: boolean;
+    readonly label?: boolean;
+    readonly attendees?: boolean;
+  };
 };
 
 type DeleteEventParams = {
   readonly calendarId: string;
   readonly eventId: string;
+};
+
+const parseIncludeOptions = (options: IncludeOptions) => {
+  return Object.entries(options)
+    .reduce<readonly string[]>(
+      (accum, [key, value]) => (value ? [...accum, key] : accum),
+      []
+    )
+    .join(",");
 };
 
 export class TimeTreeClient {
@@ -69,7 +85,7 @@ export class TimeTreeClient {
   public getCalendars(include?: IncludeOptions) {
     return this.api.get<readonly Calendar[]>("calendars", {
       searchParams: include && {
-        include: include.join(",")
+        include: parseIncludeOptions(include)
       }
     });
   }
@@ -77,7 +93,7 @@ export class TimeTreeClient {
   public async getCalendar(calendarId: string, include?: IncludeOptions) {
     return this.api.get<Calendar>(`calendars/${calendarId}`, {
       searchParams: include && {
-        include: include.join(",")
+        include: parseIncludeOptions(include)
       }
     });
   }
@@ -104,7 +120,7 @@ export class TimeTreeClient {
         searchParams: {
           timezone,
           days,
-          include: include && include.join(",")
+          include: include && parseIncludeOptions(include)
         }
       }
     );
@@ -113,16 +129,16 @@ export class TimeTreeClient {
   public async getEvent({ eventId, calendarId, include }: GetEventParams) {
     return this.api.get<Event>(`calendars/${calendarId}/events/${eventId}`, {
       searchParams: include && {
-        include: include.join(",")
+        include: parseIncludeOptions(include)
       }
     });
   }
 
-  public async postEvent({ calendarId, ...json }: EventForm) {
+  public async createEvent({ calendarId, ...json }: EventForm) {
     return this.api.post<Event>(`calendars/${calendarId}/events`, json);
   }
 
-  public async putEvent({ calendarId, ...json }: EventForm) {
+  public async updateEvent({ calendarId, ...json }: EventForm) {
     return this.api.put<Event>(`calendars/${calendarId}/events`, json);
   }
 
@@ -130,7 +146,7 @@ export class TimeTreeClient {
     return this.api.delete(`calendars/${calendarId}/events/${eventId}`);
   }
 
-  public async postActivity({ calendarId, eventId, ...json }: ActivityForm) {
+  public async createActivity({ calendarId, eventId, ...json }: ActivityForm) {
     return this.api.post<Activity>(
       `calendars/${calendarId}/events/${eventId}/activities`,
       json

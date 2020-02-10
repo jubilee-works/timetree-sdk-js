@@ -119,7 +119,10 @@ describe("TimeTreeClient", () => {
       });
 
       it("should resolve values", async () => {
-        const response = await client.getCalendars(["labels", "members"]);
+        const response = await client.getCalendars({
+          labels: true,
+          members: true
+        });
         expect(response).toEqual(expectedCalendars);
       });
     });
@@ -245,7 +248,7 @@ describe("TimeTreeClient", () => {
     });
   });
 
-  describe("postEvent", () => {
+  describe("createEvent", () => {
     const testCalendarId = "test-calendar-id";
     let client: TimeTreeClient;
 
@@ -261,7 +264,7 @@ describe("TimeTreeClient", () => {
       });
 
       it("should resolve values", async () => {
-        const response = await client.postEvent({
+        const response = await client.createEvent({
           calendarId: testCalendarId,
           ...eventForm
         });
@@ -270,7 +273,7 @@ describe("TimeTreeClient", () => {
     });
   });
 
-  describe("putEvent", () => {
+  describe("updateEvent", () => {
     const testCalendarId = "test-calendar-id";
     let client: TimeTreeClient;
 
@@ -286,7 +289,7 @@ describe("TimeTreeClient", () => {
       });
 
       it("should resolve values", async () => {
-        const response = await client.putEvent({
+        const response = await client.updateEvent({
           calendarId: testCalendarId,
           ...eventForm
         });
@@ -321,7 +324,7 @@ describe("TimeTreeClient", () => {
     });
   });
 
-  describe("postActivity", () => {
+  describe("createActivity", () => {
     const testCalendarId = "test-calendar-id";
     const testEventId = "test-event-id";
     let client: TimeTreeClient;
@@ -341,7 +344,7 @@ describe("TimeTreeClient", () => {
       });
 
       it("should resolve values", async () => {
-        const response = await client.postActivity({
+        const response = await client.createActivity({
           calendarId: testCalendarId,
           eventId: testEventId,
           ...activityForm
