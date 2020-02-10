@@ -4,6 +4,7 @@ import { deserialise, serialise, camel } from "kitsu-core";
 import plural from "pluralize";
 import { Options } from "ky";
 import { Overwrite } from "utility-types";
+import { ErrorResponse } from "./types";
 
 type Ky = typeof ky;
 
@@ -52,6 +53,15 @@ const normalizeSearchParams = (
   return new URLSearchParams(validParams);
 };
 
+export class TimeTreeHTTPError extends Error {
+  readonly data: ErrorResponse;
+
+  constructor(response: Response, data: object) {
+    super(response.statusText);
+    this.data = normalizeResponse(data).data;
+  }
+}
+
 export class APIClient {
   private readonly api: Ky;
 
@@ -64,14 +74,22 @@ export class APIClient {
     url: string,
     options?: APIOptions
   ): Promise<Response> {
-    const searchParams = normalizeSearchParams(options?.searchParams);
-    const response: object = await this.api
-      .get(url, {
-        ...options,
-        searchParams
-      })
-      .json();
-    return normalizeResponse(response)?.data;
+    try {
+      const searchParams = normalizeSearchParams(options?.searchParams);
+      const response: object = await this.api
+        .get(url, {
+          ...options,
+          searchParams
+        })
+        .json();
+      return normalizeResponse(response)?.data;
+    } catch (e) {
+      if (e instanceof ky.HTTPError) {
+        const parsed = await e.response.json();
+        throw new TimeTreeHTTPError(e.response, parsed);
+      }
+      throw e;
+    }
   }
 
   public async post<Response>(
@@ -80,19 +98,27 @@ export class APIClient {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     { searchParams, ...options }: APIOptions = {}
   ): Promise<Response> {
-    const response: object = await this.api
-      .post(url, {
-        ...options,
-        headers: {
-          ...options?.headers,
-          "Content-Type": "application/json"
-        },
-        json: normalizeRequest(json)
-      })
-      .json();
+    try {
+      const response: object = await this.api
+        .post(url, {
+          ...options,
+          headers: {
+            ...options?.headers,
+            "Content-Type": "application/json"
+          },
+          json: normalizeRequest(json)
+        })
+        .json();
 
-    if (!response) return response;
-    return normalizeResponse(response).data;
+      if (!response) return response;
+      return normalizeResponse(response).data;
+    } catch (e) {
+      if (e instanceof ky.HTTPError) {
+        const parsed = await e.response.json();
+        throw new TimeTreeHTTPError(e.response, parsed);
+      }
+      throw e;
+    }
   }
 
   public async put<Response>(
@@ -101,20 +127,36 @@ export class APIClient {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     { searchParams, ...options }: APIOptions = {}
   ): Promise<Response> {
-    const response: object = await this.api
-      .put(url, {
-        ...options,
-        headers: {
-          ...options?.headers,
-          "Content-Type": "application/json"
-        },
-        json: normalizeRequest(json)
-      })
-      .json();
-    return normalizeResponse(response)?.data;
+    try {
+      const response: object = await this.api
+        .put(url, {
+          ...options,
+          headers: {
+            ...options?.headers,
+            "Content-Type": "application/json"
+          },
+          json: normalizeRequest(json)
+        })
+        .json();
+      return normalizeResponse(response)?.data;
+    } catch (e) {
+      if (e instanceof ky.HTTPError) {
+        const parsed = await e.response.json();
+        throw new TimeTreeHTTPError(e.response, parsed);
+      }
+      throw e;
+    }
   }
 
   public async delete(url: string, options?: Options) {
-    return this.api.delete(url, options);
+    try {
+      return this.api.delete(url, options);
+    } catch (e) {
+      if (e instanceof ky.HTTPError) {
+        const parsed = await e.response.json();
+        throw new TimeTreeHTTPError(e.response, parsed);
+      }
+      throw e;
+    }
   }
 }

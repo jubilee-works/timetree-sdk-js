@@ -40,9 +40,7 @@ describe("TimeTreeClient", () => {
           Accept: "application/vnd.timetree.v1+json",
           Authorization: `Bearer ${accessToken}`
         },
-        hooks: {
-          beforeRetry: expect.anything()
-        }
+        hooks: expect.anything()
       });
     });
   });
@@ -64,6 +62,32 @@ describe("TimeTreeClient", () => {
       it("should resolve values", async () => {
         const response = await client.getUser();
         expect(response).toEqual(expectedUser);
+      });
+    });
+
+    describe("when calling api is 404", () => {
+      beforeEach(() => {
+        nock("https://timetreeapis.com")
+          .get("/user")
+          .reply(404, {
+            data: {
+              type:
+                "https://developers.timetreeapp.com/en/docs/api#client-failure",
+              title: "Not Found",
+              status: 404,
+              errors: "Calendar not found"
+            }
+          });
+      });
+
+      it("should reject values", async () => {
+        const error = await client.getUser().catch(e => e);
+        expect(error.data).toEqual({
+          type: "https://developers.timetreeapp.com/en/docs/api#client-failure",
+          title: "Not Found",
+          status: 404,
+          errors: "Calendar not found"
+        });
       });
     });
   });
