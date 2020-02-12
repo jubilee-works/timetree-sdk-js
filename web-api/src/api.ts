@@ -53,11 +53,11 @@ const normalizeSearchParams = (
   return new URLSearchParams(validParams);
 };
 
-export class TimeTreeHTTPError extends Error {
+export class TimeTreeHTTPError extends ky.HTTPError {
   readonly data: ErrorResponse;
 
   constructor(response: Response, data: object) {
-    super(response.statusText);
+    super(response);
     this.data = normalizeResponse(data).data;
   }
 }
