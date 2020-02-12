@@ -1,3 +1,10 @@
+## [1.6.6](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.5...v1.6.6) (2020-02-12)
+
+
+### Bug Fixes
+
+* **error:** fix error object to include "response: Response" ([c6d0331](https://github.com/jubilee-works/timetree-sdk-js/commit/c6d03317ff68a425b7cae630dbc665c6b8175ea7))
+
 ## [1.6.5](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.4...v1.6.5) (2020-02-07)
 
 
