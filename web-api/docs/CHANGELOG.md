@@ -1,3 +1,10 @@
+## [1.6.7](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.6...v1.6.7) (2020-02-13)
+
+
+### Bug Fixes
+
+* fix TypeError occured when error.response.data is undefined ([c67ab12](https://github.com/jubilee-works/timetree-sdk-js/commit/c67ab124101e4968eee963ee8355ac6a9b933a00))
+
 ## [1.6.6](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.5...v1.6.6) (2020-02-12)
 
 
