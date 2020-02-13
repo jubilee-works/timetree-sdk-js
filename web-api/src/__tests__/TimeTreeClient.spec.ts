@@ -90,6 +90,19 @@ describe("TimeTreeClient", () => {
         });
       });
     });
+
+    describe("when calling api is 404 without data", () => {
+      beforeEach(() => {
+        nock("https://timetreeapis.com")
+          .get("/user")
+          .reply(404);
+      });
+
+      it("should reject ky.HTTPError", async () => {
+        const error = await client.getUser().catch(e => e);
+        expect(error).toBeInstanceOf(ky.HTTPError);
+      });
+    });
   });
 
   describe("getCalendars", () => {

@@ -58,9 +58,17 @@ export class TimeTreeHTTPError extends ky.HTTPError {
 
   constructor(response: Response, data: object) {
     super(response);
-    this.data = normalizeResponse(data).data;
+    this.data = data && normalizeResponse(data).data;
   }
 }
+
+const handleHTTPError = async (error: unknown) => {
+  if (error instanceof ky.HTTPError) {
+    const parsed = await error.response.json().catch(() => null);
+    throw new TimeTreeHTTPError(error.response, parsed);
+  }
+  throw error;
+};
 
 export class APIClient {
   private readonly api: Ky;
@@ -84,11 +92,7 @@ export class APIClient {
         .json();
       return normalizeResponse(response)?.data;
     } catch (e) {
-      if (e instanceof ky.HTTPError) {
-        const parsed = await e.response.json();
-        throw new TimeTreeHTTPError(e.response, parsed);
-      }
-      throw e;
+      return handleHTTPError(e);
     }
   }
 
@@ -113,11 +117,7 @@ export class APIClient {
       if (!response) return response;
       return normalizeResponse(response).data;
     } catch (e) {
-      if (e instanceof ky.HTTPError) {
-        const parsed = await e.response.json();
-        throw new TimeTreeHTTPError(e.response, parsed);
-      }
-      throw e;
+      return handleHTTPError(e);
     }
   }
 
@@ -140,11 +140,7 @@ export class APIClient {
         .json();
       return normalizeResponse(response)?.data;
     } catch (e) {
-      if (e instanceof ky.HTTPError) {
-        const parsed = await e.response.json();
-        throw new TimeTreeHTTPError(e.response, parsed);
-      }
-      throw e;
+      return handleHTTPError(e);
     }
   }
 
@@ -152,11 +148,7 @@ export class APIClient {
     try {
       return this.api.delete(url, options);
     } catch (e) {
-      if (e instanceof ky.HTTPError) {
-        const parsed = await e.response.json();
-        throw new TimeTreeHTTPError(e.response, parsed);
-      }
-      throw e;
+      return handleHTTPError(e);
     }
   }
 }
