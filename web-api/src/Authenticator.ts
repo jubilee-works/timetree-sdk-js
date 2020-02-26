@@ -27,7 +27,7 @@ type GetTokenBody = {
 };
 
 type GetTokenResponse = {
-  readonly acessToken: string;
+  readonly accessToken: string;
   readonly createdAt: number;
   readonly tokenType: string;
 };
