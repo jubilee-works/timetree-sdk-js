@@ -1,3 +1,10 @@
+## [1.6.8](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.7...v1.6.8) (2020-02-26)
+
+
+### Bug Fixes
+
+* fix typo accessToken ([f632d72](https://github.com/jubilee-works/timetree-sdk-js/commit/f632d72d279154f978c13354b8a52f83033fdcb0))
+
 ## [1.6.7](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.6...v1.6.7) (2020-02-13)
 
 
