@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.8...v1.7.0) (2020-03-02)
+
+
+### Features
+
+* add retry option to TimeTree Client ([ce0b716](https://github.com/jubilee-works/timetree-sdk-js/commit/ce0b7164c8044e7229d564de83a66b39a7a29cf2))
+* **http client:** use axios instead of ky ([20f3280](https://github.com/jubilee-works/timetree-sdk-js/commit/20f3280768b070289c40e052cfd22b2543a4cd41))
+
 ## [1.6.8](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.7...v1.6.8) (2020-02-26)
 
 
