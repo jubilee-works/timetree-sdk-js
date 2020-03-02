@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/camelcase */
-import ky from "ky-universal";
+import axios, { AxiosInstance } from "axios";
+import qs from "qs";
 import humps from "humps";
 
 type AuthenticatorOptions = {
@@ -33,12 +33,22 @@ type GetTokenResponse = {
 };
 
 export class Authenticator {
-  readonly api: typeof ky;
+  readonly api: AxiosInstance;
 
   constructor(options: AuthenticatorOptions = {}) {
-    this.api = ky.extend({
-      prefixUrl: options.baseURL || "https://timetreeapp.com/oauth",
-      timeout: options.timeout
+    this.api = axios.create({
+      baseURL: options.baseURL || "https://timetreeapp.com/oauth",
+      timeout: options.timeout,
+      paramsSerializer: params =>
+        qs.stringify(humps.decamelizeKeys(params), { skipNulls: true }),
+      transformResponse: [
+        ...[axios.defaults.transformResponse].flat(),
+        data => humps.camelizeKeys(data)
+      ],
+      transformRequest: [
+        data => humps.decamelizeKeys(data),
+        ...[axios.defaults.transformRequest].flat()
+      ]
     });
   }
 
@@ -50,30 +60,25 @@ export class Authenticator {
     codeChallenge,
     codeChallengeMethod
   }: AuthorizeParams) {
-    const searchParams = new URLSearchParams({
-      client_id: clientId,
-      redirect_uri: redirectUri,
-      response_type: responseType,
-      state
+    const response = await this.api.get("/authorize", {
+      params: {
+        clientId,
+        redirectUri,
+        responseType,
+        state,
+        codeChallenge,
+        codeChallengeMethod
+      }
     });
-    codeChallenge && searchParams.append("code_challenge", codeChallenge);
-    codeChallengeMethod &&
-      searchParams.append("code_challenge_method", codeChallengeMethod);
-    return this.api.get("authorize", {
-      searchParams
-    });
+    return { status: response.status, statusText: response.statusText };
   }
 
   public async getToken(body: GetTokenBody) {
-    const decamelized = humps.decamelizeKeys(body);
-    const response = await this.api
-      .post("token", {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        json: decamelized
-      })
-      .json<object>();
-    return humps.camelizeKeys(response) as GetTokenResponse;
+    const response = await this.api.post<GetTokenResponse>("/token", body, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    return response.data;
   }
 }

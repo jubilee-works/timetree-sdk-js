@@ -1,5 +1,5 @@
 import { TimeTreeClient } from "../TimeTreeClient";
-import ky from "ky-universal";
+import axios from "axios";
 import nock from "nock";
 import {
   calendars,
@@ -26,7 +26,7 @@ import {
   expectedEventForm
 } from "./expectations";
 
-const kyExtendMock = jest.spyOn(ky, "extend");
+const axiosCreateMock = jest.spyOn(axios, "create");
 
 describe("TimeTreeClient", () => {
   describe("constructor", () => {
@@ -34,13 +34,16 @@ describe("TimeTreeClient", () => {
       const accessToken = "fake-access-token";
       const client = new TimeTreeClient(accessToken);
       expect(client).toBeInstanceOf(TimeTreeClient);
-      expect(kyExtendMock).toHaveBeenCalledWith({
-        prefixUrl: "https://timetreeapis.com",
+      expect(axiosCreateMock).toHaveBeenCalledWith({
+        baseURL: "https://timetreeapis.com",
         headers: {
           Accept: "application/vnd.timetree.v1+json",
           Authorization: `Bearer ${accessToken}`
         },
-        hooks: expect.anything()
+        timeout: undefined,
+        paramsSerializer: expect.anything(),
+        transformRequest: expect.anything(),
+        transformResponse: expect.anything()
       });
     });
   });
@@ -82,11 +85,14 @@ describe("TimeTreeClient", () => {
 
       it("should reject values", async () => {
         const error = await client.getUser().catch(e => e);
-        expect(error.data).toEqual({
-          type: "https://developers.timetreeapp.com/en/docs/api#client-failure",
-          title: "Not Found",
-          status: 404,
-          errors: "Calendar not found"
+        expect(error.response.data).toEqual({
+          data: {
+            type:
+              "https://developers.timetreeapp.com/en/docs/api#client-failure",
+            title: "Not Found",
+            status: 404,
+            errors: "Calendar not found"
+          }
         });
       });
     });
@@ -98,9 +104,9 @@ describe("TimeTreeClient", () => {
           .reply(404);
       });
 
-      it("should reject ky.HTTPError", async () => {
+      it("should reject Error", async () => {
         const error = await client.getUser().catch(e => e);
-        expect(error).toBeInstanceOf(ky.HTTPError);
+        expect(error).toBeInstanceOf(Error);
       });
     });
   });
@@ -332,7 +338,7 @@ describe("TimeTreeClient", () => {
           calendarId: testCalendarId,
           eventId: testEventId
         });
-        expect(response.ok).toBe(true);
+        expect(response.status).toBe(200);
       });
     });
   });

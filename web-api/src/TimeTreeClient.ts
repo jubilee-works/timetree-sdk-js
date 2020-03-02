@@ -10,13 +10,12 @@ import {
   EventForm,
   ActivityForm
 } from "./types";
-import { Options } from "ky";
 
 type TimeTreeClientOptions = {
   /** you can overwrite for testing purposes */
   readonly baseURL?: string;
-  readonly timeout?: Options["timeout"];
-  readonly retry?: Options["retry"] | number;
+  readonly timeout?: number;
+  // readonly retry?: Options["retry"] | number;
   readonly beforeRetry?: (error: Error, retryCount: number) => void;
 };
 
@@ -62,37 +61,30 @@ export class TimeTreeClient {
 
   constructor(accessToken: string, options: TimeTreeClientOptions = {}) {
     this.api = new APIClient({
-      prefixUrl: options.baseURL || "https://timetreeapis.com",
+      baseURL: options.baseURL || "https://timetreeapis.com",
       headers: {
         Accept: "application/vnd.timetree.v1+json",
         Authorization: `Bearer ${accessToken}`
-      },
-      hooks: {
-        beforeRetry: [
-          (_request, _options, error, retryCount) => {
-            options.beforeRetry && options.beforeRetry(error, retryCount);
-          }
-        ]
       },
       ...options
     });
   }
 
   public getUser() {
-    return this.api.get<User>("user");
+    return this.api.get<User>("/user");
   }
 
   public getCalendars(include?: IncludeOptions) {
-    return this.api.get<readonly Calendar[]>("calendars", {
-      searchParams: include && {
+    return this.api.get<readonly Calendar[]>("/calendars", {
+      params: include && {
         include: parseIncludeOptions(include)
       }
     });
   }
 
   public async getCalendar(calendarId: string, include?: IncludeOptions) {
-    return this.api.get<Calendar>(`calendars/${calendarId}`, {
-      searchParams: include && {
+    return this.api.get<Calendar>(`/calendars/${calendarId}`, {
+      params: include && {
         include: parseIncludeOptions(include)
       }
     });
@@ -100,12 +92,12 @@ export class TimeTreeClient {
 
   public async getLabels(calendarId: string) {
     return await this.api.get<readonly Label[]>(
-      `calendars/${calendarId}/labels`
+      `/calendars/${calendarId}/labels`
     );
   }
 
   public async getMembers(calendarId: string) {
-    return this.api.get<readonly Member[]>(`calendars/${calendarId}/members`);
+    return this.api.get<readonly Member[]>(`/calendars/${calendarId}/members`);
   }
 
   public async getUpcomingEvents({
@@ -115,9 +107,9 @@ export class TimeTreeClient {
     include
   }: GetUpcomingEventsParams) {
     return this.api.get<readonly Event[]>(
-      `calendars/${calendarId}/upcoming_events`,
+      `/calendars/${calendarId}/upcoming_events`,
       {
-        searchParams: {
+        params: {
           timezone,
           days,
           include: include && parseIncludeOptions(include)
@@ -127,28 +119,28 @@ export class TimeTreeClient {
   }
 
   public async getEvent({ eventId, calendarId, include }: GetEventParams) {
-    return this.api.get<Event>(`calendars/${calendarId}/events/${eventId}`, {
-      searchParams: include && {
+    return this.api.get<Event>(`/calendars/${calendarId}/events/${eventId}`, {
+      params: include && {
         include: parseIncludeOptions(include)
       }
     });
   }
 
   public async createEvent({ calendarId, ...json }: EventForm) {
-    return this.api.post<Event>(`calendars/${calendarId}/events`, json);
+    return this.api.post<Event>(`/calendars/${calendarId}/events`, json);
   }
 
   public async updateEvent({ calendarId, ...json }: EventForm) {
-    return this.api.put<Event>(`calendars/${calendarId}/events`, json);
+    return this.api.put<Event>(`/calendars/${calendarId}/events`, json);
   }
 
   public async deleteEvent({ calendarId, eventId }: DeleteEventParams) {
-    return this.api.delete(`calendars/${calendarId}/events/${eventId}`);
+    return this.api.delete(`/calendars/${calendarId}/events/${eventId}`);
   }
 
   public async createActivity({ calendarId, eventId, ...json }: ActivityForm) {
     return this.api.post<Activity>(
-      `calendars/${calendarId}/events/${eventId}/activities`,
+      `/calendars/${calendarId}/events/${eventId}/activities`,
       json
     );
   }
