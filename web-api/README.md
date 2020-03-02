@@ -17,6 +17,8 @@ $ yarn add @timetreeapp/web-api
 ## Usage
 
 ### Request to TimeTree Web API
+https://codesandbox.io/embed/flamboyant-haze-jfi63?fontsize=14&hidenavigation=1&theme=dark
+
 ```ts
 import { TimeTreeClient } from '@timetreeapp/web-api';
 
@@ -27,6 +29,7 @@ const client = new TimeTreeClient("<your-access-token>");
   console.log("calendars", data);
 })();
 ```
+
 #### Options
 ```ts
 new TimeTreeClient(
