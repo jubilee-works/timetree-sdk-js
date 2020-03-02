@@ -1,154 +1,155 @@
-import ky from "ky-universal";
+/* eslint-disable functional/prefer-readonly-type */
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosError
+} from "axios";
+import asyncRetroy from "async-retry";
+import qs from "qs";
 import humps from "humps";
 import { deserialise, serialise, camel } from "kitsu-core";
 import plural from "pluralize";
-import { Options } from "ky";
-import { Overwrite } from "utility-types";
-import { ErrorResponse } from "./types";
 
-type Ky = typeof ky;
-
-type APIOptions = Overwrite<
-  Options,
-  {
-    readonly searchParams?: Record<string, string | number | undefined>;
-  }
->;
-
-const normalizeResponse = (data: object) => {
+const normalizeResponse = (data?: object) => {
+  if (!data) return null;
   // when data does not have "include", "deserialise" does not work.
   const newData = data?.hasOwnProperty("included")
     ? data
     : { ...data, included: [] };
-  return deserialise(humps.camelizeKeys(newData));
+  return deserialise(newData);
 };
 
 const normalizeRequest = (data: object) => {
-  const newData = humps.decamelizeKeys(data);
-
   // does not need type property for POST body
-  const serialisedData = serialise.apply({ camel, plural }, ["", newData]);
+  const serialisedData = serialise.apply({ camel, plural }, ["", data]);
   // eslint-disable-next-line functional/immutable-data
   delete serialisedData.data.type;
   return serialisedData;
 };
 
-const normalizeSearchParams = (
-  params?: Record<string, string | number | undefined>
-) => {
-  if (!params) return;
-  const decamelized = humps.decamelizeKeys(params);
-  const validParams = Object.entries(decamelized).reduce<
-    Record<string, string>
-  >(
-    (accum, [key, value]) =>
-      value
-        ? {
-            ...accum,
-            [key]: `${value}`
-          }
-        : accum,
-    {}
-  );
-  return new URLSearchParams(validParams);
-};
-
-export class TimeTreeHTTPError extends ky.HTTPError {
-  readonly data: ErrorResponse;
-
-  constructor(response: Response, data: object) {
-    super(response);
-    this.data = data && normalizeResponse(data).data;
-  }
-}
-
-const handleHTTPError = async (error: unknown) => {
-  if (error instanceof ky.HTTPError) {
-    const parsed = await error.response.json().catch(() => null);
-    throw new TimeTreeHTTPError(error.response, parsed);
-  }
-  throw error;
+export type RetryOptions = {
+  readonly retry?: number;
+  readonly validateRetryable?: (e: AxiosError) => boolean;
+  readonly onRetry?: (e: Error, count: number) => void;
 };
 
 export class APIClient {
-  private readonly api: Ky;
+  private readonly api: AxiosInstance;
+  private readonly retryOptions: RetryOptions;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  constructor({ searchParams, ...options }: APIOptions = {}) {
-    this.api = ky.extend(options);
+  constructor(
+    options: AxiosRequestConfig,
+    { retry = 0, validateRetryable, onRetry }: RetryOptions = {}
+  ) {
+    this.api = axios.create({
+      ...options,
+      paramsSerializer: params =>
+        qs.stringify(humps.decamelizeKeys(params), { skipNulls: true }),
+      transformResponse: [
+        ...[axios.defaults.transformResponse].flat(),
+        data => humps.camelizeKeys(data)
+      ],
+      transformRequest: [
+        data => humps.decamelizeKeys(data),
+        ...[axios.defaults.transformRequest].flat()
+      ],
+      timeout: options.timeout
+    });
+    this.retryOptions = {
+      retry,
+      validateRetryable,
+      onRetry
+    };
   }
 
   public async get<Response>(
     url: string,
-    options?: APIOptions
+    options?: AxiosRequestConfig
   ): Promise<Response> {
-    try {
-      const searchParams = normalizeSearchParams(options?.searchParams);
-      const response: object = await this.api
-        .get(url, {
-          ...options,
-          searchParams
-        })
-        .json();
-      return normalizeResponse(response)?.data;
-    } catch (e) {
-      return handleHTTPError(e);
-    }
+    const get = this.wrapRequest<[string, AxiosRequestConfig | undefined]>(
+      this.api.get
+    );
+    const response = await get<object>(url, {
+      ...options
+    });
+    return normalizeResponse(response?.data)?.data;
   }
 
   public async post<Response>(
     url: string,
     json: object,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    { searchParams, ...options }: APIOptions = {}
+    options?: AxiosRequestConfig
   ): Promise<Response> {
-    try {
-      const response: object = await this.api
-        .post(url, {
-          ...options,
-          headers: {
-            ...options?.headers,
-            "Content-Type": "application/json"
-          },
-          json: normalizeRequest(json)
-        })
-        .json();
+    const post = this.wrapRequest<
+      [string, object, AxiosRequestConfig | undefined]
+    >(this.api.post);
+    const response = await post<object>(url, normalizeRequest(json), {
+      ...options,
+      headers: {
+        ...options?.headers,
+        "Content-Type": "application/json"
+      }
+    });
 
-      if (!response) return response;
-      return normalizeResponse(response).data;
-    } catch (e) {
-      return handleHTTPError(e);
-    }
+    return normalizeResponse(response?.data)?.data;
   }
 
   public async put<Response>(
     url: string,
     json: object,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    { searchParams, ...options }: APIOptions = {}
+    options?: AxiosRequestConfig
   ): Promise<Response> {
-    try {
-      const response: object = await this.api
-        .put(url, {
-          ...options,
-          headers: {
-            ...options?.headers,
-            "Content-Type": "application/json"
-          },
-          json: normalizeRequest(json)
-        })
-        .json();
-      return normalizeResponse(response)?.data;
-    } catch (e) {
-      return handleHTTPError(e);
-    }
+    const put = this.wrapRequest<
+      [string, object, AxiosRequestConfig | undefined]
+    >(this.api.put);
+    const response = await put<object>(url, normalizeRequest(json), {
+      ...options,
+      headers: {
+        ...options?.headers,
+        "Content-Type": "application/json"
+      }
+    });
+
+    return normalizeResponse(response?.data)?.data;
   }
 
-  public async delete(url: string, options?: Options) {
-    try {
-      return this.api.delete(url, options);
-    } catch (e) {
-      return handleHTTPError(e);
-    }
+  public async delete(url: string, options?: AxiosRequestConfig) {
+    const destroy = this.wrapRequest<[string, AxiosRequestConfig | undefined]>(
+      this.api.delete
+    );
+    return destroy<object>(url, options);
+  }
+
+  private wrapRequest<P extends unknown[]>(
+    fn: (...params: P) => Promise<AxiosResponse>
+  ) {
+    const { retry, validateRetryable, onRetry } = this.retryOptions;
+    const retryableStatusCodes = [408, 413, 429, 500, 502, 503, 504];
+
+    return <T>(...params: P) =>
+      asyncRetroy<AxiosResponse<T> | undefined>(
+        async bail => {
+          try {
+            const result = await fn(...params);
+            return result;
+          } catch (e) {
+            if (
+              !retryableStatusCodes.includes(e.response?.status) &&
+              validateRetryable &&
+              !validateRetryable(e)
+            ) {
+              bail(e);
+              return;
+            }
+            throw e;
+          }
+        },
+        {
+          retries: retry,
+          onRetry
+        }
+      );
   }
 }

@@ -11,9 +11,13 @@ describe("Authenticator", () => {
 
     beforeEach(() => {
       nock("https://timetreeapp.com/oauth")
-        .get(
-          `/authorize?client_id=${testClientId}&redirect_uri=${testRedirectUri}&response_type=code&state=${testCsrfToken}`
-        )
+        .get(`/authorize`)
+        .query({
+          client_id: testClientId,
+          redirect_uri: testRedirectUri,
+          response_type: "code",
+          state: testCsrfToken
+        })
         .reply(200);
     });
 
