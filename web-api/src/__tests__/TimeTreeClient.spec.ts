@@ -133,7 +133,8 @@ describe("TimeTreeClient", () => {
     describe("when calling api with include option", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
-          .get(`/calendars?include=labels,members`)
+          .get(`/calendars`)
+          .query({ include: "labels,members" })
           .reply(200, calendars);
       });
 
@@ -225,9 +226,10 @@ describe("TimeTreeClient", () => {
     describe("when calling api succeed", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
-          .get(
-            `/calendars/${testCalendarId}/upcoming_events?timezone=${testTimeZone}`
-          )
+          .get(`/calendars/${testCalendarId}/upcoming_events`)
+          .query({
+            timezone: testTimeZone
+          })
           .reply(200, upcomingEvents);
       });
 
@@ -338,7 +340,7 @@ describe("TimeTreeClient", () => {
           calendarId: testCalendarId,
           eventId: testEventId
         });
-        expect(response.status).toBe(200);
+        expect(response?.status).toBe(200);
       });
     });
   });

@@ -1,4 +1,4 @@
-import { APIClient } from "./api";
+import { APIClient, RetryOptions } from "./api";
 
 import {
   Calendar,
@@ -15,8 +15,9 @@ type TimeTreeClientOptions = {
   /** you can overwrite for testing purposes */
   readonly baseURL?: string;
   readonly timeout?: number;
-  // readonly retry?: Options["retry"] | number;
-  readonly beforeRetry?: (error: Error, retryCount: number) => void;
+  readonly retry?: RetryOptions["retry"];
+  readonly validateRetryable?: RetryOptions["validateRetryable"];
+  readonly onRetry?: RetryOptions["onRetry"];
 };
 
 type IncludeOptions = {
@@ -59,15 +60,30 @@ const parseIncludeOptions = (options: Record<string, boolean | undefined>) => {
 export class TimeTreeClient {
   private readonly api: APIClient;
 
-  constructor(accessToken: string, options: TimeTreeClientOptions = {}) {
-    this.api = new APIClient({
-      baseURL: options.baseURL || "https://timetreeapis.com",
-      headers: {
-        Accept: "application/vnd.timetree.v1+json",
-        Authorization: `Bearer ${accessToken}`
-      },
+  constructor(
+    accessToken: string,
+    {
+      retry,
+      onRetry,
+      validateRetryable,
       ...options
-    });
+    }: TimeTreeClientOptions = {}
+  ) {
+    this.api = new APIClient(
+      {
+        baseURL: options.baseURL || "https://timetreeapis.com",
+        headers: {
+          Accept: "application/vnd.timetree.v1+json",
+          Authorization: `Bearer ${accessToken}`
+        },
+        ...options
+      },
+      {
+        retry,
+        validateRetryable,
+        onRetry
+      }
+    );
   }
 
   public getUser() {
