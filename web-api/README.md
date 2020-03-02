@@ -16,6 +16,100 @@ $ yarn add @timetreeapp/web-api
 ```
 ## Usage
 
+### Request to TimeTree Web API
+```ts
+import { TimeTreeClient } from '@timetreeapp/web-api';
+
+const client = new TimeTreeClient("<your-access-token>");
+
+(async () => {
+  const data = await client.getCalendars();
+  console.log("calendars", data);
+})();
+```
+#### Options
+```ts
+new TimeTreeClient(
+  accessToken: string;
+  {
+  // you can overwrite for testing purposes
+  baseURL?: string;
+
+  // specifies the number of milliseconds before the request times out.
+  // this api is using axios timeout
+  // see: https://github.com/axios/axios
+  timeout?: number; // default is `0` (no timeout)
+
+  // specifies the number of times to retry the request
+  retry?: number; // default is `0` (no retry)
+
+  // specifies whether retry to request when using retry option.
+  // parameters is axios's error response
+  validateRetryable?: (error: AxiosError) => boolean;
+
+  // callbacks before retry
+  onRetry?: (e: Error, count: number) => boolean;
+})
+```
+
+#### Scheme
+[TimeTree API](https://developers.timetreeapp.com/ja/docs/api) conforms to JSONAPI. but this sdk can deserialize response data and request data.
+
+
+```ts
+// server response
+{
+  data: {
+    id: "1234",
+    type: "calendar",
+    attributes: {
+      name: "Some Calendar",
+      description: "Calendar description",
+      color: "#2ecc87",
+      order: 0,
+      image_url: "https://attachmentstimetreeapp.com/path/to/ image.png",
+      created_at: "2019-04-01T12:34:56.000Z"
+    },
+    relationships: {
+      labels: {
+        data: [...]
+      }
+    }
+  }
+}
+// #getCalendar result
+{
+  id: "1234",
+  type: "calendar",
+  name: "Some Calendar",
+  description: "Calendar description",
+  color: "#2ecc87",
+  order: 0,
+  imageUrl: "https://attachments.timetreeapp.com/path/to/image.png",
+  createdAt: "2019-04-01T12:34:56.000Z",
+  labels: [
+    {
+      id: "1234,1",
+      type: "label",
+      name: "label title(empty if default)",
+      color: "#2ecc87"
+    },
+    { id: "1234,2", type: "label" },
+  ]
+}
+```
+
+#### Error Handling
+this client throws axios's error object as it is.
+see https://github.com/axios/axios#handling-errors
+```ts
+try {
+  const data = client.getUser();
+} catch (e) {
+  e.response?.status
+}
+```
+
 ### Get Access Token
 
 1. Execute `Authenticator#authorize` to access https://timetreeapp.com/oauth/authorize with query parameters below.
@@ -49,17 +143,8 @@ const response = await authenticator.getToken({
 console.log(response.accessToken);
 ```
 
-### Request to TimeTree Web API
-```ts
-import { TimeTreeClient } from '@timetreeapp/web-api';
+or using some oauth2 library like [client-oauth2](https://www.npmjs.com/package/client-oauth2)
 
-const client = new TimeTreeClient("<your-access-token>");
-
-(async () => {
-  const response = await client.getCalendars();
-  console.log("calendars", response);
-})();
-```
 
 ## Licence
 MIT
