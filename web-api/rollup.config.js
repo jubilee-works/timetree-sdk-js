@@ -31,7 +31,7 @@ export default {
     json(),
     resolve({
       browser: isBrowser,
-      resolveOnly: [/src\/.*$/, "axios"]
+      preferBuiltins: true
     }),
     commonjs(),
     replace({
