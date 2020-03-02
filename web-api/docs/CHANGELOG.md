@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.0...v1.7.1) (2020-03-02)
+
+
+### Bug Fixes
+
+* **rollup:** fix rollup configuration for client build ([4daabac](https://github.com/jubilee-works/timetree-sdk-js/commit/4daabac43dd1287bbe1cbd2e4574ddd0804d8a3c))
+
 # [1.7.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.6.8...v1.7.0) (2020-03-02)
 
 
