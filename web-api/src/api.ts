@@ -68,10 +68,8 @@ export class APIClient {
     url: string,
     options?: AxiosRequestConfig
   ): Promise<Response> {
-    const get = this.wrapRequest<[string, AxiosRequestConfig | undefined]>(
-      this.api.get
-    );
-    const response = await get<object>(url, {
+    const get = this.wrapRequest(this.api.get);
+    const response = await get(url, {
       ...options
     });
     return normalizeResponse(response?.data)?.data;
@@ -82,10 +80,8 @@ export class APIClient {
     json: object,
     options?: AxiosRequestConfig
   ): Promise<Response> {
-    const post = this.wrapRequest<
-      [string, object, AxiosRequestConfig | undefined]
-    >(this.api.post);
-    const response = await post<object>(url, normalizeRequest(json), {
+    const post = this.wrapRequest(this.api.post);
+    const response = await post(url, normalizeRequest(json), {
       ...options,
       headers: {
         ...options?.headers,
@@ -101,10 +97,8 @@ export class APIClient {
     json: object,
     options?: AxiosRequestConfig
   ): Promise<Response> {
-    const put = this.wrapRequest<
-      [string, object, AxiosRequestConfig | undefined]
-    >(this.api.put);
-    const response = await put<object>(url, normalizeRequest(json), {
+    const put = this.wrapRequest(this.api.put);
+    const response = await put(url, normalizeRequest(json), {
       ...options,
       headers: {
         ...options?.headers,
@@ -116,20 +110,20 @@ export class APIClient {
   }
 
   public async delete(url: string, options?: AxiosRequestConfig) {
-    const destroy = this.wrapRequest<[string, AxiosRequestConfig | undefined]>(
-      this.api.delete
-    );
-    return destroy<object>(url, options);
+    const destroy = this.wrapRequest(this.api.delete);
+    return destroy(url, options);
   }
 
-  private wrapRequest<P extends unknown[]>(
-    fn: (...params: P) => Promise<AxiosResponse>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private wrapRequest<Request extends (...p: any[]) => Promise<any>>(
+    fn: Request
   ) {
     const { retry, validateRetryable, onRetry } = this.retryOptions;
     const retryableStatusCodes = [408, 413, 429, 500, 502, 503, 504];
+    type Params = Parameters<Request>;
 
-    return <T>(...params: P) =>
-      asyncRetroy<AxiosResponse<T> | undefined>(
+    return (...params: Params) =>
+      asyncRetroy<Promise<AxiosResponse<object>>>(
         async bail => {
           try {
             const result = await fn(...params);
