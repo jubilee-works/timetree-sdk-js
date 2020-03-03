@@ -137,8 +137,7 @@ export class APIClient {
           } catch (e) {
             if (
               !retryableStatusCodes.includes(e.response?.status) &&
-              validateRetryable &&
-              !validateRetryable(e)
+              (!validateRetryable || !validateRetryable(e))
             ) {
               bail(e);
               return;

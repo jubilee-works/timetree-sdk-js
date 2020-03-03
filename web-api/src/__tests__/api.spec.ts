@@ -62,4 +62,28 @@ describe("APIClient", () => {
       );
     });
   });
+
+  describe("when request is 404", () => {
+    beforeEach(() => {
+      nock("https://timetreeapis.com")
+        .get("/user")
+        .twice()
+        .reply(404);
+    });
+
+    it("should not retry request", async () => {
+      const retryMock = jest.fn();
+      const api = new APIClient(
+        {},
+        {
+          retry: 1,
+          onRetry: retryMock
+        }
+      );
+      await expect(api.get("https://timetreeapis.com/user")).rejects.toEqual(
+        new Error("Request failed with status code 404")
+      );
+      expect(retryMock).not.toHaveBeenCalled();
+    });
+  });
 });
