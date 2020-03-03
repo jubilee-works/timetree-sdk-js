@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.1...v1.7.2) (2020-03-03)
+
+
+### Bug Fixes
+
+* **api:** fix retry condition ([b6f4145](https://github.com/jubilee-works/timetree-sdk-js/commit/b6f41457c26259d519c73af52938ff7413f91483))
+
 ## [1.7.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.0...v1.7.1) (2020-03-02)
 
 
