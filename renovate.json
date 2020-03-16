@@ -1,5 +1,4 @@
 {
-  "extends": [
-    "config:base"
-  ]
+  "extends": ["config:js-lib", "group:definitelyTyped", ":maintainLockFilesWeekly"],
+  "postUpdateOptions": ["yarnDedupeHighest"]
 }
