@@ -14,7 +14,7 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - v1-dependencies-{{ arch }}-node12.14.1-{{ checksum "yarn.lock" }}
+            - v1-dependencies-{{ arch }}-node12.16.1-{{ checksum "yarn.lock" }}
             - v1-dependencies-{{ arch }}
             - v1-dependencies-
       - run:
@@ -23,7 +23,7 @@ commands:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ arch }}-node12.14.1-{{ checksum "yarn.lock" }}
+          key: v1-dependencies-{{ arch }}-node12.16.1-{{ checksum "yarn.lock" }}
 
 jobs:
   test:
