@@ -11,21 +11,21 @@ export const eventForm = {
       end_timezone: "UTC",
       description: "blah blah blah",
       location: "Tokyo",
-      url: "https://example.com"
+      url: "https://example.com",
     },
     relationships: {
       label: {
         data: {
           id: "1234,1",
-          type: "label"
-        }
+          type: "label",
+        },
       },
       attendees: {
         data: [
           { id: "1234,12345", type: "user" },
-          { id: "1234,56789", type: "user" }
-        ]
-      }
-    }
-  }
+          { id: "1234,56789", type: "user" },
+        ],
+      },
+    },
+  },
 };

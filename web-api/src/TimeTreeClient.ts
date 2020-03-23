@@ -8,7 +8,7 @@ import {
   User,
   Activity,
   EventForm,
-  ActivityForm
+  ActivityForm,
 } from "./types";
 
 type TimeTreeClientOptions = {
@@ -74,14 +74,14 @@ export class TimeTreeClient {
         baseURL: options.baseURL || "https://timetreeapis.com",
         headers: {
           Accept: "application/vnd.timetree.v1+json",
-          Authorization: `Bearer ${accessToken}`
+          Authorization: `Bearer ${accessToken}`,
         },
-        ...options
+        ...options,
       },
       {
         retry,
         validateRetryable,
-        onRetry
+        onRetry,
       }
     );
   }
@@ -93,16 +93,16 @@ export class TimeTreeClient {
   public getCalendars(include?: IncludeOptions) {
     return this.api.get<readonly Calendar[]>("/calendars", {
       params: include && {
-        include: parseIncludeOptions(include)
-      }
+        include: parseIncludeOptions(include),
+      },
     });
   }
 
   public async getCalendar(calendarId: string, include?: IncludeOptions) {
     return this.api.get<Calendar>(`/calendars/${calendarId}`, {
       params: include && {
-        include: parseIncludeOptions(include)
-      }
+        include: parseIncludeOptions(include),
+      },
     });
   }
 
@@ -120,7 +120,7 @@ export class TimeTreeClient {
     calendarId,
     timezone,
     days,
-    include
+    include,
   }: GetUpcomingEventsParams) {
     return this.api.get<readonly Event[]>(
       `/calendars/${calendarId}/upcoming_events`,
@@ -128,8 +128,8 @@ export class TimeTreeClient {
         params: {
           timezone,
           days,
-          include: include && parseIncludeOptions(include)
-        }
+          include: include && parseIncludeOptions(include),
+        },
       }
     );
   }
@@ -137,8 +137,8 @@ export class TimeTreeClient {
   public async getEvent({ eventId, calendarId, include }: GetEventParams) {
     return this.api.get<Event>(`/calendars/${calendarId}/events/${eventId}`, {
       params: include && {
-        include: parseIncludeOptions(include)
-      }
+        include: parseIncludeOptions(include),
+      },
     });
   }
 

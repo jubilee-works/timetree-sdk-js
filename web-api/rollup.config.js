@@ -12,31 +12,31 @@ export default {
   output: [
     {
       file: `./dist/${fileName}.js`,
-      format: "cjs"
+      format: "cjs",
     },
     {
       file: `./dist/${fileName}.mjs`,
-      format: "esm"
-    }
+      format: "esm",
+    },
   ],
   plugins: [
     typescript({
       tsconfigOverride: {
         compilerOptions: {
           module: "es2015",
-          moduleResolution: "node"
-        }
-      }
+          moduleResolution: "node",
+        },
+      },
     }),
     json(),
     resolve({
       browser: isBrowser,
-      preferBuiltins: true
+      preferBuiltins: true,
     }),
     commonjs(),
     replace({
-      "process.env.NODE_ENV": JSON.stringify("production")
+      "process.env.NODE_ENV": JSON.stringify("production"),
     }),
-    terser()
-  ]
+    terser(),
+  ],
 };

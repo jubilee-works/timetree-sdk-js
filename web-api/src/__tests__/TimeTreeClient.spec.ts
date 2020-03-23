@@ -11,7 +11,7 @@ import {
   user,
   activity,
   activityForm,
-  eventForm
+  eventForm,
 } from "./fixtures";
 import {
   expectedCalendars,
@@ -23,7 +23,7 @@ import {
   expectedUser,
   expectedActivity,
   expectedActivityForm,
-  expectedEventForm
+  expectedEventForm,
 } from "./expectations";
 
 const axiosCreateMock = jest.spyOn(axios, "create");
@@ -38,12 +38,12 @@ describe("TimeTreeClient", () => {
         baseURL: "https://timetreeapis.com",
         headers: {
           Accept: "application/vnd.timetree.v1+json",
-          Authorization: `Bearer ${accessToken}`
+          Authorization: `Bearer ${accessToken}`,
         },
         timeout: undefined,
         paramsSerializer: expect.anything(),
         transformRequest: expect.anything(),
-        transformResponse: expect.anything()
+        transformResponse: expect.anything(),
       });
     });
   });
@@ -57,9 +57,7 @@ describe("TimeTreeClient", () => {
 
     describe("when calling api succeed", () => {
       beforeEach(() => {
-        nock("https://timetreeapis.com")
-          .get("/user")
-          .reply(200, user);
+        nock("https://timetreeapis.com").get("/user").reply(200, user);
       });
 
       it("should resolve values", async () => {
@@ -78,34 +76,32 @@ describe("TimeTreeClient", () => {
                 "https://developers.timetreeapp.com/en/docs/api#client-failure",
               title: "Not Found",
               status: 404,
-              errors: "Calendar not found"
-            }
+              errors: "Calendar not found",
+            },
           });
       });
 
       it("should reject values", async () => {
-        const error = await client.getUser().catch(e => e);
+        const error = await client.getUser().catch((e) => e);
         expect(error.response.data).toEqual({
           data: {
             type:
               "https://developers.timetreeapp.com/en/docs/api#client-failure",
             title: "Not Found",
             status: 404,
-            errors: "Calendar not found"
-          }
+            errors: "Calendar not found",
+          },
         });
       });
     });
 
     describe("when calling api is 404 without data", () => {
       beforeEach(() => {
-        nock("https://timetreeapis.com")
-          .get("/user")
-          .reply(404);
+        nock("https://timetreeapis.com").get("/user").reply(404);
       });
 
       it("should reject Error", async () => {
-        const error = await client.getUser().catch(e => e);
+        const error = await client.getUser().catch((e) => e);
         expect(error).toBeInstanceOf(Error);
       });
     });
@@ -141,7 +137,7 @@ describe("TimeTreeClient", () => {
       it("should resolve values", async () => {
         const response = await client.getCalendars({
           labels: true,
-          members: true
+          members: true,
         });
         expect(response).toEqual(expectedCalendars);
       });
@@ -228,7 +224,7 @@ describe("TimeTreeClient", () => {
         nock("https://timetreeapis.com")
           .get(`/calendars/${testCalendarId}/upcoming_events`)
           .query({
-            timezone: testTimeZone
+            timezone: testTimeZone,
           })
           .reply(200, upcomingEvents);
       });
@@ -236,7 +232,7 @@ describe("TimeTreeClient", () => {
       it("should resolve values", async () => {
         const response = await client.getUpcomingEvents({
           calendarId: testCalendarId,
-          timezone: testTimeZone
+          timezone: testTimeZone,
         });
         expect(response).toEqual(expectedUpcomingEvents);
       });
@@ -262,7 +258,7 @@ describe("TimeTreeClient", () => {
       it("should resolve values", async () => {
         const response = await client.getEvent({
           calendarId: testCalendarId,
-          eventId: testEventId
+          eventId: testEventId,
         });
         expect(response).toEqual(expectedEvent);
       });
@@ -287,7 +283,7 @@ describe("TimeTreeClient", () => {
       it("should resolve values", async () => {
         const response = await client.createEvent({
           calendarId: testCalendarId,
-          ...eventForm
+          ...eventForm,
         });
         expect(response).toEqual(expectedEvent);
       });
@@ -312,7 +308,7 @@ describe("TimeTreeClient", () => {
       it("should resolve values", async () => {
         const response = await client.updateEvent({
           calendarId: testCalendarId,
-          ...eventForm
+          ...eventForm,
         });
         expect(response).toEqual(expectedEvent);
       });
@@ -338,7 +334,7 @@ describe("TimeTreeClient", () => {
       it("should resolve values", async () => {
         const response = await client.deleteEvent({
           calendarId: testCalendarId,
-          eventId: testEventId
+          eventId: testEventId,
         });
         expect(response?.status).toBe(200);
       });
@@ -368,7 +364,7 @@ describe("TimeTreeClient", () => {
         const response = await client.createActivity({
           calendarId: testCalendarId,
           eventId: testEventId,
-          ...activityForm
+          ...activityForm,
         });
         expect(response).toEqual(expectedActivity);
       });

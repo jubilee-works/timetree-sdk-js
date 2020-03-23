@@ -16,7 +16,7 @@ describe("Authenticator", () => {
           client_id: testClientId,
           redirect_uri: testRedirectUri,
           response_type: "code",
-          state: testCsrfToken
+          state: testCsrfToken,
         })
         .reply(200);
     });
@@ -26,7 +26,7 @@ describe("Authenticator", () => {
         authenticator.authorize({
           clientId: testClientId,
           redirectUri: "test-redirect-uri",
-          state: testCsrfToken
+          state: testCsrfToken,
         })
       ).resolves.toBeDefined();
     });
@@ -39,7 +39,7 @@ describe("Authenticator", () => {
       clientSecret: "test-client-secret",
       redirectUri: "test-redirect-uri",
       code: "test-code",
-      grantType: "test-grant-type"
+      grantType: "test-grant-type",
     };
 
     beforeEach(() => {
@@ -49,7 +49,7 @@ describe("Authenticator", () => {
           client_secret: testBody.clientSecret,
           redirect_uri: testBody.redirectUri,
           code: testBody.code,
-          grant_type: testBody.grantType
+          grant_type: testBody.grantType,
         })
         .reply(200, { access_token: "test", token_type: "Bearer" });
     });
@@ -58,7 +58,7 @@ describe("Authenticator", () => {
       const response = await authenticator.getToken(testBody);
       expect(response).toEqual({
         accessToken: "test",
-        tokenType: "Bearer"
+        tokenType: "Bearer",
       });
     });
   });

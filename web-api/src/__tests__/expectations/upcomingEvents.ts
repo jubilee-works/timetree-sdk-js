@@ -17,15 +17,15 @@ export const upcomingEvents = [
     createdAt: "2019-03-18T09:53:33.123Z",
     creator: {
       id: "1234,12345",
-      type: "user"
+      type: "user",
     },
     label: {
       id: "1234,1",
-      type: "label"
+      type: "label",
     },
     attendees: [
       { id: "1234,12345", type: "user" },
-      { id: "1234,56789", type: "user" }
-    ]
-  }
+      { id: "1234,56789", type: "user" },
+    ],
+  },
 ];

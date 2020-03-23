@@ -16,27 +16,27 @@ export const event = {
       location: "Tokyo",
       url: "https://example.com",
       updated_at: "2019-03-18T09:53:33.123Z",
-      created_at: "2019-03-18T09:53:33.123Z"
+      created_at: "2019-03-18T09:53:33.123Z",
     },
     relationships: {
       creator: {
         data: {
           id: "1234,12345",
-          type: "user"
-        }
+          type: "user",
+        },
       },
       label: {
         data: {
           id: "1234,1",
-          type: "label"
-        }
+          type: "label",
+        },
       },
       attendees: {
         data: [
           { id: "1234,12345", type: "user" },
-          { id: "1234,56789", type: "user" }
-        ]
-      }
-    }
-  }
+          { id: "1234,56789", type: "user" },
+        ],
+      },
+    },
+  },
 };
