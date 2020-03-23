@@ -6,7 +6,7 @@ export const user = {
     attributes: {
       name: "Your Name",
       description: "blah blah blah",
-      image_url: "https://attachments.timetreeapp.com/path/to/image.png"
-    }
-  }
+      image_url: "https://attachments.timetreeapp.com/path/to/image.png",
+    },
+  },
 };

@@ -1,3 +1,3 @@
 export const activityForm = {
-  content: "This is comment"
+  content: "This is comment",
 };

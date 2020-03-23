@@ -6,7 +6,7 @@ export const activity = {
     attributes: {
       content: "This is comment",
       updated_at: "2019-04-01T12:34:56.000Z",
-      created_at: "2019-04-01T12:34:56.000Z"
-    }
-  }
+      created_at: "2019-04-01T12:34:56.000Z",
+    },
+  },
 };

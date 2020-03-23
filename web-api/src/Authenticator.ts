@@ -39,16 +39,16 @@ export class Authenticator {
     this.api = axios.create({
       baseURL: options.baseURL || "https://timetreeapp.com/oauth",
       timeout: options.timeout,
-      paramsSerializer: params =>
+      paramsSerializer: (params) =>
         qs.stringify(humps.decamelizeKeys(params), { skipNulls: true }),
       transformResponse: [
         ...[axios.defaults.transformResponse].flat(),
-        data => humps.camelizeKeys(data)
+        (data) => humps.camelizeKeys(data),
       ],
       transformRequest: [
-        data => humps.decamelizeKeys(data),
-        ...[axios.defaults.transformRequest].flat()
-      ]
+        (data) => humps.decamelizeKeys(data),
+        ...[axios.defaults.transformRequest].flat(),
+      ],
     });
   }
 
@@ -58,7 +58,7 @@ export class Authenticator {
     state,
     responseType = "code",
     codeChallenge,
-    codeChallengeMethod
+    codeChallengeMethod,
   }: AuthorizeParams) {
     const response = await this.api.get("/authorize", {
       params: {
@@ -67,8 +67,8 @@ export class Authenticator {
         responseType,
         state,
         codeChallenge,
-        codeChallengeMethod
-      }
+        codeChallengeMethod,
+      },
     });
     return { status: response.status, statusText: response.statusText };
   }
@@ -76,8 +76,8 @@ export class Authenticator {
   public async getToken(body: GetTokenBody) {
     const response = await this.api.post<GetTokenResponse>("/token", body, {
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     });
     return response.data;
   }

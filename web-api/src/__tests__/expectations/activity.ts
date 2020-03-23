@@ -3,5 +3,5 @@ export const activity = {
   type: "activity",
   content: "This is comment",
   updatedAt: "2019-04-01T12:34:56.000Z",
-  createdAt: "2019-04-01T12:34:56.000Z"
+  createdAt: "2019-04-01T12:34:56.000Z",
 };

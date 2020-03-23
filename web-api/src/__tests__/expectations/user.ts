@@ -3,5 +3,5 @@ export const user = {
   type: "user",
   name: "Your Name",
   description: "blah blah blah",
-  imageUrl: "https://attachments.timetreeapp.com/path/to/image.png"
+  imageUrl: "https://attachments.timetreeapp.com/path/to/image.png",
 };

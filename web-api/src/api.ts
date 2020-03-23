@@ -3,7 +3,7 @@ import axios, {
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
-  AxiosError
+  AxiosError,
 } from "axios";
 import asyncRetroy from "async-retry";
 import qs from "qs";
@@ -45,22 +45,22 @@ export class APIClient {
   ) {
     this.api = axios.create({
       ...options,
-      paramsSerializer: params =>
+      paramsSerializer: (params) =>
         qs.stringify(humps.decamelizeKeys(params), { skipNulls: true }),
       transformResponse: [
         ...[axios.defaults.transformResponse].flat(),
-        data => humps.camelizeKeys(data)
+        (data) => humps.camelizeKeys(data),
       ],
       transformRequest: [
-        data => humps.decamelizeKeys(data),
-        ...[axios.defaults.transformRequest].flat()
+        (data) => humps.decamelizeKeys(data),
+        ...[axios.defaults.transformRequest].flat(),
       ],
-      timeout: options.timeout
+      timeout: options.timeout,
     });
     this.retryOptions = {
       retry,
       validateRetryable,
-      onRetry
+      onRetry,
     };
   }
 
@@ -70,7 +70,7 @@ export class APIClient {
   ): Promise<Response> {
     const get = this.wrapRequest(this.api.get);
     const response = await get(url, {
-      ...options
+      ...options,
     });
     return normalizeResponse(response?.data)?.data;
   }
@@ -85,8 +85,8 @@ export class APIClient {
       ...options,
       headers: {
         ...options?.headers,
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     });
 
     return normalizeResponse(response?.data)?.data;
@@ -102,8 +102,8 @@ export class APIClient {
       ...options,
       headers: {
         ...options?.headers,
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     });
 
     return normalizeResponse(response?.data)?.data;
@@ -124,7 +124,7 @@ export class APIClient {
 
     return (...params: Params) =>
       asyncRetroy<Promise<AxiosResponse<object>>>(
-        async bail => {
+        async (bail) => {
           try {
             const result = await fn(...params);
             return result;
@@ -141,7 +141,7 @@ export class APIClient {
         },
         {
           retries: retry,
-          onRetry
+          onRetry,
         }
       );
   }

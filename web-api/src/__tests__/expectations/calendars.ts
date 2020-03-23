@@ -13,9 +13,9 @@ export const calendars = [
         id: "1234,1",
         type: "label",
         color: "#2ecc87",
-        name: "label title(empty if default)"
+        name: "label title(empty if default)",
       },
-      { id: "1234,10", type: "label" }
+      { id: "1234,10", type: "label" },
     ],
     members: [
       {
@@ -23,10 +23,10 @@ export const calendars = [
         type: "user",
         name: "User1",
         description: "blah blah blah",
-        imageUrl: "https://attachments.timetreeapp.com/path/to/image.png"
+        imageUrl: "https://attachments.timetreeapp.com/path/to/image.png",
       },
-      { id: "1234,23456", type: "user" }
-    ]
+      { id: "1234,23456", type: "user" },
+    ],
   },
   {
     id: "5678",
@@ -37,6 +37,6 @@ export const calendars = [
     order: 1,
     imageUrl: "https://attachments.timetreeapp.com/path/to/image.png",
     createdAt: "2019-04-01T12:34:56.000Z",
-    relationships: {}
-  }
+    relationships: {},
+  },
 ];

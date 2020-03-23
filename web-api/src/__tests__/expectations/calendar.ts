@@ -12,7 +12,7 @@ export const calendar = {
       id: "1234,1",
       type: "label",
       name: "label title(empty if default)",
-      color: "#2ecc87"
+      color: "#2ecc87",
     },
     { id: "1234,2", type: "label" },
     { id: "1234,3", type: "label" },
@@ -22,7 +22,7 @@ export const calendar = {
     { id: "1234,7", type: "label" },
     { id: "1234,8", type: "label" },
     { id: "1234,9", type: "label" },
-    { id: "1234,10", type: "label" }
+    { id: "1234,10", type: "label" },
   ],
   members: [
     {
@@ -30,8 +30,8 @@ export const calendar = {
       type: "user",
       name: "User1",
       description: "blah blah blah",
-      imageUrl: "https://attachments.timetreeapp.com/path/to/image.png"
+      imageUrl: "https://attachments.timetreeapp.com/path/to/image.png",
     },
-    { id: "1234,23456", type: "user" }
-  ]
+    { id: "1234,23456", type: "user" },
+  ],
 };

@@ -7,8 +7,8 @@ export const members = {
       attributes: {
         name: "User1",
         description: "blah blah blah",
-        image_url: "https://attachments.timetreeapp.com/path/to/image.png"
-      }
+        image_url: "https://attachments.timetreeapp.com/path/to/image.png",
+      },
     },
     {
       id: "1234,56789",
@@ -17,9 +17,9 @@ export const members = {
         name: "User2",
         description: "Foo Bar",
         image_url:
-          "https://attachments.timetreeapp.com/path/to/anothor_image.png"
-      }
-    }
+          "https://attachments.timetreeapp.com/path/to/anothor_image.png",
+      },
+    },
     // ...
-  ]
+  ],
 };
