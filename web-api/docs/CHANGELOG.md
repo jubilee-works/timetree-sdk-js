@@ -1,3 +1,11 @@
+## [1.7.3](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.2...v1.7.3) (2020-04-14)
+
+
+### Bug Fixes
+
+* **yarn.lock:** run: yarn upgrade cz-conventional-changelog ([c00df06](https://github.com/jubilee-works/timetree-sdk-js/commit/c00df06ffcebabdf6cfd2f1a91477b5bb45c6316))
+* **yarn.lock:** run: yarn upgrade semantic-release for security vulnerabilities ([f377da7](https://github.com/jubilee-works/timetree-sdk-js/commit/f377da7516f6d01b3abce2ac05ad59bcceb8502d))
+
 ## [1.7.2](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.1...v1.7.2) (2020-03-03)
 
 
