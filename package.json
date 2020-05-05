@@ -1,7 +1,7 @@
 {
   "license": "MIT",
   "devDependencies": {
-    "cz-conventional-changelog": "3.1.0",
+    "cz-conventional-changelog": "3.2.0",
     "husky": "4.2.5"
   },
   "config": {
