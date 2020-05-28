@@ -44,7 +44,7 @@ type GetEventParams = {
 };
 
 type UpdateEventForm = EventForm & {
-  eventId: string;
+  readonly eventId: string;
 };
 
 type DeleteEventParams = {
@@ -151,7 +151,10 @@ export class TimeTreeClient {
   }
 
   public async updateEvent({ calendarId, eventId, ...json }: UpdateEventForm) {
-    return this.api.put<Event>(`/calendars/${calendarId}/events${eventId}`, json);
+    return this.api.put<Event>(
+      `/calendars/${calendarId}/events${eventId}`,
+      json
+    );
   }
 
   public async deleteEvent({ calendarId, eventId }: DeleteEventParams) {

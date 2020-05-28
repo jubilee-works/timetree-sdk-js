@@ -292,7 +292,7 @@ describe("TimeTreeClient", () => {
 
   describe("updateEvent", () => {
     const testCalendarId = "test-calendar-id";
-    const testEventId = "test-event-id"
+    const testEventId = "test-event-id";
     let client: TimeTreeClient;
 
     beforeEach(() => {
@@ -302,7 +302,10 @@ describe("TimeTreeClient", () => {
     describe("when calling api succeed", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
-          .put(`/calendars/${testCalendarId}/events${testEventId}`, expectedEventForm)
+          .put(
+            `/calendars/${testCalendarId}/events${testEventId}`,
+            expectedEventForm
+          )
           .reply(200, event);
       });
 
