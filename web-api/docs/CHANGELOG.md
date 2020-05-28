@@ -1,3 +1,10 @@
+## [1.7.4](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.3...v1.7.4) (2020-05-28)
+
+
+### Bug Fixes
+
+* **api:** fix update event missing params ([5fdedcc](https://github.com/jubilee-works/timetree-sdk-js/commit/5fdedccd6c1d331df684b5410bf675aa17e6b936))
+
 ## [1.7.3](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.2...v1.7.3) (2020-04-14)
 
 
