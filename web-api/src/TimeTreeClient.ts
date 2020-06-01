@@ -152,7 +152,7 @@ export class TimeTreeClient {
 
   public async updateEvent({ calendarId, eventId, ...json }: UpdateEventForm) {
     return this.api.put<Event>(
-      `/calendars/${calendarId}/events${eventId}`,
+      `/calendars/${calendarId}/events/${eventId}`,
       json
     );
   }

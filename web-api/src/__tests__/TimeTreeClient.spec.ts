@@ -303,7 +303,7 @@ describe("TimeTreeClient", () => {
       beforeEach(() => {
         nock("https://timetreeapis.com")
           .put(
-            `/calendars/${testCalendarId}/events${testEventId}`,
+            `/calendars/${testCalendarId}/events/${testEventId}`,
             expectedEventForm
           )
           .reply(200, event);
