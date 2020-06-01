@@ -1,3 +1,10 @@
+## [1.7.5](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.4...v1.7.5) (2020-06-01)
+
+
+### Bug Fixes
+
+* **update event:** fix wrong url of /events/:eventId ([349c2aa](https://github.com/jubilee-works/timetree-sdk-js/commit/349c2aa5f77b63a18c91bc3eb2db5afc71b87b97))
+
 ## [1.7.4](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.3...v1.7.4) (2020-05-28)
 
 
