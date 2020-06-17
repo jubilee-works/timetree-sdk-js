@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 export const event = {
   data: {
     id: "c9c8e0fd66c34505a876d88cb4bb3b2a",
