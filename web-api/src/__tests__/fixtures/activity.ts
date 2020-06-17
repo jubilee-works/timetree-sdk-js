@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 export const activity = {
   data: {
     id: "5fde58f529bf4359b6cc15523ed86965",

@@ -10,7 +10,7 @@ module.exports = {
   plugins: ["@typescript-eslint", "functional"],
   env: { node: true, es6: true },
   rules: {
-    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "functional/immutable-data": "error",
     "functional/no-method-signature": "error",
     "functional/prefer-readonly-type": "error",

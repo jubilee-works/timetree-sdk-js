@@ -1,4 +1,4 @@
-/* eslint-disable functional/prefer-readonly-type */
+/* eslint-disable functional/prefer-readonly-type, @typescript-eslint/ban-types */
 import axios, {
   AxiosInstance,
   AxiosRequestConfig,
