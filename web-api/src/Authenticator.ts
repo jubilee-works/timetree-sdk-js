@@ -1,4 +1,5 @@
-import axios, { AxiosInstance } from "axios";
+/* eslint-disable functional/prefer-readonly-type */
+import axios, { AxiosInstance, AxiosTransformer } from "axios";
 import qs from "qs";
 import humps from "humps";
 
@@ -44,11 +45,11 @@ export class Authenticator {
       transformResponse: [
         ...[axios.defaults.transformResponse].flat(),
         (data) => humps.camelizeKeys(data),
-      ],
+      ] as AxiosTransformer[],
       transformRequest: [
         (data) => humps.decamelizeKeys(data),
         ...[axios.defaults.transformRequest].flat(),
-      ],
+      ] as AxiosTransformer[],
     });
   }
 
