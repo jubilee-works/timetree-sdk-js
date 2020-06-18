@@ -4,6 +4,7 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
   AxiosError,
+  AxiosTransformer,
 } from "axios";
 import asyncRetroy from "async-retry";
 import qs from "qs";
@@ -50,11 +51,11 @@ export class APIClient {
       transformResponse: [
         ...[axios.defaults.transformResponse].flat(),
         (data) => humps.camelizeKeys(data),
-      ],
+      ] as AxiosTransformer[],
       transformRequest: [
         (data) => humps.decamelizeKeys(data),
         ...[axios.defaults.transformRequest].flat(),
-      ],
+      ] as AxiosTransformer[],
       timeout: options.timeout,
     });
     this.retryOptions = {
