@@ -7,7 +7,7 @@ executors:
   default:
     working_directory: ~/timetree-sdk-js/web-api
     docker:
-      - image: circleci/node:12.18.0
+      - image: circleci/node:12.18.1
 
 commands:
   build_npm:
