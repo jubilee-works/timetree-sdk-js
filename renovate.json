@@ -1,4 +1,14 @@
 {
   "extends": ["config:js-lib", "group:definitelyTyped", ":maintainLockFilesWeekly"],
-  "postUpdateOptions": ["yarnDedupeHighest"]
+  "postUpdateOptions": ["yarnDedupeHighest"],
+  "packageRules": [
+    {
+      "depTypeList": ["devDependencies"],
+      "automerge": true
+    },
+    {
+      "packagePatterns": ["^rollup", "^@rollup/"],
+      "automerge": false
+    }
+  ]
 }
