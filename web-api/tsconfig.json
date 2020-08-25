@@ -3,7 +3,7 @@
     "sourceMap": true,
     "target": "es6",
     "module": "commonjs",
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "outDir": "dist",
 
     "strict": true,
@@ -12,7 +12,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noFallthroughCasesInSwitch": true,
-  
+
     "baseUrl": "./src",
     "moduleResolution": "node",
     "esModuleInterop": true,
