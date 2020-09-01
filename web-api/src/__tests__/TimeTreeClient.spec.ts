@@ -16,7 +16,7 @@ import {
 import {
   expectedCalendars,
   expectedCalendar,
-  expecteLabels,
+  expectedLabels,
   expectedMembers,
   expectedUpcomingEvents,
   expectedEvent,
@@ -183,7 +183,7 @@ describe("TimeTreeClient", () => {
 
       it("should resolve values", async () => {
         const response = await client.getLabels(testCalendarId);
-        expect(response).toEqual(expecteLabels);
+        expect(response).toEqual(expectedLabels);
       });
     });
   });
