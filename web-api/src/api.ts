@@ -15,7 +15,7 @@ import plural from "pluralize";
 const normalizeResponse = (data?: object) => {
   if (!data) return null;
   // when data does not have "include", "deserialise" does not work.
-  const newData = data?.hasOwnProperty("included")
+  const newData = Object.prototype.hasOwnProperty.call(data, "included")
     ? data
     : { ...data, included: [] };
   return deserialise(newData);
