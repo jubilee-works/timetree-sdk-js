@@ -3,6 +3,7 @@ import {
   Activity,
   ActivityForm,
   Calendar,
+  Event,
   EventForm,
   Label,
   Member,
