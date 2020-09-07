@@ -1,3 +1,16 @@
+# [1.8.0-beta.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.5...v1.8.0-beta.1) (2020-09-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency axios to ^0.20.0 ([8c87786](https://github.com/jubilee-works/timetree-sdk-js/commit/8c87786ad5d6e2fdeed36d738753fa4e8eea68a4))
+* **jwttimetreeclient:** add import statement ([8e9e98f](https://github.com/jubilee-works/timetree-sdk-js/commit/8e9e98fde67ec710f3d7acdbc6f90129f5e4ba44))
+
+
+### Features
+
+* **jwt support:** support jwt authentication ([8de7246](https://github.com/jubilee-works/timetree-sdk-js/commit/8de72469e5c7210d8b648f3708b80731d35262db))
+
 ## [1.7.5](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.4...v1.7.5) (2020-06-01)
 
 
