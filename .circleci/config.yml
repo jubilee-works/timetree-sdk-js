@@ -63,7 +63,9 @@ workflows:
       - test:
           filters:
             branches:
-              only: master
+              only:
+                - master
+                - beta
       - slack/approval-notification:
           channel: "#timetree-sdk-js"
           context: release-timetree-sdk
@@ -79,4 +81,6 @@ workflows:
             - release-approval
           filters:
             branches:
-              only: master
+              only:
+                - master
+                - beta
