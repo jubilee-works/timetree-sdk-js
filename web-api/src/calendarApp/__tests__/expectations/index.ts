@@ -7,3 +7,4 @@ export { activity as expectedActivity } from "./activity";
 
 export { activityForm as expectedActivityForm } from "./activityForm";
 export { eventForm as expectedEventForm } from "./eventForm";
+export { accessToken as expectedAccessToken } from "./accessToken";

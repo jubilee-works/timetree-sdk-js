@@ -107,12 +107,12 @@ export class CalendarAppClient {
     return this.api.get<Event>(`/calendar/events/${eventId}`);
   }
 
-  public async createEvent({ ...json }: EventForm) {
-    return this.api.post<Event>(`/calendar/events`, json);
+  public async createEvent(eventForm: EventForm) {
+    return this.api.post<Event>(`/calendar/events`, eventForm);
   }
 
-  public async updateEvent({ ...json }: UpdateEventForm) {
-    return this.api.put<Event>(`/calendar/events`, json);
+  public async updateEvent(updateEventForm: UpdateEventForm) {
+    return this.api.put<Event>(`/calendar/events`, updateEventForm);
   }
 
   public async deleteEvent({ eventId }: DeleteEventParams) {

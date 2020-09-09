@@ -46,7 +46,7 @@ export class CalendarAppAuthenticator {
   public async getAccessToken(installationId: string) {
     const response = await this.api.post<AccessToken>(
       `/installations/${installationId}/access_tokens`,
-      { dummy: 0 },
+      null,
       {
         headers: {
           Authorization: `Bearer ${this.generateToken()}`,
