@@ -33,7 +33,7 @@ type GetTokenResponse = {
   readonly tokenType: string;
 };
 
-export class Authenticator {
+export class OAuthAuthenticator {
   readonly api: AxiosInstance;
 
   constructor(options: AuthenticatorOptions = {}) {

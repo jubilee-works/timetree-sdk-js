@@ -1,4 +1,4 @@
-import { TimeTreeClient } from "../TimeTreeClient";
+import { OAuthClient } from "../OAuthClient";
 import axios from "axios";
 import nock from "nock";
 import {
@@ -32,8 +32,8 @@ describe("TimeTreeClient", () => {
   describe("constructor", () => {
     it("should build default settings", () => {
       const accessToken = "fake-access-token";
-      const client = new TimeTreeClient(accessToken);
-      expect(client).toBeInstanceOf(TimeTreeClient);
+      const client = new OAuthClient(accessToken);
+      expect(client).toBeInstanceOf(OAuthClient);
       expect(axiosCreateMock).toHaveBeenCalledWith({
         baseURL: "https://timetreeapis.com",
         headers: {
@@ -49,10 +49,10 @@ describe("TimeTreeClient", () => {
   });
 
   describe("getUser", () => {
-    let client: TimeTreeClient;
+    let client: OAuthClient;
 
     beforeEach(() => {
-      client = new TimeTreeClient("fake-access-token");
+      client = new OAuthClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -108,9 +108,9 @@ describe("TimeTreeClient", () => {
   });
 
   describe("getCalendars", () => {
-    let client: TimeTreeClient;
+    let client: OAuthClient;
     beforeEach(() => {
-      client = new TimeTreeClient("fake-access-token");
+      client = new OAuthClient("fake-access-token");
     });
 
     describe("when calling api without include option", () => {
@@ -146,10 +146,10 @@ describe("TimeTreeClient", () => {
 
   describe("getCalendar", () => {
     const testCalendarId = "test-calendar-id";
-    let client: TimeTreeClient;
+    let client: OAuthClient;
 
     beforeEach(() => {
-      client = new TimeTreeClient("fake-access-token");
+      client = new OAuthClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -168,10 +168,10 @@ describe("TimeTreeClient", () => {
 
   describe("getLabels", () => {
     const testCalendarId = "test-calendar-id";
-    let client: TimeTreeClient;
+    let client: OAuthClient;
 
     beforeEach(() => {
-      client = new TimeTreeClient("fake-access-token");
+      client = new OAuthClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -190,10 +190,10 @@ describe("TimeTreeClient", () => {
 
   describe("getMembers", () => {
     const testCalendarId = "test-calendar-id";
-    let client: TimeTreeClient;
+    let client: OAuthClient;
 
     beforeEach(() => {
-      client = new TimeTreeClient("fake-access-token");
+      client = new OAuthClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -213,10 +213,10 @@ describe("TimeTreeClient", () => {
   describe("getUpcomingEvents", () => {
     const testCalendarId = "test-calendar-id";
     const testTimeZone = "America/New_York";
-    let client: TimeTreeClient;
+    let client: OAuthClient;
 
     beforeEach(() => {
-      client = new TimeTreeClient("fake-access-token");
+      client = new OAuthClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -242,10 +242,10 @@ describe("TimeTreeClient", () => {
   describe("getEvent", () => {
     const testCalendarId = "test-calendar-id";
     const testEventId = "test-event-id";
-    let client: TimeTreeClient;
+    let client: OAuthClient;
 
     beforeEach(() => {
-      client = new TimeTreeClient("fake-access-token");
+      client = new OAuthClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -267,10 +267,10 @@ describe("TimeTreeClient", () => {
 
   describe("createEvent", () => {
     const testCalendarId = "test-calendar-id";
-    let client: TimeTreeClient;
+    let client: OAuthClient;
 
     beforeEach(() => {
-      client = new TimeTreeClient("fake-access-token");
+      client = new OAuthClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -293,10 +293,10 @@ describe("TimeTreeClient", () => {
   describe("updateEvent", () => {
     const testCalendarId = "test-calendar-id";
     const testEventId = "test-event-id";
-    let client: TimeTreeClient;
+    let client: OAuthClient;
 
     beforeEach(() => {
-      client = new TimeTreeClient("fake-access-token");
+      client = new OAuthClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -323,10 +323,10 @@ describe("TimeTreeClient", () => {
   describe("deleteEvent", () => {
     const testCalendarId = "test-calendar-id";
     const testEventId = "test-event-id";
-    let client: TimeTreeClient;
+    let client: OAuthClient;
 
     beforeEach(() => {
-      client = new TimeTreeClient("fake-access-token");
+      client = new OAuthClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -349,10 +349,10 @@ describe("TimeTreeClient", () => {
   describe("createActivity", () => {
     const testCalendarId = "test-calendar-id";
     const testEventId = "test-event-id";
-    let client: TimeTreeClient;
+    let client: OAuthClient;
 
     beforeEach(() => {
-      client = new TimeTreeClient("fake-access-token");
+      client = new OAuthClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {

@@ -1,4 +1,4 @@
-import { APIClient } from "./api";
+import { APIClient } from "../api";
 import {
   Activity,
   ActivityForm,
@@ -7,9 +7,9 @@ import {
   EventForm,
   Label,
   Member,
-} from "./types";
+} from "../types";
 
-type JwtTimeTreeClientOptions = {
+type CalendarAppClientOptions = {
   /** you can overwrite for testing purposes */
   readonly baseURL?: string;
   readonly timeout?: number;
@@ -57,10 +57,10 @@ const parseIncludeOptions = (options: Record<string, boolean | undefined>) => {
     .join(",");
 };
 
-export class JwtTimeTreeClient {
+export class CalendarAppClient {
   private readonly api: APIClient;
 
-  constructor(accessToken: string, options: JwtTimeTreeClientOptions = {}) {
+  constructor(accessToken: string, options: CalendarAppClientOptions = {}) {
     this.api = new APIClient({
       ...options,
       baseURL: options.baseURL || "https://timetreeapis.com",

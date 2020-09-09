@@ -6,7 +6,7 @@ import axios, { AxiosInstance, AxiosTransformer } from "axios";
 import humps from "humps";
 import qs from "qs";
 
-export type JwtAuthenticatorOptions = {
+export type CalendarAppAuthenticatorOptions = {
   readonly applicationId: string;
   readonly privateKey: string;
   readonly accessTokenLifetimeInSec?: number;
@@ -21,11 +21,11 @@ export type AccessToken = {
   readonly tokenType: "Bearer";
 };
 
-export class JwtAuthenticator {
+export class CalendarAppAuthenticator {
   readonly api: AxiosInstance;
-  private readonly options: JwtAuthenticatorOptions;
+  private readonly options: CalendarAppAuthenticatorOptions;
 
-  constructor(options: JwtAuthenticatorOptions) {
+  constructor(options: CalendarAppAuthenticatorOptions) {
     this.options = options;
     this.api = axios.create({
       baseURL: options.baseURL || "https://timetreeapis.com",

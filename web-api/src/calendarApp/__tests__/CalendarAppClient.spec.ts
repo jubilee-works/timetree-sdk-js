@@ -1,4 +1,4 @@
-import { JwtTimeTreeClient } from "../JwtTimeTreeClient";
+import { CalendarAppClient } from "../CalendarAppClient";
 import axios from "axios";
 import nock from "nock";
 import {
@@ -23,8 +23,8 @@ describe("JwtTimeTreeClient", () => {
   describe("constructor", () => {
     it("should build default settings", () => {
       const accessToken = "fake-access-token";
-      const client = new JwtTimeTreeClient(accessToken);
-      expect(client).toBeInstanceOf(JwtTimeTreeClient);
+      const client = new CalendarAppClient(accessToken);
+      expect(client).toBeInstanceOf(CalendarAppClient);
       expect(axiosCreateMock).toHaveBeenCalledWith({
         baseURL: "https://timetreeapis.com",
         headers: {
@@ -40,10 +40,10 @@ describe("JwtTimeTreeClient", () => {
   });
 
   describe("getCalendar", () => {
-    let client: JwtTimeTreeClient;
+    let client: CalendarAppClient;
 
     beforeEach(() => {
-      client = new JwtTimeTreeClient("fake-access-token");
+      client = new CalendarAppClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -59,10 +59,10 @@ describe("JwtTimeTreeClient", () => {
   });
 
   describe("getLabels", () => {
-    let client: JwtTimeTreeClient;
+    let client: CalendarAppClient;
 
     beforeEach(() => {
-      client = new JwtTimeTreeClient("fake-access-token");
+      client = new CalendarAppClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -80,10 +80,10 @@ describe("JwtTimeTreeClient", () => {
   });
 
   describe("getMembers", () => {
-    let client: JwtTimeTreeClient;
+    let client: CalendarAppClient;
 
     beforeEach(() => {
-      client = new JwtTimeTreeClient("fake-access-token");
+      client = new CalendarAppClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -101,11 +101,11 @@ describe("JwtTimeTreeClient", () => {
   });
 
   describe("getUpcomingEvents", () => {
-    let client: JwtTimeTreeClient;
+    let client: CalendarAppClient;
     const testTimeZone = "America/New_York";
 
     beforeEach(() => {
-      client = new JwtTimeTreeClient("fake-access-token");
+      client = new CalendarAppClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -128,11 +128,11 @@ describe("JwtTimeTreeClient", () => {
   });
 
   describe("getEvent", () => {
-    let client: JwtTimeTreeClient;
+    let client: CalendarAppClient;
     const testEventId = "test-event-id";
 
     beforeEach(() => {
-      client = new JwtTimeTreeClient("fake-access-token");
+      client = new CalendarAppClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -150,10 +150,10 @@ describe("JwtTimeTreeClient", () => {
   });
 
   describe("createEvent", () => {
-    let client: JwtTimeTreeClient;
+    let client: CalendarAppClient;
     const testCalendarId = "test-calendar-id";
     beforeEach(() => {
-      client = new JwtTimeTreeClient("fake-access-token");
+      client = new CalendarAppClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -174,12 +174,12 @@ describe("JwtTimeTreeClient", () => {
   });
 
   describe("updateEvent", () => {
-    let client: JwtTimeTreeClient;
+    let client: CalendarAppClient;
     const testCalendarId = "test-calendar-id";
     const testEventId = "test-event-id";
 
     beforeEach(() => {
-      client = new JwtTimeTreeClient("fake-access-token");
+      client = new CalendarAppClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -201,11 +201,11 @@ describe("JwtTimeTreeClient", () => {
   });
 
   describe("deleteEvent", () => {
-    let client: JwtTimeTreeClient;
+    let client: CalendarAppClient;
     const testEventId = "test-event-id";
 
     beforeEach(() => {
-      client = new JwtTimeTreeClient("fake-access-token");
+      client = new CalendarAppClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
@@ -225,11 +225,11 @@ describe("JwtTimeTreeClient", () => {
   });
 
   describe("deleteInstallation", () => {
-    let client: JwtTimeTreeClient;
+    let client: CalendarAppClient;
     const testInstallationId = "test-installation-id";
 
     beforeEach(() => {
-      client = new JwtTimeTreeClient("fake-access-token");
+      client = new CalendarAppClient("fake-access-token");
     });
 
     describe("when calling api succeed", () => {
