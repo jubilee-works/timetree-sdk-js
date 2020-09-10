@@ -11,6 +11,23 @@
 
 ### Features
 
+* ci test ([a322d50](https://github.com/jubilee-works/timetree-sdk-js/commit/a322d50e6118324d5d259405e35ddacfdfc4a5f8))
+* rename classes ([d3f5844](https://github.com/jubilee-works/timetree-sdk-js/commit/d3f5844f54652e68719ac399d99b571fb4940323))
+* **jwt support:** support jwt authentication ([0df8910](https://github.com/jubilee-works/timetree-sdk-js/commit/0df891062f179b061158b5700efda779e0de37b6))
+
+# [1.8.0-beta.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.5...v1.8.0-beta.1) (2020-09-10)
+
+
+### Bug Fixes
+
+* ci test ([41772ee](https://github.com/jubilee-works/timetree-sdk-js/commit/41772ee95885bc8e23a74077fe3ddd7da4894e22))
+* fix checksum path ([d0a3fc1](https://github.com/jubilee-works/timetree-sdk-js/commit/d0a3fc136a9cca5c1687d6e97c3ffe80a48a1d1d))
+* **deps:** update dependency axios to ^0.20.0 ([8c87786](https://github.com/jubilee-works/timetree-sdk-js/commit/8c87786ad5d6e2fdeed36d738753fa4e8eea68a4))
+* **jwttimetreeclient:** add import statement ([d62aa91](https://github.com/jubilee-works/timetree-sdk-js/commit/d62aa91747cadc78085ee38cb5125f4f8ae4ff79))
+
+
+### Features
+
 * rename classes ([d3f5844](https://github.com/jubilee-works/timetree-sdk-js/commit/d3f5844f54652e68719ac399d99b571fb4940323))
 * **jwt support:** support jwt authentication ([0df8910](https://github.com/jubilee-works/timetree-sdk-js/commit/0df891062f179b061158b5700efda779e0de37b6))
 
