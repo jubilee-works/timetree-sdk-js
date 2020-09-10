@@ -14,4 +14,3 @@ $ yarn add @timetreeapp/web-api
 ```
 
 # Get Started
-
