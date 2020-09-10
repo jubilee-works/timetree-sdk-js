@@ -1,9 +1,9 @@
-import { Authenticator } from "../Authenticator";
+import { OAuthAuthenticator } from "../OAuthAuthenticator";
 import nock from "nock";
 
 describe("Authenticator", () => {
   describe("authorize", () => {
-    const authenticator = new Authenticator();
+    const authenticator = new OAuthAuthenticator();
     const testClientId = "test-client-id";
     const testCsrfToken = "test-csrf-token";
     const testRedirectUri = "test-redirect-uri";
@@ -32,7 +32,7 @@ describe("Authenticator", () => {
   });
 
   describe("getToken", () => {
-    const authenticator = new Authenticator();
+    const authenticator = new OAuthAuthenticator();
     const testBody = {
       clientId: "test-client-id",
       clientSecret: "test-client-secret",
