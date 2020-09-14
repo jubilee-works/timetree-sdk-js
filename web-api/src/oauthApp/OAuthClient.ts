@@ -1,4 +1,4 @@
-import { APIClient, RetryOptions } from "./api";
+import { APIClient, RetryOptions } from "../api";
 
 import {
   Calendar,
@@ -9,9 +9,9 @@ import {
   Activity,
   EventForm,
   ActivityForm,
-} from "./types";
+} from "../types";
 
-type TimeTreeClientOptions = {
+type OAuthClientOptions = {
   /** you can overwrite for testing purposes */
   readonly baseURL?: string;
   readonly timeout?: number;
@@ -61,17 +61,12 @@ const parseIncludeOptions = (options: Record<string, boolean | undefined>) => {
     .join(",");
 };
 
-export class TimeTreeClient {
+export class OAuthClient {
   private readonly api: APIClient;
 
   constructor(
     accessToken: string,
-    {
-      retry,
-      onRetry,
-      validateRetryable,
-      ...options
-    }: TimeTreeClientOptions = {}
+    { retry, onRetry, validateRetryable, ...options }: OAuthClientOptions = {}
   ) {
     this.api = new APIClient(
       {
