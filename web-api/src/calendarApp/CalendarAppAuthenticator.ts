@@ -6,6 +6,8 @@ import axios, { AxiosInstance, AxiosTransformer } from "axios";
 import humps from "humps";
 import qs from "qs";
 
+const DEFAULT_ACCESS_TOKEN_LIFETIME = 600;
+
 export type CalendarAppAuthenticatorOptions = {
   readonly applicationId: string;
   readonly privateKey: string;
@@ -60,7 +62,10 @@ export class CalendarAppAuthenticator {
     const now = Math.floor(new Date().getTime() / 1000);
     const payload = {
       iat: now,
-      exp: now + (this.options.accessTokenLifetimeInSec || 0),
+      exp:
+        now +
+        (this.options.accessTokenLifetimeInSec ||
+          DEFAULT_ACCESS_TOKEN_LIFETIME),
       iss: this.options.applicationId,
     };
     return jwt.sign(payload, this.options.privateKey, { algorithm: "RS256" });
