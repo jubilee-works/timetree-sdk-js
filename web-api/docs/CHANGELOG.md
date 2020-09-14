@@ -1,3 +1,10 @@
+# [2.0.0-alpha.2](https://github.com/jubilee-works/timetree-sdk-js/compare/v2.0.0-alpha.1...v2.0.0-alpha.2) (2020-09-14)
+
+
+### Features
+
+* change default expiration time of JWT token ([f9096e9](https://github.com/jubilee-works/timetree-sdk-js/commit/f9096e95fb4a12c47176e78fbba1b7be2fd0de87))
+
 # [2.0.0-alpha.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.5...v2.0.0-alpha.1) (2020-09-10)
 
 

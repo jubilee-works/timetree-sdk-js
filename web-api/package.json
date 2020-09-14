@@ -1,6 +1,6 @@
 {
   "name": "@timetreeapp/web-api",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.2",
   "description": "Official SDK for using TimeTree WebAPI",
   "author": "TimeTree, Inc. <dev-platform@timetreeapp.com>",
   "repository": "https://github.com/jubilee-works/timetree-sdk-js",
