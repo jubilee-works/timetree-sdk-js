@@ -16,13 +16,13 @@ $ yarn add @timetreeapp/web-api
 ```
 ## Usage
 
-### Request to TimeTree Web API
-https://codesandbox.io/embed/flamboyant-haze-jfi63?fontsize=14&hidenavigation=1&theme=dark
+### Accessing API endpoints as a User App
+https://codesandbox.io/s/nifty-firefly-93mwg?fontsize=14&hidenavigation=1&theme=dark
 
 ```ts
-import { TimeTreeClient } from '@timetreeapp/web-api';
+import { OAuthClient } from "@timetreeapp/web-api";
 
-const client = new TimeTreeClient("<your-access-token>");
+const client = new OAuthClient("<your-access-token>");
 
 (async () => {
   const data = await client.getCalendars();
@@ -32,7 +32,7 @@ const client = new TimeTreeClient("<your-access-token>");
 
 #### Options
 ```ts
-new TimeTreeClient(
+new OAuthClient(
   accessToken: string;
   {
   // you can overwrite for testing purposes
@@ -56,7 +56,7 @@ new TimeTreeClient(
 ```
 
 #### Scheme
-[TimeTree API](https://developers.timetreeapp.com/ja/docs/api) conforms to JSONAPI. but this sdk can deserialize response data and request data.
+[TimeTree API](https://developers.timetreeapp.com/docs/api/overview) conforms to JSONAPI. But this sdk can deserialize response data and request data.
 
 
 ```ts
@@ -113,14 +113,14 @@ try {
 }
 ```
 
-### Get Access Token
+### Get OAuth Access Token
 
-1. Execute `Authenticator#authorize` to access https://timetreeapp.com/oauth/authorize with query parameters below.
+1. Execute `OAuthAuthenticator#authorize` to access https://timetreeapp.com/oauth/authorize with query parameters below.
 
 ```ts
-import { Authenticator } from "@timetreeapp/web-api";
+import { OAuthAuthenticator } from "@timetreeapp/web-api";
 
-const authenticator = new Authenticator();
+const authenticator = new OAuthAuthenticator();
 
 authenticator.authorize({
   clientId: "<your-client-id>",
@@ -130,7 +130,7 @@ authenticator.authorize({
 // -> TimeTree redirects to URI specified redirect_uri with code parameter. The code parameter expires in 10 minutes
 ```
 
-2. Execute `Authenticator#getToken` with the following parameters to JSON body to get access token when redirected.
+2. Execute `OAuthAuthenticator#getToken` with the following parameters to JSON body to get access token when redirected.
 
 ```ts
 const response = await authenticator.getToken({
@@ -148,6 +148,28 @@ console.log(response.accessToken);
 
 or using some oauth2 library like [client-oauth2](https://www.npmjs.com/package/client-oauth2)
 
+### Accessing API endpoints as a Calendar App
+
+```ts
+import { OAuthAuthenticator, CalendarAppClient } from "@timetreeapp/web-api";
+
+// Generate and download the private key. Please refer to the link below.
+// https://developers.timetreeapp.com/docs/api/calendar-app
+const authenticator = new CalendarAppAuthenticator({
+  applicationId: "<your-jwt-application-id>",
+  privateKey: "-----BEGIN RSA PRIVATE KEY-----\n....-----END RSA PRIVATE KEY-----\n",
+});
+
+(async () => {
+  // When the Calendar App is linked by the user, TimeTree will
+  // notify installation_id in an HTTP POST request.
+  const response = await authenticator.getAccessToken("<installation-id>");
+
+  const client = new CalendarAppClient(response.accessToken);
+  const data = await client.getCalendar();
+  console.log("calendar", data);
+})();
+```
 
 ## Licence
 MIT
