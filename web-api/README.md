@@ -16,7 +16,7 @@ $ yarn add @timetreeapp/web-api
 ```
 ## Usage
 
-### Accessing API endpoints as a User App
+### Accessing API endpoints as a OAuth App
 https://codesandbox.io/s/nifty-firefly-93mwg?fontsize=14&hidenavigation=1&theme=dark
 
 ```ts
@@ -156,7 +156,7 @@ import { OAuthAuthenticator, CalendarAppClient } from "@timetreeapp/web-api";
 // Generate and download the private key. Please refer to the link below.
 // https://developers.timetreeapp.com/docs/api/calendar-app
 const authenticator = new CalendarAppAuthenticator({
-  applicationId: "<your-jwt-application-id>",
+  applicationId: "<your-calendar-app-id>",
   privateKey: "-----BEGIN RSA PRIVATE KEY-----\n....-----END RSA PRIVATE KEY-----\n",
 });
 
