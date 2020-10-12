@@ -4521,10 +4521,10 @@ kind-of@^6.0.0, kind-of@^6.0.2, kind-of@^6.0.3:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
-kitsu-core@^8.0.4:
-  version "8.3.1"
-  resolved "https://registry.yarnpkg.com/kitsu-core/-/kitsu-core-8.3.1.tgz#89b8848694c371afca38d81333e4225fdf77cb33"
-  integrity sha512-Zf3sqz//9C8Kq9LVoBP4D8dQpaeeDqM+TWO38y/emmr3JiHMz3fNlDva5IK0bchsU3AshtXD5Z83FZxnLglkig==
+kitsu-core@^9.0.0:
+  version "9.1.15"
+  resolved "https://registry.yarnpkg.com/kitsu-core/-/kitsu-core-9.1.15.tgz#9c22f9b416e6a544896548a8e151760c7eed96af"
+  integrity sha512-jqs74f0JRT8vkDzISLbbef6AtdYunIqZy2qMvQMDjXSTHfD/zPOL5AHqc/kUtW7XpF6u7edkzANJLn8ackXwqw==
 
 kleur@^3.0.3:
   version "3.0.3"
