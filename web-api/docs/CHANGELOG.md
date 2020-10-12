@@ -1,3 +1,21 @@
+# [2.0.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.5...v2.0.0) (2020-10-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency axios to ^0.20.0 ([8c87786](https://github.com/jubilee-works/timetree-sdk-js/commit/8c87786ad5d6e2fdeed36d738753fa4e8eea68a4))
+
+
+### Features
+
+* change default expiration time of JWT token ([f9096e9](https://github.com/jubilee-works/timetree-sdk-js/commit/f9096e95fb4a12c47176e78fbba1b7be2fd0de87))
+* support jwt authentication ([488eb4d](https://github.com/jubilee-works/timetree-sdk-js/commit/488eb4dd2dfcc3ec7998e88880517a606a3fdb33))
+
+
+### BREAKING CHANGES
+
+* rename TimeTreeClient to OAuthClient and Authenticator to OAuthAuthenticator
+
 # [2.0.0-alpha.2](https://github.com/jubilee-works/timetree-sdk-js/compare/v2.0.0-alpha.1...v2.0.0-alpha.2) (2020-09-14)
 
 
