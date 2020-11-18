@@ -67,15 +67,15 @@ workflows:
                 - master
                 - alpha
                 - beta
-      - slack/approval-notification:
+      - slack/on-hold:
           channel: "#timetree-sdk-js"
-          context: release-timetree-sdk
+          context: slack-orb
           requires:
             - test
       - release-approval:
           type: approval
           requires:
-            - slack/approval-notification
+            - slack/on-hold
       - release:
           context: release-timetree-sdk
           requires:
