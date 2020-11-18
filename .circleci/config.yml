@@ -7,7 +7,7 @@ executors:
   default:
     working_directory: ~/timetree-sdk-js/web-api
     docker:
-      - image: circleci/node:12.19.0
+      - image: cimg/node:14.15.1
 
 commands:
   build_npm:
@@ -15,14 +15,13 @@ commands:
       - restore_cache:
           keys:
             - v1-dependencies-{{ arch }}-{{ checksum "../.node-version" }}-{{ checksum "yarn.lock" }}
-            - v1-dependencies-{{ arch }}
-            - v1-dependencies-
+            - v1-dependencies-{{ arch }}-{{ checksum "../.node-version" }}-
       - run:
           name: Yarn
-          command: yarn
+          command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
       - save_cache:
           paths:
-            - node_modules
+            - ~/.cache/yarn
           key: v1-dependencies-{{ arch }}-{{ checksum "../.node-version" }}-{{ checksum "yarn.lock" }}
 
 jobs:
