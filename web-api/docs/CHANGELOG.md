@@ -1,3 +1,11 @@
+## [2.0.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v2.0.0...v2.0.1) (2020-11-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency axios to ^0.21.0 ([0ce9b51](https://github.com/jubilee-works/timetree-sdk-js/commit/0ce9b51d21422396455a09655ee3e59d8e095828))
+* **package.json:** fix vulnerability of semantic-release ([dae1478](https://github.com/jubilee-works/timetree-sdk-js/commit/dae1478740eb621093746594f4b274e311bccf6a))
+
 # [2.0.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v1.7.5...v2.0.0) (2020-10-12)
 
 
