@@ -2,6 +2,7 @@ eslintrc.js
 jest.config.js
 release.config.js
 rollup.config.js
+tsconfig.json
+**/__tests__/**
 src/
 docs/
-dist/__tests__
