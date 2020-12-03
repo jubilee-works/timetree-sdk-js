@@ -70,7 +70,7 @@ new OAuthClient(
       description: "Calendar description",
       color: "#2ecc87",
       order: 0,
-      image_url: "https://attachmentstimetreeapp.com/path/to/ image.png",
+      image_url: "https://attachmentstimetreeapp.com/path/to/image.png",
       created_at: "2019-04-01T12:34:56.000Z"
     },
     relationships: {
@@ -151,7 +151,7 @@ or using some oauth2 library like [client-oauth2](https://www.npmjs.com/package/
 ### Accessing API endpoints as a Calendar App
 
 ```ts
-import { OAuthAuthenticator, CalendarAppClient } from "@timetreeapp/web-api";
+import { CalendarAppAuthenticator, CalendarAppClient } from "@timetreeapp/web-api";
 
 // Generate and download the private key. Please refer to the link below.
 // https://developers.timetreeapp.com/docs/api/calendar-app
