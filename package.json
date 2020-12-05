@@ -2,7 +2,7 @@
   "license": "MIT",
   "devDependencies": {
     "cz-conventional-changelog": "3.3.0",
-    "husky": "4.3.0"
+    "husky": "4.3.4"
   },
   "config": {
     "commitizen": {
