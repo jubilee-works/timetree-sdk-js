@@ -70,7 +70,7 @@ new OAuthClient(
       description: "Calendar description",
       color: "#2ecc87",
       order: 0,
-      image_url: "https://attachmentstimetreeapp.com/path/to/image.png",
+      image_url: "https://attachments.timetreeapp.com/path/to/image.png",
       created_at: "2019-04-01T12:34:56.000Z"
     },
     relationships: {
