@@ -7,7 +7,7 @@ executors:
   default:
     working_directory: ~/timetree-sdk-js/web-api
     docker:
-      - image: cimg/node:14.15.4
+      - image: cimg/node:14.15.5
 
 commands:
   build_npm:
