@@ -34,7 +34,7 @@
     "jsonwebtoken": "^8.5.1",
     "kitsu-core": "^8.0.4",
     "pluralize": "^8.0.0",
-    "qs": "^6.9.1"
+    "qs": "^6.10.1"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "17.1.0",
