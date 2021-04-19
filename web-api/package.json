@@ -67,7 +67,7 @@
     "typescript": "4.2.4"
   },
   "resolutions": {
-    "semantic-release/**/yargs-parser": ">=13.1.2",
+    "semantic-release/**/yargs-parser": "20.2.7",
     "semantic-release/**/mem": ">=4.0.0"
   },
   "publishConfig": {
