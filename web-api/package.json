@@ -68,7 +68,7 @@
   },
   "resolutions": {
     "semantic-release/**/yargs-parser": ">=13.1.2",
-    "semantic-release/**/mem": ">=4.0.0"
+    "semantic-release/**/mem": "8.1.0"
   },
   "publishConfig": {
     "access": "public"
