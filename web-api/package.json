@@ -48,7 +48,7 @@
     "@types/jest": "26.0.24",
     "@types/jsonwebtoken": "8.5.4",
     "@types/pluralize": "0.0.29",
-    "@types/qs": "6.9.6",
+    "@types/qs": "6.9.7",
     "@typescript-eslint/eslint-plugin": "4.28.2",
     "@typescript-eslint/parser": "4.28.2",
     "eslint": "7.30.0",
