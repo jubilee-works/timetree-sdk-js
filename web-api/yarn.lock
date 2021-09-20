@@ -2350,10 +2350,10 @@ eslint-config-prettier@8.3.0:
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.3.0.tgz#f7471b20b6fe8a9a9254cc684454202886a2dd7a"
   integrity sha512-BgZuLUSeKzvlL/VUjx/Yb787VQ26RU3gGjA3iiFvdsp/2bMfVIWUVP7tjxtjS0e+HP409cPlPvNkQloz8C91ew==
 
-eslint-plugin-functional@3.7.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-functional/-/eslint-plugin-functional-3.7.1.tgz#42a25f85bd0b36878da789326b1f467c0e8cb193"
-  integrity sha512-ykMhjogt/bb2TOydUYiypwy8mTyX27Te2sb1T+5X2Bs71EcldPFhNyWow0KrCtn+BNV1aYoLg1umGxE2NhuuUw==
+eslint-plugin-functional@3.7.2:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-functional/-/eslint-plugin-functional-3.7.2.tgz#c90325dddfa822fab27419375084d12158f05da1"
+  integrity sha512-BuWPOeE0nuXYlZjObYOHnYf7G3iG+sysxw84I579MsrH+hy5XdXb2sdabmXQ5z7eFGCg2/DWNbZ/yz5GAgtcUg==
   dependencies:
     "@typescript-eslint/experimental-utils" "^4.9.1"
     array.prototype.flatmap "^1.2.4"
