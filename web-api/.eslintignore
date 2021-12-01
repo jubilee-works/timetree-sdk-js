@@ -1,3 +1,5 @@
+.eslintrc.js
 jest.config.js
 release.config.js
 /dist
+node_modules

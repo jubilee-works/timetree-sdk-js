@@ -1,5 +1,6 @@
-import { APIClient } from "../api";
 import nock from "nock";
+
+import { APIClient } from "../api";
 
 describe("APIClient", () => {
   describe("when request is timeout on server", () => {
@@ -40,9 +41,7 @@ describe("APIClient", () => {
         {
           retry: 1,
           onRetry: retryMock,
-          validateRetryable: (error) => {
-            return error.code === "ECONNABORTED";
-          },
+          validateRetryable: (error) => error.code === "ECONNABORTED",
         }
       );
       await api.get("https://timetreeapis.com/user");

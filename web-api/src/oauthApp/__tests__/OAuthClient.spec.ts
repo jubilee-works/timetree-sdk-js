@@ -1,30 +1,32 @@
-import { OAuthClient } from "../OAuthClient";
 import axios from "axios";
 import nock from "nock";
+
+import { OAuthClient } from "../OAuthClient";
+
 import {
-  calendars,
-  calendar,
-  labels,
-  members,
-  upcomingEvents,
-  event,
-  user,
-  activity,
-  activityForm,
-  eventForm,
-} from "./fixtures";
-import {
-  expectedCalendars,
+  expectedActivity,
+  expectedActivityForm,
   expectedCalendar,
+  expectedCalendars,
+  expectedEvent,
+  expectedEventForm,
   expectedLabels,
   expectedMembers,
   expectedUpcomingEvents,
-  expectedEvent,
   expectedUser,
-  expectedActivity,
-  expectedActivityForm,
-  expectedEventForm,
 } from "./expectations";
+import {
+  activity,
+  activityForm,
+  calendar,
+  calendars,
+  event,
+  eventForm,
+  labels,
+  members,
+  upcomingEvents,
+  user,
+} from "./fixtures";
 
 const axiosCreateMock = jest.spyOn(axios, "create");
 
@@ -72,8 +74,7 @@ describe("TimeTreeClient", () => {
           .get("/user")
           .reply(404, {
             data: {
-              type:
-                "https://developers.timetreeapp.com/en/docs/api#client-failure",
+              type: "https://developers.timetreeapp.com/en/docs/api#client-failure",
               title: "Not Found",
               status: 404,
               errors: "Calendar not found",
@@ -85,8 +86,7 @@ describe("TimeTreeClient", () => {
         const error = await client.getUser().catch((e) => e);
         expect(error.response.data).toEqual({
           data: {
-            type:
-              "https://developers.timetreeapp.com/en/docs/api#client-failure",
+            type: "https://developers.timetreeapp.com/en/docs/api#client-failure",
             title: "Not Found",
             status: 404,
             errors: "Calendar not found",
@@ -109,6 +109,7 @@ describe("TimeTreeClient", () => {
 
   describe("getCalendars", () => {
     let client: OAuthClient;
+
     beforeEach(() => {
       client = new OAuthClient("fake-access-token");
     });

@@ -1,7 +1,6 @@
-/* eslint-disable functional/prefer-readonly-type */
 import axios, { AxiosInstance, AxiosTransformer } from "axios";
-import qs from "qs";
 import humps from "humps";
+import qs from "qs";
 
 type AuthenticatorOptions = {
   /** you can overwrite for testing purposes */
@@ -42,6 +41,7 @@ export class OAuthAuthenticator {
       timeout: options.timeout,
       paramsSerializer: (params) =>
         qs.stringify(humps.decamelizeKeys(params), { skipNulls: true }),
+      /* eslint-disable functional/prefer-readonly-type */
       transformResponse: [
         ...[axios.defaults.transformResponse].flat(),
         (data) => humps.camelizeKeys(data),
@@ -50,6 +50,7 @@ export class OAuthAuthenticator {
         (data) => humps.decamelizeKeys(data),
         ...[axios.defaults.transformRequest].flat(),
       ] as AxiosTransformer[],
+      /* eslint-enable functional/prefer-readonly-type */
     });
   }
 

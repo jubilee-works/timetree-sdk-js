@@ -1,9 +1,6 @@
-/* eslint-disable functional/prefer-readonly-type */
-import * as jwt from "jsonwebtoken";
-
 import axios, { AxiosInstance, AxiosTransformer } from "axios";
-
 import humps from "humps";
+import * as jwt from "jsonwebtoken";
 import qs from "qs";
 
 const DEFAULT_ACCESS_TOKEN_LIFETIME = 600;
@@ -34,6 +31,7 @@ export class CalendarAppAuthenticator {
       timeout: options.timeout,
       paramsSerializer: (params) =>
         qs.stringify(humps.decamelizeKeys(params), { skipNulls: true }),
+      /* eslint-disable functional/prefer-readonly-type */
       transformResponse: [
         ...[axios.defaults.transformResponse].flat(),
         (data) => humps.camelizeKeys(data),
@@ -42,6 +40,7 @@ export class CalendarAppAuthenticator {
         (data) => humps.decamelizeKeys(data),
         ...[axios.defaults.transformRequest].flat(),
       ] as AxiosTransformer[],
+      /* eslint-enable functional/prefer-readonly-type */
     });
   }
 

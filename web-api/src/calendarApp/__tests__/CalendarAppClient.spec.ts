@@ -1,6 +1,15 @@
-import { CalendarAppClient } from "../CalendarAppClient";
 import axios from "axios";
 import nock from "nock";
+
+import { CalendarAppClient } from "../CalendarAppClient";
+
+import {
+  expectedCalendar,
+  expectedEvent,
+  expectedLabels,
+  expectedMembers,
+  expectedUpcomingEvents,
+} from "./expectations";
 import {
   calendar,
   event,
@@ -9,13 +18,6 @@ import {
   members,
   upcomingEvents,
 } from "./fixtures";
-import {
-  expectedCalendar,
-  expectedEvent,
-  expectedLabels,
-  expectedMembers,
-  expectedUpcomingEvents,
-} from "./expectations";
 
 const axiosCreateMock = jest.spyOn(axios, "create");
 
@@ -152,6 +154,7 @@ describe("JwtTimeTreeClient", () => {
   describe("createEvent", () => {
     let client: CalendarAppClient;
     const testCalendarId = "test-calendar-id";
+
     beforeEach(() => {
       client = new CalendarAppClient("fake-access-token");
     });

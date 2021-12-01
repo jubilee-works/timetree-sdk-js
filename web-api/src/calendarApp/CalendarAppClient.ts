@@ -48,14 +48,13 @@ type DeleteInstallationParams = {
   readonly installationId: string;
 };
 
-const parseIncludeOptions = (options: Record<string, boolean | undefined>) => {
-  return Object.entries(options)
+const parseIncludeOptions = (options: Record<string, boolean | undefined>) =>
+  Object.entries(options)
     .reduce<readonly string[]>(
       (accum, [key, value]) => (value ? [...accum, key] : accum),
       []
     )
     .join(",");
-};
 
 export class CalendarAppClient {
   private readonly api: APIClient;

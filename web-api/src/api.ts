@@ -1,16 +1,16 @@
-/* eslint-disable functional/prefer-readonly-type, @typescript-eslint/ban-types */
+/* eslint-disable functional/prefer-readonly-type */
+import asyncRetroy from "async-retry";
 import axios, {
+  AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
-  AxiosError,
   AxiosTransformer,
 } from "axios";
-import asyncRetroy from "async-retry";
-import qs from "qs";
 import humps from "humps";
-import { deserialise, serialise, camel } from "kitsu-core";
+import { camel, deserialise, serialise } from "kitsu-core";
 import plural from "pluralize";
+import qs from "qs";
 
 const normalizeResponse = (data?: object) => {
   if (!data) return null;
@@ -39,7 +39,6 @@ export class APIClient {
   private readonly api: AxiosInstance;
   private readonly retryOptions: RetryOptions;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(
     options: AxiosRequestConfig,
     { retry = 0, validateRetryable, onRetry }: RetryOptions = {}
@@ -115,7 +114,6 @@ export class APIClient {
     return destroy(url, options);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private wrapRequest<Request extends (...p: any[]) => Promise<any>>(
     fn: Request
   ) {
@@ -131,6 +129,8 @@ export class APIClient {
             return result;
           } catch (e) {
             if (
+              axios.isAxiosError(e) &&
+              typeof e.response?.status === "number" &&
               !retryableStatusCodes.includes(e.response?.status) &&
               (!validateRetryable || !validateRetryable(e))
             ) {
@@ -147,3 +147,4 @@ export class APIClient {
       );
   }
 }
+/* eslint-enable functional/prefer-readonly-type */

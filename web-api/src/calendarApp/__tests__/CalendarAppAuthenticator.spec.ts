@@ -1,10 +1,12 @@
+import nock from "nock";
+
 import {
   CalendarAppAuthenticator,
   CalendarAppAuthenticatorOptions,
 } from "../CalendarAppAuthenticator";
-import nock from "nock";
-import { accessToken, jwtPrivateKey } from "./fixtures";
+
 import { expectedAccessToken } from "./expectations";
+import { accessToken, jwtPrivateKey } from "./fixtures";
 
 describe("JwtAuthenticator", () => {
   describe("getAccessToken", () => {

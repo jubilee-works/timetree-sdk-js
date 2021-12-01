@@ -1,14 +1,13 @@
 import { APIClient, RetryOptions } from "../api";
-
 import {
+  Activity,
+  ActivityForm,
   Calendar,
+  Event,
+  EventForm,
   Label,
   Member,
-  Event,
   User,
-  Activity,
-  EventForm,
-  ActivityForm,
 } from "../types";
 
 type OAuthClientOptions = {
@@ -52,14 +51,13 @@ type DeleteEventParams = {
   readonly eventId: string;
 };
 
-const parseIncludeOptions = (options: Record<string, boolean | undefined>) => {
-  return Object.entries(options)
+const parseIncludeOptions = (options: Record<string, boolean | undefined>) =>
+  Object.entries(options)
     .reduce<readonly string[]>(
       (accum, [key, value]) => (value ? [...accum, key] : accum),
       []
     )
     .join(",");
-};
 
 export class OAuthClient {
   private readonly api: APIClient;

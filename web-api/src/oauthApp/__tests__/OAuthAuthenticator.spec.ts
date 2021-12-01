@@ -1,5 +1,6 @@
-import { OAuthAuthenticator } from "../OAuthAuthenticator";
 import nock from "nock";
+
+import { OAuthAuthenticator } from "../OAuthAuthenticator";
 
 describe("Authenticator", () => {
   describe("authorize", () => {
