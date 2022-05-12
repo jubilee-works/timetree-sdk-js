@@ -115,38 +115,9 @@ try {
 
 ### Get OAuth Access Token
 
-1. Execute `OAuthAuthenticator#authorize` to access https://timetreeapp.com/oauth/authorize with query parameters below.
+TimeTree API uses OAuth2, you can use some OAuth2 library like [client-oauth2](https://www.npmjs.com/package/client-oauth2)
 
-```ts
-import { OAuthAuthenticator } from "@timetreeapp/web-api";
 
-const authenticator = new OAuthAuthenticator();
-
-authenticator.authorize({
-  clientId: "<your-client-id>",
-  redirectUri: "https://<your-redirect-uri>",
-  state: "<your-state>",
-});
-// -> TimeTree redirects to URI specified redirect_uri with code parameter. The code parameter expires in 10 minutes
-```
-
-2. Execute `OAuthAuthenticator#getToken` with the following parameters to JSON body to get access token when redirected.
-
-```ts
-const response = await authenticator.getToken({
-  clientId: "<your-client-id>",
-  clientSecret: "<your-client-secret>",
-  redirectUri: "https://<your-redirect-uri>",
-  // code is included in query parameters
-  //   GET {redirect_uri}?code={code}&state={csrf_token}
-  code:"<your-code>",
-  grantType: "authorization_code"
-});
-
-console.log(response.accessToken);
-```
-
-or using some oauth2 library like [client-oauth2](https://www.npmjs.com/package/client-oauth2)
 
 ### Accessing API endpoints as a Calendar App
 
