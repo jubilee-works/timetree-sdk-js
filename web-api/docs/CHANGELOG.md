@@ -1,3 +1,16 @@
+# [3.0.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v2.0.1...v3.0.0) (2022-05-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency axios to v0.21.2 [security] ([155bd24](https://github.com/jubilee-works/timetree-sdk-js/commit/155bd246ce8f8abb3047e334e904bc5856f1e542))
+* **oauth-authenticator:** drop OAuth2 authentication ([c61c350](https://github.com/jubilee-works/timetree-sdk-js/commit/c61c350e237d5060687131a7ad10ee10dd1c8424))
+
+
+### BREAKING CHANGES
+
+* **oauth-authenticator:** remove class OAuthAuthenticator
+
 ## [2.0.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v2.0.0...v2.0.1) (2020-11-24)
 
 
