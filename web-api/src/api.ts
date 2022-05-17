@@ -29,6 +29,11 @@ const normalizeRequest = (data: object) => {
   return serialisedData;
 };
 
+const isError = (error: unknown): error is Error => error instanceof Error;
+const isAxiosError = (error: unknown): error is AxiosError => {
+  return isError(error) && (error as AxiosError).isAxiosError;
+};
+
 export type RetryOptions = {
   readonly retry?: number;
   readonly validateRetryable?: (e: AxiosError) => boolean;
@@ -131,13 +136,15 @@ export class APIClient {
             return result;
           } catch (e) {
             if (
-              !retryableStatusCodes.includes(e.response?.status) &&
-              (!validateRetryable || !validateRetryable(e))
+              isAxiosError(e) &&
+              ((e.response &&
+                retryableStatusCodes.includes(e.response.status)) ||
+                validateRetryable?.(e))
             ) {
-              bail(e);
-              return;
+              throw e;
             }
-            throw e;
+            bail(e as Error);
+            return;
           }
         },
         {
