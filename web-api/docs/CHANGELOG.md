@@ -1,3 +1,11 @@
+## [3.0.1](https://github.com/jubilee-works/timetree-sdk-js/compare/v3.0.0...v3.0.1) (2023-01-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency jsonwebtoken to v9 [security] ([4bad247](https://github.com/jubilee-works/timetree-sdk-js/commit/4bad24782b931dca15b9961b718701757a1fb55a))
+* **deps:** update dependency qs to v6.10.3 [security] ([0a508cf](https://github.com/jubilee-works/timetree-sdk-js/commit/0a508cf36fbcc0d31f95fa7deeb28e0c34cca756))
+
 # [3.0.0](https://github.com/jubilee-works/timetree-sdk-js/compare/v2.0.1...v3.0.0) (2022-05-17)
 
 
